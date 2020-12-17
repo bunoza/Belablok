@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Bela blok</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="dijeli">Dijeli: \</string>
+    <string name="igra_je_gotova">Igra je gotova!</string>
+    <string name="nastavkom_ce_se_obrisati">Nastavkom će se obrisati podaci o trenutnoj igri.</string>
+    <string name="nastavi">Nastavi</string>
+    <string name="button">Button</string>
+    <string name="vi">VI</string>
+    <string name="mi">MI</string>
+    <string name="_0">0</string>
+    <string name="_20">20</string>
+    <string name="_50">50</string>
+    <string name="_100">100</string>
+    <string name="belot">BELOT</string>
+    <string name="upisi">UPIŠI</string>
+    <string name="mi_smo_zvali">Mi smo zvali</string>
+    <string name="vi_ste_zvali">Vi ste zvali</string>
+    <string name="obrisi_zvanja">Obriši zvanja</string>
+    <string name="zvanje">"Zvanje: "</string>
+</resources>

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InputActivity">
+
+    <EditText
+        android:id="@+id/editTextNumber2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:focusableInTouchMode="true"
+        android:hint="@string/_0"
+        android:inputType="number"
+        android:maxLength="3"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textColorHint="#DADADA"
+        android:textSize="30sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/editTextNumber"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/editTextNumber"
+        android:importantForAutofill="no"/>
+
+    <EditText
+        android:id="@+id/editTextNumber"
+        style="@style/Widget.AppCompat.EditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:ems="10"
+        android:focusableInTouchMode="true"
+        android:hint="@string/_0"
+        android:inputType="number"
+        android:maxLength="3"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textColorHint="#DADADA"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/editTextNumber2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.100000024"
+        android:importantForAutofill="no"/>
+
+    <Button
+        android:id="@+id/vi20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_20"
+        app:layout_constraintBaseline_toBaselineOf="@+id/mi20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/mi20" />
+
+    <Button
+        android:id="@+id/vi50"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/_50"
+        app:layout_constraintStart_toStartOf="@+id/vi20"
+        app:layout_constraintTop_toBottomOf="@+id/vi20" />
+
+    <Button
+        android:id="@+id/vi100"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/_100"
+        app:layout_constraintStart_toStartOf="@+id/vi50"
+        app:layout_constraintTop_toBottomOf="@+id/vi50" />
+
+    <Button
+        android:id="@+id/viBelot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/belot"
+        app:layout_constraintStart_toStartOf="@+id/vi100"
+        app:layout_constraintTop_toBottomOf="@+id/vi100" />
+
+    <Button
+        android:id="@+id/mi20"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="96dp"
+        android:text="@string/_20"
+        app:layout_constraintEnd_toStartOf="@+id/vi20"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNumber" />
+
+    <Button
+        android:id="@+id/mi50"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/_50"
+        app:layout_constraintStart_toStartOf="@+id/mi20"
+        app:layout_constraintTop_toBottomOf="@+id/mi20" />
+
+    <Button
+        android:id="@+id/mi100"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/_100"
+        app:layout_constraintStart_toStartOf="@+id/mi50"
+        app:layout_constraintTop_toBottomOf="@+id/mi50" />
+
+    <Button
+        android:id="@+id/miBelot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/belot"
+        app:layout_constraintStart_toStartOf="@+id/mi100"
+        app:layout_constraintTop_toBottomOf="@+id/mi100" />
+
+    <Button
+        android:id="@+id/upis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:text="@string/upisi"
+        app:layout_constraintEnd_toStartOf="@+id/viBelot"
+        app:layout_constraintStart_toEndOf="@+id/miBelot"
+        app:layout_constraintTop_toBottomOf="@+id/miBelot" />
+
+    <RadioGroup
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:baselineAligned="true"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/upis"
+        app:layout_constraintEnd_toEndOf="@+id/viBelot"
+        app:layout_constraintStart_toStartOf="@+id/miBelot"
+        app:layout_constraintTop_toBottomOf="@+id/miBelot">
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:buttonTint="@color/colorPrimary"
+            android:checked="true"
+            android:text="@string/mi_smo_zvali" />
+
+        <RadioButton
+            android:id="@+id/radioButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:buttonTint="@color/colorPrimary"
+            android:text="@string/vi_ste_zvali" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/iznoszvanjaMi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/mi20"
+        app:layout_constraintEnd_toStartOf="@+id/brisiZvanja"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNumber" />
+
+    <TextView
+        android:id="@+id/iznoszvanjaVi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/vi20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/brisiZvanja"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNumber2" />
+
+    <Button
+        android:id="@+id/brisiZvanja"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/obrisi_zvanja"
+        app:layout_constraintBaseline_toBaselineOf="@+id/iznoszvanjaMi"
+        app:layout_constraintEnd_toStartOf="@+id/iznoszvanjaVi"
+        app:layout_constraintStart_toEndOf="@+id/iznoszvanjaMi" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
