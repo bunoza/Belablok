@@ -4,17 +4,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.os.Handler;
@@ -26,23 +25,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NameClickListener{
 
     private static final int SECOND_ACTIVITY_REQUEST_CODE = 0;
-    private static final int THIRD_ACTIVITY_REQUEST_CODE = 1;
+    private static  int THIRD_ACTIVITY_REQUEST_CODE = 1;
 
     FloatingActionButton fab;
     boolean doubleBackToExitPressedOnce = false;
-    static List<Integer> nasaIgra;
-    static List<Integer> vasaIgra;
+    private List<Integer> nasaIgra;
+    private List<Integer> vasaIgra;
     static String[] dealeri = {"Ja", "Desni protivnik", "Partner", "Lijevi protivnik"};
     static int dealerCounter;
     AlertDialog.Builder builderGotovaIgra, builderNovaIgra;
-    LinearLayout linearLayoutMi;
-    LinearLayout linearLayoutVi;
     TextView djelitelj;
     TextView sumaMi, sumaVi;
     int editID1, editID2;
+    RecyclerAdapter recyclerAdapter;
+    RecyclerView recycler;
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
@@ -134,8 +133,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 nasaIgra.clear();
                 vasaIgra.clear();
-                linearLayoutMi.removeAllViews();
-                linearLayoutVi.removeAllViews();
                 updateSums();
             }
         });
@@ -163,8 +160,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 nasaIgra.clear();
                 vasaIgra.clear();
-                linearLayoutMi.removeAllViews();
-                linearLayoutVi.removeAllViews();
                 updateSums();
             }
         });
@@ -191,8 +186,11 @@ public class MainActivity extends AppCompatActivity {
         nasaIgra = new ArrayList<>();
         vasaIgra = new ArrayList<>();
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        linearLayoutMi = (LinearLayout) findViewById((R.id.linear1));
-        linearLayoutVi = (LinearLayout) findViewById((R.id.linear2));
+        recycler = findViewById(R.id.RecyclerViewMi);
+        recycler.setLayoutManager(new LinearLayoutManager(this));
+        recycler.addItemDecoration(new DividerItemDecoration(recycler.getContext(), DividerItemDecoration.VERTICAL));
+        recyclerAdapter = new RecyclerAdapter(this);
+        recycler.setAdapter(recyclerAdapter);
 
         fab.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -243,24 +241,18 @@ public class MainActivity extends AppCompatActivity {
                 String[] temp = returnString.split( " ");
                 nase = Integer.parseInt(temp[0]);
                 vase = Integer.parseInt(temp[1]);
-//                nasaIgra.add(nase);
-//                vasaIgra.add(vase);
-                for(int i = 0; i < nasaIgra.size(); i++){
-                    if(nasaIgra.get(i) == editID1 && vasaIgra.get(i) == editID2){
-                        nasaIgra.set(i, nase);
-                        vasaIgra.set(i, vase);
-                        Log.d("tag", "stigo2");
-                        break;
-                    }
+                nasaIgra.set(THIRD_ACTIVITY_REQUEST_CODE-20, nase);
+                vasaIgra.set(THIRD_ACTIVITY_REQUEST_CODE-20, vase);
                 }
                 updateSums();
                 if(gameIsOver()){
                     Toast.makeText(MainActivity.this , getString(R.string.igra_je_gotova), Toast.LENGTH_SHORT).show();
                 }
                 updateTable();
+                THIRD_ACTIVITY_REQUEST_CODE = 1;
             }
         }
-    }
+
     public static int getRandomIntegerBetween(){
         Random rand = new Random();
         return rand.nextInt(4);
@@ -293,42 +285,23 @@ public class MainActivity extends AppCompatActivity {
         sumaVi.setText(String.valueOf(sum2));
     }
     public void updateTable() {
-        linearLayoutMi.removeAllViews();
-        linearLayoutVi.removeAllViews();
-        int value1;
-        int value2;
-        for (int i = 0; i < nasaIgra.size(); i++) {
-            TableRow row1 = new TableRow(MainActivity.this);
-            TableRow row2 = new TableRow(MainActivity.this);
-            value1 = nasaIgra.get(i);
-            value2 = vasaIgra.get(i);
-            final TextView tempView1 = new TextView(MainActivity.this);
-            final TextView tempView2 = new TextView(MainActivity.this);
-            tempView1.setText(String.valueOf(value1));
-            tempView2.setText(String.valueOf(value2));
-            tempView1.setGravity(Gravity.CENTER);
-            tempView2.setGravity(Gravity.CENTER);
-            tempView1.setTextSize(25);
-            tempView2.setTextSize(25);
-            tempView1.setTextColor(Color.BLACK);
-            tempView2.setTextColor(Color.BLACK);
-            tempView1.setClickable(true);
-            tempView2.setClickable(true);
-            View.OnClickListener tempListener = new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    editID1 = Integer.parseInt(tempView1.getText().toString());
-                    editID2 = Integer.parseInt(tempView2.getText().toString());
-                    Intent intent = new Intent(MainActivity.this, InputActivity.class);
-                    startActivityForResult(intent, THIRD_ACTIVITY_REQUEST_CODE);
-                }
-            };
-            tempView1.setOnClickListener(tempListener);
-            tempView2.setOnClickListener(tempListener);
-            row1.addView(tempView1);
-            row2.addView(tempView2);
-            linearLayoutMi.addView(row1);
-            linearLayoutVi.addView(row2);
-        }
+        setupRecyclerData();
+                //postaviti listener na svaki nameviewholder
+    }
+
+    @Override
+    public void onNameClick(int position) {
+        Toast.makeText(this, "Position: " + position, Toast.LENGTH_SHORT).show();
+        THIRD_ACTIVITY_REQUEST_CODE = position+20;
+        Intent intent = new Intent(MainActivity.this, InputActivity.class);
+        startActivityForResult(intent, THIRD_ACTIVITY_REQUEST_CODE);
+    }
+
+//    public void addCell(int x, int y){
+//        recyclerAdapter.addNewCell(x, y);
+//    }
+
+    private void setupRecyclerData(){
+        recyclerAdapter.addData(nasaIgra, vasaIgra);
     }
 }
