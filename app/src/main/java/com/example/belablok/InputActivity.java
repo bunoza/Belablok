@@ -197,6 +197,8 @@ public class InputActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int nasiBodovi;
                 int vasiBodovi;
+                boolean brojZvanjaMi = false;
+                boolean brojZvanjaVi = false;
                 try {
                     nasiBodovi = Integer.parseInt(mi.getText().toString()) + naseZvanje;
                     vasiBodovi = Integer.parseInt(vi.getText().toString()) + vaseZvanje;
@@ -206,6 +208,7 @@ public class InputActivity extends AppCompatActivity {
                             vasiBodovi += nasiBodovi;
                             nasiBodovi = 0;
                         }
+                        brojZvanjaMi = true;
                     }
                     else if(viSteZvali.isChecked()){
                         if(vasiBodovi < nasiBodovi){
@@ -213,12 +216,14 @@ public class InputActivity extends AppCompatActivity {
                             nasiBodovi += vasiBodovi;
                             vasiBodovi = 0;
                         }
+                        brojZvanjaVi = true;
                     }
                     nase = nasiBodovi;
                     vase = vasiBodovi;
                     String stringToPassBack = nasiBodovi + " " + vasiBodovi;
                     Intent intent = new Intent();
                     intent.putExtra("keyName", stringToPassBack);
+                    intent.putExtra("brojZvanjaMi", brojZvanjaMi);
                     setResult(RESULT_OK, intent);
                     finish();
                 }catch(NumberFormatException e){

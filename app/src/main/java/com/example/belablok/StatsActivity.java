@@ -27,6 +27,7 @@ public class StatsActivity extends AppCompatActivity{
     private ScreenSlidePagerAdapter screenSlidePagerAdapter;
     private Partije partije = new Partije();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +63,7 @@ public class StatsActivity extends AppCompatActivity{
 //        ScreenSlidePagerAdapter pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         screenSlidePagerAdapter = new ScreenSlidePagerAdapter((getSupportFragmentManager()));
         screenSlidePagerAdapter.addFragment(HistoryFragment.newInstance(nasaIgraHistory,vasaIgraHistory), "POVIJEST");
-        screenSlidePagerAdapter.addFragment(StatsFragment.newInstance(nasaIgraHistory,vasaIgraHistory, partije), "STATISTIKA");
+        screenSlidePagerAdapter.addFragment(StatsFragment.newInstance(nasaIgraHistory,vasaIgraHistory, partije, getIntent().getIntExtra("brojZvanjaMi", 0), getIntent().getIntExtra("brojZvanjaVi", 0)), "STATISTIKA");
         mViewPager.setAdapter(screenSlidePagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
     }

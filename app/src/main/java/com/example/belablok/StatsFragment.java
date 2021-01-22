@@ -23,16 +23,22 @@ public class StatsFragment extends Fragment {
     private List<Integer> dataList2;
     private TextView winRateMi;
     private TextView winRateVi;
+    private TextView tvbrojZvanjaMi;
+    private TextView tvbrojZvanjaVi;
     private int brojOdigranihPartija = 0;
     private int brojPobjedenihMi = 0;
     private int brojPobjedenihVi = 0;
+    private int brojZvanjaMi;
+    private int brojZvanjaVi;
 
-    public static StatsFragment newInstance(List<Integer> dataList1, List<Integer> dataList2, Partije partije) {
+    public static StatsFragment newInstance(List<Integer> dataList1, List<Integer> dataList2, Partije partije, int brojZvanjaMi, int brojZvanjaVi) {
         StatsFragment fragment = new StatsFragment();
         Bundle args = new Bundle();
         args.putIntegerArrayList("datax", (ArrayList<Integer>) dataList1);
         args.putIntegerArrayList("datay", (ArrayList<Integer>) dataList2);
         args.putSerializable("data2D", partije);
+        args.putInt("brojZvanjaMi", brojZvanjaMi);
+        args.putInt("brojZvanjaVi", brojZvanjaVi);
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,12 +56,14 @@ public class StatsFragment extends Fragment {
         setUpViews(view);
         setUpData();
         calculateWinRates();
-        showWinRates();
+        updateTV();
     }
 
-    private void showWinRates() {
+    private void updateTV() {
         winRateMi.setText(getResources().getString(R.string.winrate, 100.0*brojPobjedenihMi/brojOdigranihPartija));
         winRateVi.setText(getResources().getString(R.string.winrate, 100.0*brojPobjedenihVi/brojOdigranihPartija));
+        tvbrojZvanjaMi.setText(getResources().getString(R.string.broj_zvanja, brojZvanjaMi));
+        tvbrojZvanjaVi.setText(getResources().getString(R.string.broj_zvanja, brojZvanjaVi));
     }
 
     private void calculateWinRates() {
@@ -74,6 +82,8 @@ public class StatsFragment extends Fragment {
     private void setUpViews(View view) {
         winRateMi = view.findViewById(R.id.tvWinRateMi);
         winRateVi = view.findViewById(R.id.tvWinRateVi);
+        tvbrojZvanjaMi = view.findViewById(R.id.brojZvanjaMi);
+        tvbrojZvanjaVi = view.findViewById(R.id.brojZvanjaVi);
     }
 
     private void setUpData() {
@@ -87,6 +97,7 @@ public class StatsFragment extends Fragment {
             dataListMi2D.addAll(partije.getListaMi());
             dataListVi2D.addAll(partije.getListaVi());
         }
-
+        brojZvanjaMi = getArguments().getInt("brojZvanjaMi", 0 );
+        brojZvanjaVi = getArguments().getInt("brojZvanjaVi", 0 );
     }
 }

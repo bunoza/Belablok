@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
     RecyclerAdapter recyclerAdapter;
     RecyclerView recycler;
     private Partije partije = new Partije();
+    int brojZvanjaMi, brojZvanjaVi = 0;
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
@@ -115,6 +116,8 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
                 partije.setListaMi(dataListMi2D);
                 partije.setListaMi(dataListVi2D);
                 intent.putExtra("data2D", partije);
+                intent.putExtra("brojZvanjaMi", brojZvanjaMi);
+                intent.putExtra("brojZvanjaVi", brojZvanjaVi);
                 startActivity(intent);
             }else{
                 Toast.makeText(this, "Još nije odigrana ni jedna partija!", Toast.LENGTH_SHORT).show();
@@ -167,6 +170,7 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
                 }
                 nasaIgra.clear();
                 vasaIgra.clear();
+                setupRecyclerData();
                 updateSums();
             }
         });
@@ -194,6 +198,7 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
                 }
                 nasaIgra.clear();
                 vasaIgra.clear();
+                setupRecyclerData();
                 updateSums();
             }
         });
@@ -259,6 +264,11 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
             if (resultCode == RESULT_OK) { // Activity.RESULT_OK
                 String returnString = data.getStringExtra("keyName");
                 updateDealerCounter();
+                if(data.getBooleanExtra("brojZvanjaMi", false)){
+                    brojZvanjaMi++;
+                }else{
+                    brojZvanjaVi++;
+                }
                 int nase, vase;
                 String[] temp = returnString.split( " ");
                 nase = Integer.parseInt(temp[0]);
