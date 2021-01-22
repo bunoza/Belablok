@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +15,8 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +36,11 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
 
     FloatingActionButton fab;
     boolean doubleBackToExitPressedOnce = false;
+    private List<Integer> nasaIgraHistory;
+    private List<Integer> vasaIgraHistory;
+    private List<List<Integer>> dataListMi2D = new ArrayList<>();
+    private List<List<Integer>> dataListVi2D = new ArrayList<>();
+    private List<Integer> odigranePartije = new ArrayList<>();
     private List<Integer> nasaIgra;
     private List<Integer> vasaIgra;
     static String[] dealeri = {"Ja", "Desni protivnik", "Partner", "Lijevi protivnik"};
@@ -42,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
     int editID1, editID2;
     RecyclerAdapter recyclerAdapter;
     RecyclerView recycler;
+    private Partije partije = new Partije();
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
@@ -87,6 +97,30 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
             updateSums();
             String temp = getString(R.string.dijeli) + dealeri[savedInstanceState.getInt("DEALER_COUNTER")];
            djelitelj.setText(temp);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.mymenu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.mybutton) {
+            if(!nasaIgraHistory.isEmpty() && !vasaIgraHistory.isEmpty()){
+                Intent intent = new Intent(MainActivity.this, StatsActivity.class);
+                intent.putIntegerArrayListExtra("nasaHistory", (ArrayList<Integer>) nasaIgraHistory);
+                intent.putIntegerArrayListExtra("vasaHistory", (ArrayList<Integer>) vasaIgraHistory);
+                partije.setListaMi(dataListMi2D);
+                partije.setListaMi(dataListVi2D);
+                intent.putExtra("data2D", partije);
+                startActivity(intent);
+            }else{
+                Toast.makeText(this, "Još nije odigrana ni jedna partija!", Toast.LENGTH_SHORT).show();
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -170,11 +204,11 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
             }
         });
 
-        sumaVi = (TextView) findViewById(R.id.sumaVi);
-        sumaMi = (TextView) findViewById(R.id.sumaMi);
+        sumaVi = findViewById(R.id.sumaVi);
+        sumaMi = findViewById(R.id.sumaMi);
         sumaVi.setText("0");
         sumaMi.setText("0");
-        djelitelj = (TextView) findViewById(R.id.dealer);
+        djelitelj = findViewById(R.id.dealer);
         setDealerRandom();
         djelitelj.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -185,12 +219,14 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
         });
         nasaIgra = new ArrayList<>();
         vasaIgra = new ArrayList<>();
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = findViewById(R.id.fab);
         recycler = findViewById(R.id.RecyclerViewMi);
         recycler.setLayoutManager(new LinearLayoutManager(this));
         recycler.addItemDecoration(new DividerItemDecoration(recycler.getContext(), DividerItemDecoration.VERTICAL));
         recyclerAdapter = new RecyclerAdapter(this);
         recycler.setAdapter(recyclerAdapter);
+        dataListMi2D = new ArrayList<>();
+        dataListVi2D = new ArrayList<>();
 
         fab.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -212,6 +248,8 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
                 return true;
             }
         });
+        nasaIgraHistory = new ArrayList<>();
+        vasaIgraHistory = new ArrayList<>();
     }
 
     @Override
@@ -230,6 +268,12 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
                 updateSums();
                 if(gameIsOver()){
                     Toast.makeText(MainActivity.this , getString(R.string.igra_je_gotova), Toast.LENGTH_SHORT).show();
+                    nasaIgraHistory.add(nasaIgraHistory.size(), Integer.parseInt(sumaMi.getText().toString()));
+                    vasaIgraHistory.add(vasaIgraHistory.size(), Integer.parseInt(sumaVi.getText().toString()));
+                    dataListMi2D.add(nasaIgra);
+                    dataListVi2D.add(nasaIgra);
+                    partije.setListaMi(dataListMi2D);
+                    partije.setListaVi(dataListVi2D);
                 }
                updateTable();
             }
@@ -286,12 +330,11 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
     }
     public void updateTable() {
         setupRecyclerData();
-                //postaviti listener na svaki nameviewholder
     }
 
     @Override
     public void onNameClick(int position) {
-        Toast.makeText(this, "Position: " + position, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Position: " + position, Toast.LENGTH_SHORT).show();
         THIRD_ACTIVITY_REQUEST_CODE = position+20;
         Intent intent = new Intent(MainActivity.this, InputActivity.class);
         startActivityForResult(intent, THIRD_ACTIVITY_REQUEST_CODE);

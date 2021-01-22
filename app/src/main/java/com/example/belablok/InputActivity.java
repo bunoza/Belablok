@@ -46,22 +46,22 @@ public class InputActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
-        miSmoZvali = (RadioButton) findViewById(R.id.radioButton2);
-        viSteZvali = (RadioButton) findViewById(R.id.radioButton);
-        final Button mi20 = (Button) findViewById(R.id.mi20);
-        final Button mi50 = (Button) findViewById(R.id.mi50);
-        final Button mi100 = (Button) findViewById(R.id.mi100);
-        final Button miBelot = (Button) findViewById(R.id.miBelot);
-        final Button vi20 = (Button) findViewById(R.id.vi20);
-        final Button vi50 = (Button) findViewById(R.id.vi50);
-        final Button vi100 = (Button) findViewById(R.id.vi100);
-        final Button viBelot = (Button) findViewById(R.id.viBelot);
-        Button upis = (Button) findViewById(R.id.upis);
-        Button brisiZvanja = (Button) findViewById(R.id.brisiZvanja);
-        mi = (EditText) findViewById(R.id.editTextNumber);
-        vi = (EditText) findViewById(R.id.editTextNumber2);
-        prikazZvanjaMi = (TextView) findViewById(R.id.iznoszvanjaMi);
-        prikazZvanjaVi = (TextView) findViewById(R.id.iznoszvanjaVi);
+        miSmoZvali = findViewById(R.id.radioButton2);
+        viSteZvali = findViewById(R.id.radioButton);
+        final Button mi20 = findViewById(R.id.mi20);
+        final Button mi50 = findViewById(R.id.mi50);
+        final Button mi100 = findViewById(R.id.mi100);
+        final Button miBelot = findViewById(R.id.miBelot);
+        final Button vi20 = findViewById(R.id.vi20);
+        final Button vi50 = findViewById(R.id.vi50);
+        final Button vi100 = findViewById(R.id.vi100);
+        final Button viBelot = findViewById(R.id.viBelot);
+        Button upis = findViewById(R.id.upis);
+        Button brisiZvanja = findViewById(R.id.brisiZvanja);
+        mi = findViewById(R.id.editTextNumber);
+        vi = findViewById(R.id.editTextNumber2);
+        prikazZvanjaMi = findViewById(R.id.iznoszvanjaMi);
+        prikazZvanjaVi = findViewById(R.id.iznoszvanjaVi);
         naseZvanje = 0;
         vaseZvanje = 0;
         String temp = getString(R.string.zvanje)+ naseZvanje;

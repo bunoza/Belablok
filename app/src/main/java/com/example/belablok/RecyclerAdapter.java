@@ -19,6 +19,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<NameViewHolder> {
     public RecyclerAdapter(NameClickListener clickListener) {
         this.clickListener = clickListener;
     }
+    public RecyclerAdapter(){
+    }
 
     @NonNull
     @Override
@@ -44,6 +46,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<NameViewHolder> {
         this.dataListVi.addAll(data2);
         notifyDataSetChanged();
     }
+//    public void addData2D(List<List<Integer>> data1 , List<List<Integer>> data2){
+//        this.dataListMi2D.clear();
+//        this.dataListVi2D.clear();
+//        this.dataListMi2D.addAll(data1);
+//        this.dataListVi2D.addAll(data2);
+//        notifyDataSetChanged();
+//    }
 
     public void addNewCell(int x, int y){
             dataListMi.add(getItemCount(), x);

@@ -5,9 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="false"
-    android:hapticFeedbackEnabled="false"
-    android:id="@+id/clMAIN"
-    tools:context=".MainActivity">
+    android:hapticFeedbackEnabled="false">
 
 
     <TextView
@@ -37,53 +35,21 @@
         app:layout_constraintStart_toEndOf="@+id/mi" />
 
     <TextView
-        android:id="@+id/dealer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="16dp"
-        android:longClickable="true"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
-        android:clickable="true"
-        android:contentDescription="@string/button"
-        android:focusable="true"
-        app:backgroundTint="#6200EE"
-        app:fabSize="auto"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/dealer"
-        app:srcCompat="@android:drawable/ic_menu_add" />
-
-    <TextView
-        android:id="@+id/sumaMi"
+        android:id="@+id/pobjedeMi"
         style="@style/Widget.AppCompat.TextView.SpinnerItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/fab"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/mi"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/mi"/>
+        app:layout_constraintStart_toStartOf="@+id/mi" />
 
     <TextView
-        android:id="@+id/sumaVi"
+        android:id="@+id/pobjedeVi"
         style="@style/Widget.AppCompat.TextView.SpinnerItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintBaseline_toBaselineOf="@+id/sumaMi"
+        app:layout_constraintBaseline_toBaselineOf="@+id/pobjedeMi"
         app:layout_constraintEnd_toEndOf="@+id/vi"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/vi" />
@@ -97,7 +63,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/sumaMi"
+        app:layout_constraintBottom_toTopOf="@+id/pobjedeMi"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mi" />
