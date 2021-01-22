@@ -203,15 +203,15 @@ public class InputActivity extends AppCompatActivity {
                     nasiBodovi = Integer.parseInt(mi.getText().toString()) + naseZvanje;
                     vasiBodovi = Integer.parseInt(vi.getText().toString()) + vaseZvanje;
                     if(miSmoZvali.isChecked()){
-                        if(nasiBodovi < vasiBodovi){
+                        if(nasiBodovi <= vasiBodovi){
                             Toast.makeText(InputActivity.this , "Pali smo!", Toast.LENGTH_SHORT).show();
                             vasiBodovi += nasiBodovi;
                             nasiBodovi = 0;
                         }
                         brojZvanjaMi = true;
                     }
-                    else if(viSteZvali.isChecked()){
-                        if(vasiBodovi < nasiBodovi){
+                    else {
+                        if(vasiBodovi <= nasiBodovi){
                             Toast.makeText(InputActivity.this , "Pali ste!", Toast.LENGTH_SHORT).show();
                             nasiBodovi += vasiBodovi;
                             vasiBodovi = 0;
