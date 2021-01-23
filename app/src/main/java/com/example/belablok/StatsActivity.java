@@ -22,10 +22,8 @@ public class StatsActivity extends AppCompatActivity{
     private TabLayout mTabLayout;
     private List<Integer> nasaIgraHistory;
     private List<Integer> vasaIgraHistory;
-    private List<List<Integer>> dataListMi2D = new ArrayList<>();
-    private List<List<Integer>> dataListVi2D = new ArrayList<>();
     private ScreenSlidePagerAdapter screenSlidePagerAdapter;
-    private Partije partije = new Partije();
+    private Partije partije;
 
 
     @Override
@@ -44,8 +42,6 @@ public class StatsActivity extends AppCompatActivity{
 
         nasaIgraHistory = new ArrayList<>();
         vasaIgraHistory = new ArrayList<>();
-        dataListMi2D = new ArrayList<>();
-        dataListVi2D = new ArrayList<>();
 
         if(!(getIntent().getIntegerArrayListExtra("nasaHistory")).isEmpty()) {
             nasaIgraHistory.addAll(getIntent().getIntegerArrayListExtra("nasaHistory"));

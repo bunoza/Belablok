@@ -43,7 +43,8 @@
             android:id="@+id/tvWinRateMi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="48dp"
+            android:textSize="@dimen/stats_fragment_text_size"
             app:layout_constraintEnd_toEndOf="@+id/mi"
             app:layout_constraintStart_toStartOf="@+id/mi"
             app:layout_constraintTop_toBottomOf="@+id/mi" />
@@ -52,6 +53,7 @@
             android:id="@+id/tvWinRateVi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/stats_fragment_text_size"
             app:layout_constraintEnd_toEndOf="@+id/vi"
             app:layout_constraintBaseline_toBaselineOf="@id/tvWinRateMi"
             app:layout_constraintStart_toStartOf="@+id/vi"
@@ -61,7 +63,8 @@
             android:id="@+id/brojZvanjaMi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="48dp"
+            android:textSize="@dimen/stats_fragment_text_size"
             app:layout_constraintEnd_toEndOf="@+id/mi"
             app:layout_constraintStart_toStartOf="@+id/mi"
             app:layout_constraintTop_toBottomOf="@+id/tvWinRateMi" />
@@ -70,9 +73,22 @@
             android:id="@+id/brojZvanjaVi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/stats_fragment_text_size"
             app:layout_constraintBaseline_toBaselineOf="@id/brojZvanjaMi"
             app:layout_constraintEnd_toEndOf="@+id/vi"
             app:layout_constraintStart_toStartOf="@+id/vi" />
+
+        <com.jjoe64.graphview.GraphView
+            android:id="@+id/graphView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginVertical="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/brojZvanjaMi" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

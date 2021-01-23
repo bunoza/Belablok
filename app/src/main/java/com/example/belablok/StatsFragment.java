@@ -1,5 +1,6 @@
 package com.example.belablok;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,14 +12,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.LegendRenderer;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class StatsFragment extends Fragment {
 
-    private List<List<Integer>> dataListMi2D = new ArrayList<>();
-    private List<List<Integer>> dataListVi2D = new ArrayList<>();
-    Partije partije = new Partije();
+    private List<List<Integer>> dataListMi2D;
+    private List<List<Integer>> dataListVi2D;
+    Partije partije;
     private List<Integer> dataList1;
     private List<Integer> dataList2;
     private TextView winRateMi;
@@ -30,6 +36,8 @@ public class StatsFragment extends Fragment {
     private int brojPobjedenihVi = 0;
     private int brojZvanjaMi;
     private int brojZvanjaVi;
+    private GraphView graphView;
+
 
     public static StatsFragment newInstance(List<Integer> dataList1, List<Integer> dataList2, Partije partije, int brojZvanjaMi, int brojZvanjaVi) {
         StatsFragment fragment = new StatsFragment();
@@ -57,7 +65,50 @@ public class StatsFragment extends Fragment {
         setUpData();
         calculateWinRates();
         updateTV();
+        updateGraphData();
+
     }
+
+
+    private void updateGraphData() {
+        DataPoint[] pointsMi = new DataPoint[dataListMi2D.get(0).size()+1];
+        DataPoint[] pointsVi = new DataPoint[dataListVi2D.get(0).size()+1];
+        pointsMi[0] = new DataPoint(0,0);
+        pointsVi[0] = new DataPoint(0,0);
+        int i;
+        int sumMi = 0, sumVi = 0;
+        for(i = 0; i < dataListVi2D.get(0).size(); i++){
+            sumMi += dataListMi2D.get(0).get(i);
+            sumVi += dataListVi2D.get(0).get(i);
+            pointsMi[i+1] = new DataPoint(i+1, sumMi);
+            pointsVi[i+1] = new DataPoint(i+1, sumVi);
+        }
+        LineGraphSeries<DataPoint> seriesMi = new LineGraphSeries<>(pointsMi);
+        LineGraphSeries<DataPoint> seriesVi = new LineGraphSeries<>(pointsVi);
+        graphView.getViewport().setXAxisBoundsManual(true);
+        graphView.getViewport().setYAxisBoundsManual(true);
+        graphView.setTitle("Tijek partije");
+        graphView.removeAllSeries();
+        seriesMi.setColor(Color.BLUE);
+        seriesMi.setTitle("Mi");
+        seriesMi.setThickness(5);
+        seriesVi.setThickness(5);
+        graphView.addSeries(seriesMi);
+        seriesVi.setColor(Color.RED);
+        seriesVi.setTitle("Vi");
+        graphView.addSeries(seriesVi);
+        graphView.getViewport().setMinY(0);
+        graphView.getViewport().setMaxY(1001);
+        graphView.getViewport().setMinX(0);
+        graphView.getViewport().setMaxX(dataListMi2D.get(0).size());
+        graphView.getLegendRenderer().setVisible(true);
+        graphView.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.BOTTOM);
+        graphView.getLegendRenderer().setBackgroundColor(Color.WHITE);
+        graphView.getGridLabelRenderer().setHorizontalAxisTitle("Broj miješanja");
+        graphView.getGridLabelRenderer().setVerticalAxisTitle("Bodovi");
+        graphView.getViewport().setScrollable(true);
+    }
+
 
     private void updateTV() {
         winRateMi.setText(getResources().getString(R.string.winrate, 100.0*brojPobjedenihMi/brojOdigranihPartija));
@@ -67,7 +118,7 @@ public class StatsFragment extends Fragment {
     }
 
     private void calculateWinRates() {
-        brojOdigranihPartija = dataListMi2D.size();
+        brojOdigranihPartija = dataListVi2D.size();
         int i;
         for(i = 0; i < dataListMi2D.size(); i++){
             if(dataList1.get(i) < dataList2.get(i)){
@@ -84,6 +135,7 @@ public class StatsFragment extends Fragment {
         winRateVi = view.findViewById(R.id.tvWinRateVi);
         tvbrojZvanjaMi = view.findViewById(R.id.brojZvanjaMi);
         tvbrojZvanjaVi = view.findViewById(R.id.brojZvanjaVi);
+        graphView = view.findViewById(R.id.graphView);
     }
 
     private void setUpData() {
@@ -92,10 +144,8 @@ public class StatsFragment extends Fragment {
 
         if(getArguments().getSerializable("data2D") != null){
             partije = (Partije) getArguments().getSerializable("data2D");
-            dataListMi2D.clear();
-            dataListVi2D.clear();
-            dataListMi2D.addAll(partije.getListaMi());
-            dataListVi2D.addAll(partije.getListaVi());
+            dataListMi2D = partije.getListaMi();
+            dataListVi2D = partije.getListaVi();
         }
         brojZvanjaMi = getArguments().getInt("brojZvanjaMi", 0 );
         brojZvanjaVi = getArguments().getInt("brojZvanjaVi", 0 );

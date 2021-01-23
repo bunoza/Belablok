@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
                 intent.putIntegerArrayListExtra("nasaHistory", (ArrayList<Integer>) nasaIgraHistory);
                 intent.putIntegerArrayListExtra("vasaHistory", (ArrayList<Integer>) vasaIgraHistory);
                 partije.setListaMi(dataListMi2D);
-                partije.setListaMi(dataListVi2D);
+                partije.setListaVi(dataListVi2D);
                 intent.putExtra("data2D", partije);
                 intent.putExtra("brojZvanjaMi", brojZvanjaMi);
                 intent.putExtra("brojZvanjaVi", brojZvanjaVi);
@@ -281,7 +281,7 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
                     nasaIgraHistory.add(nasaIgraHistory.size(), Integer.parseInt(sumaMi.getText().toString()));
                     vasaIgraHistory.add(vasaIgraHistory.size(), Integer.parseInt(sumaVi.getText().toString()));
                     dataListMi2D.add(nasaIgra);
-                    dataListVi2D.add(nasaIgra);
+                    dataListVi2D.add(vasaIgra);
                     partije.setListaMi(dataListMi2D);
                     partije.setListaVi(dataListVi2D);
                 }
