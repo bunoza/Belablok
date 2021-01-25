@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -32,7 +33,7 @@ public class StatsActivity extends AppCompatActivity{
         setContentView(R.layout.activity_stats);
         initViews();
         setUpPager();
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
 

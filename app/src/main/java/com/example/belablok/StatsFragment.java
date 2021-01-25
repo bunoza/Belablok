@@ -1,5 +1,6 @@
 package com.example.belablok;
 
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -7,10 +8,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.LegendRenderer;
@@ -20,7 +27,8 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StatsFragment extends Fragment {
+
+public class StatsFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     private List<List<Integer>> dataListMi2D;
     private List<List<Integer>> dataListVi2D;
@@ -36,7 +44,12 @@ public class StatsFragment extends Fragment {
     private int brojPobjedenihVi = 0;
     private int brojZvanjaMi;
     private int brojZvanjaVi;
+    private List<String> dropDownArray;
     private GraphView graphView;
+    Spinner spinner;
+    ArrayAdapter<CharSequence> adapter;
+    LineGraphSeries<DataPoint> seriesMi;
+    LineGraphSeries<DataPoint> seriesVi;
 
 
     public static StatsFragment newInstance(List<Integer> dataList1, List<Integer> dataList2, Partije partije, int brojZvanjaMi, int brojZvanjaVi) {
@@ -65,48 +78,68 @@ public class StatsFragment extends Fragment {
         setUpData();
         calculateWinRates();
         updateTV();
-        updateGraphData();
+        setUpDataForSpinner();
+        setUpSpinner();
+    }
 
+    private void setUpDataForSpinner() {
+        dropDownArray = new ArrayList<>();
+        String temp;
+        int i;
+        for(i = 0; i < dataList1.size(); i++){
+            temp = i+1 +". " + dataList1.get(i) + " - " + dataList2.get(i);
+            dropDownArray.add(i, temp);
+        }
+    }
+
+    private void setUpSpinner() {
+        CharSequence[] cs = dropDownArray.toArray(new CharSequence[dropDownArray.size()]);
+        adapter = new ArrayAdapter<CharSequence>(getContext(), android.R.layout.simple_spinner_item, cs);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
     }
 
 
-    private void updateGraphData() {
-        DataPoint[] pointsMi = new DataPoint[dataListMi2D.get(0).size()+1];
-        DataPoint[] pointsVi = new DataPoint[dataListVi2D.get(0).size()+1];
+    private void updateGraphData(int odabranaPartija) {
+        graphView.removeAllSeries();
+        DataPoint[] pointsMi = new DataPoint[dataListMi2D.get(odabranaPartija).size()+1];
+        DataPoint[] pointsVi = new DataPoint[dataListVi2D.get(odabranaPartija).size()+1];
         pointsMi[0] = new DataPoint(0,0);
         pointsVi[0] = new DataPoint(0,0);
         int i;
         int sumMi = 0, sumVi = 0;
-        for(i = 0; i < dataListVi2D.get(0).size(); i++){
-            sumMi += dataListMi2D.get(0).get(i);
-            sumVi += dataListVi2D.get(0).get(i);
+        for(i = 0; i < dataListMi2D.get(odabranaPartija).size(); i++){
+            sumMi += dataListMi2D.get(odabranaPartija).get(i);
+            sumVi += dataListVi2D.get(odabranaPartija).get(i);
             pointsMi[i+1] = new DataPoint(i+1, sumMi);
             pointsVi[i+1] = new DataPoint(i+1, sumVi);
         }
-        LineGraphSeries<DataPoint> seriesMi = new LineGraphSeries<>(pointsMi);
-        LineGraphSeries<DataPoint> seriesVi = new LineGraphSeries<>(pointsVi);
+        seriesMi = new LineGraphSeries<>(pointsMi);
+        seriesVi = new LineGraphSeries<>(pointsVi);
+        graphView.addSeries(seriesMi);
+        graphView.addSeries(seriesVi);
+
         graphView.getViewport().setXAxisBoundsManual(true);
         graphView.getViewport().setYAxisBoundsManual(true);
-        graphView.setTitle("Tijek partije");
-        graphView.removeAllSeries();
+
+        graphView.setTitle("Tijek zadnje partije");
         seriesMi.setColor(Color.BLUE);
+        seriesVi.setColor(Color.RED);
         seriesMi.setTitle("Mi");
+        seriesVi.setTitle("Vi");
         seriesMi.setThickness(5);
         seriesVi.setThickness(5);
-        graphView.addSeries(seriesMi);
-        seriesVi.setColor(Color.RED);
-        seriesVi.setTitle("Vi");
-        graphView.addSeries(seriesVi);
+        seriesMi.setAnimated(true);
+        seriesVi.setAnimated(true);
         graphView.getViewport().setMinY(0);
         graphView.getViewport().setMaxY(1001);
         graphView.getViewport().setMinX(0);
-        graphView.getViewport().setMaxX(dataListMi2D.get(0).size());
+        graphView.getViewport().setMaxX(dataListMi2D.get(odabranaPartija).size());
         graphView.getLegendRenderer().setVisible(true);
         graphView.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.BOTTOM);
         graphView.getLegendRenderer().setBackgroundColor(Color.WHITE);
         graphView.getGridLabelRenderer().setHorizontalAxisTitle("Broj miješanja");
         graphView.getGridLabelRenderer().setVerticalAxisTitle("Bodovi");
-        graphView.getViewport().setScrollable(true);
     }
 
 
@@ -118,9 +151,9 @@ public class StatsFragment extends Fragment {
     }
 
     private void calculateWinRates() {
-        brojOdigranihPartija = dataListVi2D.size();
+        brojOdigranihPartija = dataList1.size();
         int i;
-        for(i = 0; i < dataListMi2D.size(); i++){
+        for(i = 0; i < brojOdigranihPartija; i++){
             if(dataList1.get(i) < dataList2.get(i)){
                 brojPobjedenihVi++;
             }else if(dataList1.get(i) > dataList2.get(i)){
@@ -136,18 +169,37 @@ public class StatsFragment extends Fragment {
         tvbrojZvanjaMi = view.findViewById(R.id.brojZvanjaMi);
         tvbrojZvanjaVi = view.findViewById(R.id.brojZvanjaVi);
         graphView = view.findViewById(R.id.graphView);
+        spinner = view.findViewById(R.id.spinner);
     }
 
     private void setUpData() {
         this.dataList1 = getArguments().getIntegerArrayList("datax");
         this.dataList2 = getArguments().getIntegerArrayList("datay");
-
-        if(getArguments().getSerializable("data2D") != null){
-            partije = (Partije) getArguments().getSerializable("data2D");
-            dataListMi2D = partije.getListaMi();
-            dataListVi2D = partije.getListaVi();
-        }
         brojZvanjaMi = getArguments().getInt("brojZvanjaMi", 0 );
         brojZvanjaVi = getArguments().getInt("brojZvanjaVi", 0 );
+
+        if(getArguments().getSerializable("data2D") != null){
+            dataListMi2D = new ArrayList<>();
+            dataListVi2D = new ArrayList<>();
+            partije = (Partije) getArguments().getSerializable("data2D");
+
+            for( List<Integer> sublist : partije.getListaMi()) {
+                this.dataListMi2D.add(new ArrayList<>(sublist));
+            }
+            for( List<Integer> sublist : partije.getListaVi()) {
+                this.dataListVi2D.add(new ArrayList<>(sublist));
+            }        }
+
+        spinner.setOnItemSelectedListener(this);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        updateGraphData(position);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        updateGraphData(dataList1.size());
     }
 }

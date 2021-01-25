@@ -22,6 +22,6 @@
     <string name="povijest_odigranih_partija">Povijest odigranih partija</string>
     <string name="datami">datami%d</string>
     <string name="datavi">datavi%d</string>
-    <string name="winrate">Stopa pobjeđivanja: \n %.2f%% </string>
+    <string name="winrate">Pobjede: \n %.2f%% </string>
     <string name="broj_zvanja">Broj zvanja: %d</string>
 </resources>

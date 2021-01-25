@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
     private List<Integer> vasaIgraHistory;
     private List<List<Integer>> dataListMi2D = new ArrayList<>();
     private List<List<Integer>> dataListVi2D = new ArrayList<>();
-    private List<Integer> odigranePartije = new ArrayList<>();
     private List<Integer> nasaIgra;
     private List<Integer> vasaIgra;
     static String[] dealeri = {"Ja", "Desni protivnik", "Partner", "Lijevi protivnik"};
@@ -48,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
     AlertDialog.Builder builderGotovaIgra, builderNovaIgra;
     TextView djelitelj;
     TextView sumaMi, sumaVi;
-    int editID1, editID2;
     RecyclerAdapter recyclerAdapter;
     RecyclerView recycler;
     private Partije partije = new Partije();
@@ -159,15 +157,7 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
         builderGotovaIgra.setPositiveButton(R.string.nastavi, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(Integer.parseInt(sumaMi.getText().toString()) > 1000){
-                    if (dealerCounter == 0 || dealerCounter == 2){
-                        updateDealerCounter();
-                    }
-                }else {
-                    if (dealerCounter == 1 || dealerCounter == 3) {
-                        updateDealerCounter();
-                    }
-                }
+                updateDealerCounterOnWin();
                 nasaIgra.clear();
                 vasaIgra.clear();
                 setupRecyclerData();
@@ -187,15 +177,7 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
         builderNovaIgra.setPositiveButton(R.string.nastavi, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(Integer.parseInt(sumaMi.getText().toString()) > 1000){
-                    if (dealerCounter == 0 || dealerCounter == 2){
-                        updateDealerCounter();
-                    }
-                }else {
-                    if (dealerCounter == 1 || dealerCounter == 3) {
-                        updateDealerCounter();
-                    }
-                }
+                updateDealerCounter();
                 nasaIgra.clear();
                 vasaIgra.clear();
                 setupRecyclerData();
@@ -214,7 +196,8 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
         sumaVi.setText("0");
         sumaMi.setText("0");
         djelitelj = findViewById(R.id.dealer);
-        setDealerRandom();
+        if(djelitelj.getText().toString().trim().length() == 0)
+            setDealerRandom();
         djelitelj.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -230,8 +213,6 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
         recycler.addItemDecoration(new DividerItemDecoration(recycler.getContext(), DividerItemDecoration.VERTICAL));
         recyclerAdapter = new RecyclerAdapter(this);
         recycler.setAdapter(recyclerAdapter);
-        dataListMi2D = new ArrayList<>();
-        dataListVi2D = new ArrayList<>();
 
         fab.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -264,11 +245,6 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
             if (resultCode == RESULT_OK) { // Activity.RESULT_OK
                 String returnString = data.getStringExtra("keyName");
                 updateDealerCounter();
-                if(data.getBooleanExtra("brojZvanjaMi", false)){
-                    brojZvanjaMi++;
-                }else{
-                    brojZvanjaVi++;
-                }
                 int nase, vase;
                 String[] temp = returnString.split( " ");
                 nase = Integer.parseInt(temp[0]);
@@ -280,10 +256,14 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
                     Toast.makeText(MainActivity.this , getString(R.string.igra_je_gotova), Toast.LENGTH_SHORT).show();
                     nasaIgraHistory.add(nasaIgraHistory.size(), Integer.parseInt(sumaMi.getText().toString()));
                     vasaIgraHistory.add(vasaIgraHistory.size(), Integer.parseInt(sumaVi.getText().toString()));
-                    dataListMi2D.add(nasaIgra);
-                    dataListVi2D.add(vasaIgra);
-                    partije.setListaMi(dataListMi2D);
-                    partije.setListaVi(dataListVi2D);
+                    dataListMi2D.add(dataListMi2D.size(), new ArrayList<Integer>(nasaIgra));
+                    dataListVi2D.add(dataListVi2D.size(), new ArrayList<Integer>(vasaIgra));
+                    updateDealerCounterOnWin();
+                }
+                if(data.getBooleanExtra("brojZvanjaMi", false)){
+                    brojZvanjaMi++;
+                }else{
+                    brojZvanjaVi++;
                 }
                updateTable();
             }
@@ -311,6 +291,10 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
         Random rand = new Random();
         return rand.nextInt(4);
     }
+    public static int getRandomIntegerBetween02(){
+        Random rand = new Random();
+        return rand.nextInt(2);
+    }
     public void updateDealerCounter(){
         if(dealerCounter == 3){
             dealerCounter = 0;
@@ -319,6 +303,29 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
         }
         String text = getString(R.string.dijeli)+dealeri[dealerCounter];
         djelitelj.setText(text);
+    }
+    public void updateDealerCounterOnWin(){
+        if(Integer.parseInt(sumaMi.getText().toString()) > Integer.parseInt(sumaVi.getText().toString())){
+            if(getRandomIntegerBetween02() == 0){
+                dealerCounter= 0;
+            }else{
+                dealerCounter = 2;
+            }
+            String text = getString(R.string.dijeli)+dealeri[dealerCounter];
+            djelitelj.setText(text);
+        }
+        else if(Integer.parseInt(sumaMi.getText().toString()) < Integer.parseInt(sumaVi.getText().toString())){
+            if(getRandomIntegerBetween02() == 0){
+                dealerCounter= 1;
+            }else{
+                dealerCounter = 3;
+            }
+            String text = getString(R.string.dijeli)+dealeri[dealerCounter];
+            djelitelj.setText(text);
+        }
+        else{
+            setDealerRandom();
+        }
     }
     public void setDealerRandom(){
         dealerCounter = getRandomIntegerBetween();
