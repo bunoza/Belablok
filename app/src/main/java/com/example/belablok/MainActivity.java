@@ -4,8 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,8 +34,8 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
 
     FloatingActionButton fab;
     boolean doubleBackToExitPressedOnce = false;
-    private List<Integer> nasaIgraHistory;
-    private List<Integer> vasaIgraHistory;
+    private List<Integer> nasaIgraHistory = new ArrayList<>();
+    private List<Integer> vasaIgraHistory = new ArrayList<>();
     private List<List<Integer>> dataListMi2D = new ArrayList<>();
     private List<List<Integer>> dataListVi2D = new ArrayList<>();
     private List<Integer> nasaIgra;
@@ -51,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
     RecyclerView recycler;
     private Partije partije = new Partije();
     int brojZvanjaMi, brojZvanjaVi = 0;
+    boolean gotovaIgra = false;
+
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
@@ -146,10 +146,11 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
-        updateUI();
+        initUI();
+
     }
 
-    private void updateUI() {
+    private void initUI() {
         builderGotovaIgra = new AlertDialog.Builder(MainActivity.this);
         builderGotovaIgra.setIcon(Drawable.createFromPath("drawable/ic_dialog.xml"));
         builderGotovaIgra.setTitle(getString(R.string.igra_je_gotova));
@@ -157,6 +158,7 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
         builderGotovaIgra.setPositiveButton(R.string.nastavi, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                gotovaIgra = false;
                 updateDealerCounterOnWin();
                 nasaIgra.clear();
                 vasaIgra.clear();
@@ -182,6 +184,7 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
                 vasaIgra.clear();
                 setupRecyclerData();
                 updateSums();
+                gotovaIgra = false;
             }
         });
         builderNovaIgra.setNegativeButton("Odustani", new DialogInterface.OnClickListener() {
@@ -234,8 +237,6 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
                 return true;
             }
         });
-        nasaIgraHistory = new ArrayList<>();
-        vasaIgraHistory = new ArrayList<>();
     }
 
     @Override
@@ -246,46 +247,83 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
                 String returnString = data.getStringExtra("keyName");
                 updateDealerCounter();
                 int nase, vase;
-                String[] temp = returnString.split( " ");
+                String[] temp = returnString.split(" ");
                 nase = Integer.parseInt(temp[0]);
                 vase = Integer.parseInt(temp[1]);
                 nasaIgra.add(nase);
                 vasaIgra.add(vase);
                 updateSums();
-                if(gameIsOver()){
-                    Toast.makeText(MainActivity.this , getString(R.string.igra_je_gotova), Toast.LENGTH_SHORT).show();
+                if (gameIsOver()) {
+                    gotovaIgra = true;
+                    Toast.makeText(MainActivity.this, getString(R.string.igra_je_gotova), Toast.LENGTH_SHORT).show();
                     nasaIgraHistory.add(nasaIgraHistory.size(), Integer.parseInt(sumaMi.getText().toString()));
                     vasaIgraHistory.add(vasaIgraHistory.size(), Integer.parseInt(sumaVi.getText().toString()));
                     dataListMi2D.add(dataListMi2D.size(), new ArrayList<Integer>(nasaIgra));
                     dataListVi2D.add(dataListVi2D.size(), new ArrayList<Integer>(vasaIgra));
                     updateDealerCounterOnWin();
                 }
-                if(data.getBooleanExtra("brojZvanjaMi", false)){
+                if (data.getBooleanExtra("brojZvanjaMi", false)) {
                     brojZvanjaMi++;
-                }else{
+                } else {
                     brojZvanjaVi++;
                 }
-               updateTable();
+                updateTable();
             }
         }
         if (requestCode == THIRD_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) { // Activity.RESULT_OK
                 String returnString = data.getStringExtra("keyName");
                 int nase, vase;
-                String[] temp = returnString.split( " ");
+                String[] temp = returnString.split(" ");
                 nase = Integer.parseInt(temp[0]);
                 vase = Integer.parseInt(temp[1]);
-                nasaIgra.set(THIRD_ACTIVITY_REQUEST_CODE-20, nase);
-                vasaIgra.set(THIRD_ACTIVITY_REQUEST_CODE-20, vase);
-                }
+                nasaIgra.set(THIRD_ACTIVITY_REQUEST_CODE - 20, nase);
+                vasaIgra.set(THIRD_ACTIVITY_REQUEST_CODE - 20, vase);
                 updateSums();
-                if(gameIsOver()){
-                    Toast.makeText(MainActivity.this , getString(R.string.igra_je_gotova), Toast.LENGTH_SHORT).show();
+
+                if (gameIsOver()) {
+                    Toast.makeText(MainActivity.this, getString(R.string.igra_je_gotova), Toast.LENGTH_SHORT).show();
+                    if (gotovaIgra) {
+                        if (!nasaIgraHistory.isEmpty()) {
+                            nasaIgraHistory.set(nasaIgraHistory.size() - 1, Integer.parseInt(sumaMi.getText().toString()));
+                            vasaIgraHistory.set(vasaIgraHistory.size() - 1, Integer.parseInt(sumaVi.getText().toString()));
+                            dataListMi2D.set(dataListMi2D.size() - 1, new ArrayList<Integer>(nasaIgra));
+                            dataListVi2D.set(dataListVi2D.size() - 1, new ArrayList<Integer>(vasaIgra));
+                        } else {
+                            nasaIgraHistory.add(nasaIgraHistory.size(), Integer.parseInt(sumaMi.getText().toString()));
+                            vasaIgraHistory.add(vasaIgraHistory.size(), Integer.parseInt(sumaVi.getText().toString()));
+                            dataListMi2D.add(dataListMi2D.size(), new ArrayList<Integer>(nasaIgra));
+                            dataListVi2D.add(dataListVi2D.size(), new ArrayList<Integer>(vasaIgra));
+                        }
+                    } else {
+                        nasaIgraHistory.add(nasaIgraHistory.size(), Integer.parseInt(sumaMi.getText().toString()));
+                        vasaIgraHistory.add(vasaIgraHistory.size(), Integer.parseInt(sumaVi.getText().toString()));
+                        dataListMi2D.add(dataListMi2D.size(), new ArrayList<Integer>(nasaIgra));
+                        dataListVi2D.add(dataListVi2D.size(), new ArrayList<Integer>(vasaIgra));
+                        gotovaIgra = true;
+                    }
+
+                    updateDealerCounterOnWin();
+                } else {
+                    if (gotovaIgra) {
+                        if (!nasaIgraHistory.isEmpty()) {
+                            nasaIgraHistory.remove(nasaIgraHistory.size() - 1);
+                            vasaIgraHistory.remove(vasaIgraHistory.size() - 1);
+                            dataListMi2D.remove(dataListMi2D.size() - 1);
+                            dataListVi2D.remove(dataListVi2D.size() - 1);
+                            gotovaIgra = false;
+                        } else {
+
+                        }
+                    } else {
+                    }
+
                 }
                 updateTable();
                 THIRD_ACTIVITY_REQUEST_CODE = 1;
             }
         }
+    }
 
     public static int getRandomIntegerBetween(){
         Random rand = new Random();

@@ -67,7 +67,6 @@ public class StatsFragment extends Fragment implements AdapterView.OnItemSelecte
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_stats, container, false);
     }
 
@@ -102,17 +101,17 @@ public class StatsFragment extends Fragment implements AdapterView.OnItemSelecte
 
     private void updateGraphData(int odabranaPartija) {
         graphView.removeAllSeries();
-        DataPoint[] pointsMi = new DataPoint[dataListMi2D.get(odabranaPartija).size()+1];
-        DataPoint[] pointsVi = new DataPoint[dataListVi2D.get(odabranaPartija).size()+1];
-        pointsMi[0] = new DataPoint(0,0);
-        pointsVi[0] = new DataPoint(0,0);
+        DataPoint[] pointsMi = new DataPoint[dataListMi2D.get(odabranaPartija).size() + 1];
+        DataPoint[] pointsVi = new DataPoint[dataListVi2D.get(odabranaPartija).size() + 1];
+        pointsMi[0] = new DataPoint(0, 0);
+        pointsVi[0] = new DataPoint(0, 0);
         int i;
         int sumMi = 0, sumVi = 0;
-        for(i = 0; i < dataListMi2D.get(odabranaPartija).size(); i++){
+        for (i = 0; i < dataListMi2D.get(odabranaPartija).size(); i++) {
             sumMi += dataListMi2D.get(odabranaPartija).get(i);
             sumVi += dataListVi2D.get(odabranaPartija).get(i);
-            pointsMi[i+1] = new DataPoint(i+1, sumMi);
-            pointsVi[i+1] = new DataPoint(i+1, sumVi);
+            pointsMi[i + 1] = new DataPoint(i + 1, sumMi);
+            pointsVi[i + 1] = new DataPoint(i + 1, sumVi);
         }
         seriesMi = new LineGraphSeries<>(pointsMi);
         seriesVi = new LineGraphSeries<>(pointsVi);
@@ -122,7 +121,7 @@ public class StatsFragment extends Fragment implements AdapterView.OnItemSelecte
         graphView.getViewport().setXAxisBoundsManual(true);
         graphView.getViewport().setYAxisBoundsManual(true);
 
-        graphView.setTitle("Tijek zadnje partije");
+        graphView.setTitle("Tijek odabrane partije");
         seriesMi.setColor(Color.BLUE);
         seriesVi.setColor(Color.RED);
         seriesMi.setTitle("Mi");
@@ -132,6 +131,15 @@ public class StatsFragment extends Fragment implements AdapterView.OnItemSelecte
         seriesMi.setAnimated(true);
         seriesVi.setAnimated(true);
         graphView.getViewport().setMinY(0);
+        graphView.setDrawingCacheBackgroundColor(Color.rgb(255,255,255));
+        graphView.getViewport().setBorderColor(Color.rgb(255,255,255));
+        graphView.getGridLabelRenderer().setGridColor(Color.rgb(255,255,255));
+        graphView.getGridLabelRenderer().setHorizontalLabelsColor(Color.rgb(255,255,255));
+        graphView.getGridLabelRenderer().setVerticalLabelsColor(Color.rgb(255,255,255));
+        graphView.setTitleColor(Color.rgb(255,255,255));
+        graphView.getGridLabelRenderer().setHorizontalAxisTitleColor(Color.rgb(255,255,255));
+        graphView.getGridLabelRenderer().setVerticalAxisTitleColor(Color.rgb(255,255,255));
+        graphView.setTitleTextSize(45);
         graphView.getViewport().setMaxY(1001);
         graphView.getViewport().setMinX(0);
         graphView.getViewport().setMaxX(dataListMi2D.get(odabranaPartija).size());
@@ -196,6 +204,9 @@ public class StatsFragment extends Fragment implements AdapterView.OnItemSelecte
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         updateGraphData(position);
+        for(int i = 0; i < parent.getChildCount(); i++){
+            ((TextView) parent.getChildAt(i)).setTextColor(Color.rgb(250,250,250));
+        }
     }
 
     @Override

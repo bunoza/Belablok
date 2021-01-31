@@ -20,8 +20,8 @@ import java.util.List;
 
 public class HistoryFragment extends Fragment {
 
-    private List<Integer> dataList1;
-    private List<Integer> dataList2;
+    private List<Integer> nasaHistory;
+    private List<Integer> vasaHistory;
     private RecyclerView recycler;
     private RecyclerAdapter recyclerAdapter;
     private TextView sumaMi;
@@ -49,15 +49,19 @@ public class HistoryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initUI(view);
-        this.dataList1 = getArguments().getIntegerArrayList("datax");
-        this.dataList2 = getArguments().getIntegerArrayList("datay");
+        this.nasaHistory = new ArrayList<Integer>(getArguments().getIntegerArrayList("datax"));
+        this.vasaHistory = new ArrayList<Integer>(getArguments().getIntegerArrayList("datay"));
         setupRecyclerData();
-        if(dataList1.get(0) == null)
-        Toast.makeText(getContext(), "no data", Toast.LENGTH_SHORT).show();
-        for(int i = 0; i < dataList1.size(); i++){
-            if(dataList1.get(i) < dataList2.get(i)){
+        setUpSums();
+    }
+
+    private void setUpSums() {
+        if(nasaHistory.get(0) == null)
+            Toast.makeText(getContext(), "no data", Toast.LENGTH_SHORT).show();
+        for(int i = 0; i < nasaHistory.size(); i++){
+            if(nasaHistory.get(i) < vasaHistory.get(i)){
                 pobjedeVi++;
-            }else if(dataList1.get(i) > dataList2.get(i)){
+            }else if(nasaHistory.get(i) > vasaHistory.get(i)){
                 pobjedeMi++;
             }else{
                 pobjedeMi += 1;
@@ -66,6 +70,7 @@ public class HistoryFragment extends Fragment {
         }
         sumaMi.setText(pobjedeMi.toString());
         sumaVi.setText(pobjedeVi.toString());
+
     }
 
     private void initUI(View view) {
@@ -78,7 +83,6 @@ public class HistoryFragment extends Fragment {
         sumaVi = view.findViewById(R.id.pobjedeVi);
     }
     private void setupRecyclerData() {
-        this.recyclerAdapter.addData(dataList1, dataList2);
+        this.recyclerAdapter.addData(nasaHistory, vasaHistory);
     }
-
 }

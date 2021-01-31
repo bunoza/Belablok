@@ -3,13 +3,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.icu.text.TimeZoneFormat;
+import android.os.Build;
 import android.os.Bundle;
+import android.telecom.Call;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -82,7 +89,7 @@ public class InputActivity extends AppCompatActivity {
                     if (_ignore)
                         return;
                     _ignore = true;
-                    if((162 - Integer.parseInt(s.toString())) >=0) {
+                    if((162 - Integer.parseInt(s.toString())) >0) {
                         vi.setText(Integer.toString(162 - Integer.parseInt(s.toString())));
                     }else{
                         vi.setText("0");
@@ -107,7 +114,7 @@ public class InputActivity extends AppCompatActivity {
                     if (_ignore)
                         return;
                     _ignore = true;
-                    if((162 - Integer.parseInt(s.toString())) >=0) {
+                    if((162 - Integer.parseInt(s.toString())) >0) {
                         mi.setText(Integer.toString(162 - Integer.parseInt(s.toString())));
                     }else{
                         mi.setText("0");
