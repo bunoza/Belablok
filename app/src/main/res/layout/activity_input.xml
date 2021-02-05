@@ -218,7 +218,6 @@
         android:id="@+id/brisiZvanja"
         android:layout_width="wrap_content"
         android:background="@color/eggshell"
-        android:paddingHorizontal="5dp"
         android:layout_height="wrap_content"
         android:text="@string/obrisi_zvanja"
         app:layout_constraintBaseline_toBaselineOf="@+id/iznoszvanjaMi"
