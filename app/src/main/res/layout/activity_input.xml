@@ -205,6 +205,71 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextNumber" />
 
     <TextView
+        android:id="@+id/mi20count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/mi20"
+        app:layout_constraintStart_toEndOf="@+id/mi20" />
+
+    <TextView
+        android:id="@+id/mi50count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/mi50"
+        app:layout_constraintStart_toEndOf="@+id/mi50" />
+
+    <TextView
+        android:id="@+id/mi100count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/mi100"
+        app:layout_constraintStart_toEndOf="@+id/mi100" />
+
+    <TextView
+        android:id="@+id/miBelotcount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/miBelot"
+        app:layout_constraintStart_toEndOf="@+id/miBelot" />
+
+    <TextView
+        android:id="@+id/vi20count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/vi20"
+        app:layout_constraintEnd_toStartOf="@+id/vi20" />
+
+    <TextView
+        android:id="@+id/vi50count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/vi50"
+        app:layout_constraintEnd_toStartOf="@+id/vi50" />
+
+    <TextView
+        android:id="@+id/vi100count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/vi100"
+        app:layout_constraintEnd_toStartOf="@+id/vi100" />
+
+    <TextView
+        android:id="@+id/viBelotcount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/viBelot"
+        app:layout_constraintEnd_toStartOf="@+id/viBelot" />
+
+
+    <TextView
         android:id="@+id/iznoszvanjaVi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -223,5 +288,106 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/iznoszvanjaMi"
         app:layout_constraintEnd_toStartOf="@+id/iznoszvanjaVi"
         app:layout_constraintStart_toEndOf="@+id/iznoszvanjaMi" />
+
+    <ImageButton
+        android:id="@+id/miMinus20"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="8dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/mi20"
+        app:layout_constraintEnd_toStartOf="@+id/mi20"
+        app:layout_constraintTop_toTopOf="@+id/mi20"
+        app:srcCompat="@drawable/minus" />
+
+    <ImageButton
+        android:id="@+id/miMinus50"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="8dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/mi50"
+        app:layout_constraintEnd_toStartOf="@+id/mi50"
+        app:layout_constraintTop_toTopOf="@+id/mi50"
+        app:srcCompat="@drawable/minus" />
+
+    <ImageButton
+        android:id="@+id/miMinus100"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="8dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/mi100"
+        app:layout_constraintEnd_toStartOf="@+id/mi100"
+        app:layout_constraintTop_toTopOf="@+id/mi100"
+        app:srcCompat="@drawable/minus" />
+
+    <ImageButton
+        android:id="@+id/miMinusBelot"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="8dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/miBelot"
+        app:layout_constraintEnd_toStartOf="@+id/miBelot"
+        app:layout_constraintTop_toTopOf="@+id/miBelot"
+        app:srcCompat="@drawable/minus" />
+
+    <ImageButton
+        android:id="@+id/viMinus20"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/vi20"
+        app:layout_constraintStart_toEndOf="@id/vi20"
+        app:layout_constraintTop_toTopOf="@+id/vi20"
+        app:srcCompat="@drawable/minus" />
+    <ImageButton
+        android:id="@+id/viMinus50"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/vi50"
+        app:layout_constraintStart_toEndOf="@id/vi50"
+        app:layout_constraintTop_toTopOf="@+id/vi50"
+        app:srcCompat="@drawable/minus" />
+    <ImageButton
+        android:id="@+id/viMinus100"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/vi100"
+        app:layout_constraintStart_toEndOf="@id/vi100"
+        app:layout_constraintTop_toTopOf="@+id/vi100"
+        app:srcCompat="@drawable/minus" />
+    <ImageButton
+        android:id="@+id/viMinusBelot"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/viBelot"
+        app:layout_constraintStart_toEndOf="@id/viBelot"
+        app:layout_constraintTop_toTopOf="@+id/viBelot"
+        app:srcCompat="@drawable/minus" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
