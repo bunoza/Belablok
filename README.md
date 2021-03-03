@@ -1,5 +1,7 @@
 # Bela blok
-https://play.google.com/store/apps/details?id=com.bunoza.belablok
+  <a href="https://play.google.com/store/apps/details?id=com.bunoza.belablok">
+<img src="/app/src/main/res/drawable-anydpi/bela_blok_infographic.png" alt="Get it on Google Play">
+</a>
 
 ### Opis
 Korištenje i funkcionalnosti:
