@@ -5,11 +5,17 @@
 
 ### Opis
 Korištenje i funkcionalnosti:
+
 • Unos rezultata partije
+
 • Jednostavno uređivanje krivo upisanih rezultata pritiskom na njih
+
 • Indikator djelitelja - može se mijenjati dugim pritiskom na indikator
+
 • Nakon 1 cijele odigrane partije, dodatni detalji postaju dostupni pritiskom na tipku u gornjem desnom uglu
+
 • Povijest - prikaz prethodnih aktualnih partija uz zbroj pobjeda
+
 • Statistika - iznos stope pobjeđivanja, broja zvanja i jedinstven grafički prikaz odabrane partije
 
 
