@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 gotovaIgra = false;
-//                updateDealerCounterOnWin();
+                updateDealerCounterOnWin();
                 nasaIgra.clear();
                 vasaIgra.clear();
                 setupRecyclerData();
@@ -260,7 +260,7 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
                     vasaIgraHistory.add(vasaIgraHistory.size(), Integer.parseInt(sumaVi.getText().toString()));
                     dataListMi2D.add(dataListMi2D.size(), new ArrayList<Integer>(nasaIgra));
                     dataListVi2D.add(dataListVi2D.size(), new ArrayList<Integer>(vasaIgra));
-                    updateDealerCounterOnWin();
+//                    updateDealerCounterOnWin();
                     promijenjenDealer = true;
                 }else{
                     updateDealerCounter();
