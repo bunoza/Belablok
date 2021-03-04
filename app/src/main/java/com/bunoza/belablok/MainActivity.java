@@ -29,7 +29,7 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements NameClickListener{
 
-    private static final int SECOND_ACTIVITY_REQUEST_CODE = 0;
+    private static final int SECOND_ACTIVITY_REQUEST_CODE = 2;
     private static  int THIRD_ACTIVITY_REQUEST_CODE = 1;
 
     FloatingActionButton fab;
@@ -262,6 +262,8 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
                     dataListVi2D.add(dataListVi2D.size(), new ArrayList<Integer>(vasaIgra));
                     updateDealerCounterOnWin();
                     promijenjenDealer = true;
+                }else{
+                    updateDealerCounter();
                 }
                 if (data.getBooleanExtra("brojZvanjaMi", false)) {
                     brojZvanjaMi++;
@@ -270,9 +272,9 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
                 }
                 updateTable();
             }
-            if(!promijenjenDealer){
-                updateDealerCounter();
-            }
+//            if(!promijenjenDealer){
+//                updateDealerCounter();
+//            }
 
         }
         if (requestCode == THIRD_ACTIVITY_REQUEST_CODE) {
