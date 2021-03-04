@@ -310,7 +310,7 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
                         gotovaIgra = true;
                     }
 
-                    updateDealerCounterOnWin();
+//                    updateDealerCounterOnWin();
                 } else {
                     if (gotovaIgra) {
                         if (!nasaIgraHistory.isEmpty()) {
