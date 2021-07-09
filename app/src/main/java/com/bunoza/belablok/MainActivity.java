@@ -8,10 +8,12 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 import android.os.Handler;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 
 import java.util.ArrayList;
@@ -31,6 +34,9 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
 
     private static final int SECOND_ACTIVITY_REQUEST_CODE = 2;
     private static  int THIRD_ACTIVITY_REQUEST_CODE = 1;
+//    private boolean AGREED_TO_DISCLAIMER;
+//    private boolean DISCLAIMER_SHOWN;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     FloatingActionButton fab;
     boolean doubleBackToExitPressedOnce = false;
@@ -42,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
     private List<Integer> vasaIgra;
     static String[] dealeri = {"Ja", "Desni protivnik", "Partner", "Lijevi protivnik"};
     static int dealerCounter;
-    AlertDialog.Builder builderGotovaIgra, builderNovaIgra;
+    AlertDialog.Builder builderGotovaIgra, builderNovaIgra, builderDisclaimer;
     TextView djelitelj;
     TextView sumaMi, sumaVi;
     RecyclerAdapter recyclerAdapter;
@@ -50,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
     private Partije partije = new Partije();
     int brojZvanjaMi, brojZvanjaVi = 0;
     boolean gotovaIgra = false;
+
 
 
     @Override
@@ -147,10 +154,30 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
         initUI();
-
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
     }
 
     private void initUI() {
+
+
+//        builderDisclaimer = new AlertDialog.Builder(MainActivity.this);
+//        builderDisclaimer.setTitle("Analitika i podaci");
+//        builderDisclaimer.setMessage("Bela blok počinje koristiti Firebase Analytics i Crashlytics alate za prikupljanje analitičkih i statističkih podataka u svrhu poboljšanja aplikacije i korisničkog iskustva. Nastavkom korištenja aplikacije dajete suglasnost prikupljanju podataka, što meni pomaže napraviti kvalitetniju aplikaciju :)");
+//        builderDisclaimer.setNegativeButton("Ne slažem se", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                AGREED_TO_DISCLAIMER = false;
+//
+//            }
+//        });
+//        builderDisclaimer.setPositiveButton("SLAŽEM SE", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                AGREED_TO_DISCLAIMER = true;
+//            }
+//        });
+
+
         builderGotovaIgra = new AlertDialog.Builder(MainActivity.this);
         builderGotovaIgra.setIcon(Drawable.createFromPath("drawable/ic_dialog.xml"));
         builderGotovaIgra.setTitle(getString(R.string.igra_je_gotova));
@@ -260,6 +287,8 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
                     vasaIgraHistory.add(vasaIgraHistory.size(), Integer.parseInt(sumaVi.getText().toString()));
                     dataListMi2D.add(dataListMi2D.size(), new ArrayList<Integer>(nasaIgra));
                     dataListVi2D.add(dataListVi2D.size(), new ArrayList<Integer>(vasaIgra));
+
+
 //                    updateDealerCounterOnWin();
                     promijenjenDealer = true;
                 }else{
@@ -438,4 +467,31 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
     private void setupRecyclerData(){
         recyclerAdapter.addData(nasaIgra, vasaIgra);
     }
+
+
+
+
+
+//    public class SavePick extends AsyncTask<Void,Void,Void> {
+//        DisclaimerBase dBase;
+//
+//        @Override
+//        protected Void doInBackground(Void... voids) {
+//            dBase = new DisclaimerBase();
+//            dBase.setAgreed(AGREED_TO_DISCLAIMER);
+//            dBase.setShown(DISCLAIMER_SHOWN);
+//            DatabaseClient.getInstance(getApplicationContext()).getAppDatabase()
+//                    .disclaimerDAO()
+//                    .insert(dBase);
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Void aVoid) {
+//            super.onPostExecute(aVoid);
+//            finish();
+//            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+//            Toast.makeText(getApplicationContext(), "Izbor pohranjen", Toast.LENGTH_LONG).show();
+//        }
+//    }
 }
