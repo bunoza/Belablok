@@ -1,5 +1,6 @@
 package com.bunoza.belablok;
 
+import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -15,6 +16,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
     private List<Integer> vasaIgra;
     static String[] dealeri = {"Ja", "Desni protivnik", "Partner", "Lijevi protivnik"};
     static int dealerCounter;
-    AlertDialog.Builder builderGotovaIgra, builderNovaIgra, builderDisclaimer;
+    AlertDialog.Builder builderGotovaIgra, builderNovaIgra, builderDisclaimer, builderObrisiIgru;
     TextView djelitelj;
     TextView sumaMi, sumaVi;
     RecyclerAdapter recyclerAdapter;
@@ -123,6 +125,18 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
                 intent.putExtra("data2D", partije);
                 intent.putExtra("brojZvanjaMi", brojZvanjaMi);
                 intent.putExtra("brojZvanjaVi", brojZvanjaVi);
+
+                StringBuilder str = new StringBuilder();
+
+                for(int i = 0; i < dataListMi2D.size(); i++){
+                    for(int j = 0; j < dataListMi2D.get(i).size(); j++){
+                        str.append(dataListMi2D.get(i).get(j).toString());
+                        str.append(", ");
+
+                    }
+                    str.append("\n");
+                }
+                Log.d("matrica", str.toString());
                 startActivity(intent);
             }else{
                 Toast.makeText(this, "Još nije odigrana ni jedna partija!", Toast.LENGTH_SHORT).show();
@@ -359,6 +373,8 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
                 THIRD_ACTIVITY_REQUEST_CODE = 1;
             }
         }
+        if(nasaIgra.size() > 0)
+            recycler.scrollToPosition(nasaIgra.size()-1);
     }
 
     public static int getRandomIntegerBetween(){
@@ -458,6 +474,42 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
         THIRD_ACTIVITY_REQUEST_CODE = position+20;
         Intent intent = new Intent(MainActivity.this, InputActivity.class);
         startActivityForResult(intent, THIRD_ACTIVITY_REQUEST_CODE);
+    }
+
+    @Override
+    public void onLongNameClick(int position) {
+        builderObrisiIgru = new AlertDialog.Builder(MainActivity.this);
+        builderObrisiIgru.setTitle(getString(R.string.obrisi_partiju));
+        builderObrisiIgru.setMessage(R.string.brisanje_partije);
+        builderObrisiIgru.setPositiveButton(R.string.obrisi, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(gameIsOver()){
+                    nasaIgraHistory.remove(nasaIgraHistory.size() -1);
+                    vasaIgraHistory.remove(vasaIgraHistory.size() -1);
+                }else{
+                    gotovaIgra = false;
+                }
+                nasaIgra.remove(position);
+                vasaIgra.remove(position);
+                if(dataListMi2D.size() > 0){
+                    dataListMi2D.remove(dataListMi2D.size()-1);
+                    dataListVi2D.remove(dataListVi2D.size()-1);
+                }
+                setupRecyclerData();
+                updateSums();
+                updateDealerCounter();
+                updateDealerCounter();
+                updateDealerCounter();
+            }
+        });
+        builderObrisiIgru.setNegativeButton("Odustani", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builderObrisiIgru.show();
     }
 
 //    public void addCell(int x, int y){

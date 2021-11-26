@@ -4,8 +4,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="dijeli">Dijeli: \</string>
     <string name="igra_je_gotova">Igra je gotova!</string>
+    <string name="obrisi_partiju">Brisanje partije?</string>
     <string name="nastavkom_ce_se_obrisati">Nastavkom će se obrisati podaci o trenutnoj igri.</string>
+    <string name="brisanje_partije">Nastavkom će se obrisati podaci o odabranoj partiji.</string>
     <string name="nastavi">Nastavi</string>
+    <string name="obrisi">Obriši</string>
     <string name="button">Button</string>
     <string name="vi">VI</string>
     <string name="mi">MI</string>

@@ -7,7 +7,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class NameViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+public class NameViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
 
     private TextView tvMi;
     private TextView tvVi;
@@ -20,6 +20,7 @@ public class NameViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         tvMi =  itemView.findViewById(R.id.tvMi);
         tvVi =  itemView.findViewById(R.id.tvVi);
         itemView.setOnClickListener(this);
+        itemView.setOnLongClickListener(this);
     }
 
     public void setName(Integer x, Integer y){
@@ -43,5 +44,13 @@ public class NameViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         if(clickListener !=null){
             clickListener.onNameClick(getAdapterPosition());
         }
+    }
+
+    @Override
+    public boolean onLongClick(View view) {
+        if(clickListener !=null) {
+            clickListener.onLongNameClick(getAdapterPosition());
+        }
+        return true;
     }
 }
