@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
     boolean gotovaIgra = false;
 
 
-
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
