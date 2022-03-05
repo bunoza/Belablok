@@ -16,7 +16,8 @@
         android:theme="@style/AppTheme">
         <activity android:name="com.bunoza.belablok.StatsActivity"></activity>
         <activity android:name="com.bunoza.belablok.InputActivity"></activity>
-        <activity android:name="com.bunoza.belablok.MainActivity">
+        <activity android:name="com.bunoza.belablok.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

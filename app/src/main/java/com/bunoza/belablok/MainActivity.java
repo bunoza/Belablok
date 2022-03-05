@@ -1,6 +1,7 @@
 package com.bunoza.belablok;
 
-import androidx.annotation.LongDef;
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -9,12 +10,11 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -36,7 +36,11 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
 
     private static final int SECOND_ACTIVITY_REQUEST_CODE = 2;
     private static  int THIRD_ACTIVITY_REQUEST_CODE = 1;
-//    private boolean AGREED_TO_DISCLAIMER;
+
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor;
+
+    //    private boolean AGREED_TO_DISCLAIMER;
 //    private boolean DISCLAIMER_SHOWN;
     private FirebaseAnalytics mFirebaseAnalytics;
 
@@ -56,54 +60,93 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
     RecyclerAdapter recyclerAdapter;
     RecyclerView recycler;
     private Partije partije = new Partije();
-    int brojZvanjaMi, brojZvanjaVi = 0;
     boolean gotovaIgra = false;
 
-
     @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        StringBuilder stringBuilder1 = new StringBuilder();
-        StringBuilder stringBuilder2 = new StringBuilder();
-        for(int i = 0; i < nasaIgra.size(); i++){
-            if(i !=0){
-                stringBuilder1.append(",");
-                stringBuilder2.append(",");
-            }
-            stringBuilder1.append(nasaIgra.get(i));
-            stringBuilder2.append(vasaIgra.get(i));
-        }
-        outState.putInt("DEALER_COUNTER", dealerCounter);
-        try{
-        outState.putString("NASA_IGRA", stringBuilder1.toString());
-        outState.putString("VASA_IGRA", stringBuilder2.toString());
-        }
-        catch(NumberFormatException ignored){
-
-        }
-
+    protected void onPause() {
+        saveGameState();
+        Log.d("TAG", "onPause: ");
+        super.onPause();
     }
 
-
     @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
+    protected void onResume() {
+        restoreGameState();
+        super.onResume();
+    }
 
-        String[] dividers1 = savedInstanceState.getString("NASA_IGRA").split(",");
-        String[] dividers2 = savedInstanceState.getString("VASA_IGRA").split(",");
-        try {
-            for (int i = 0; i < dividers1.length; i++) {
-                nasaIgra.add(Integer.parseInt(dividers1[i]));
-                vasaIgra.add(Integer.parseInt(dividers2[i]));
+    void saveGameState(){
+        editor.putString("nasaIgraHistory", arrayListToString(nasaIgraHistory)).apply();
+        editor.putString("vasaIgraHistory", arrayListToString(vasaIgraHistory)).apply();
+        editor.putString("nasaIgra", arrayListToString(nasaIgra)).apply();
+        editor.putString("vasaIgra", arrayListToString(vasaIgra)).apply();
+        editor.putString("dataListMi2D", arrayList2DToString(dataListMi2D)).apply();
+        editor.putString("dataListVi2D", arrayList2DToString(dataListVi2D)).apply();
+        editor.putInt("dealerCounter", dealerCounter).apply();
+    }
+
+    void restoreGameState(){
+        if (!prefs.getString("nasaIgra", "notfound").equals("notfound") &&
+                !prefs.getString("nasaIgraHistory", "notfound").equals("notfound")) {
+            nasaIgraHistory = stringToIntList(prefs.getString("nasaIgraHistory", "notfound"));
+            vasaIgraHistory = stringToIntList(prefs.getString("vasaIgraHistory", "notfound"));
+            nasaIgra = stringToIntList(prefs.getString("nasaIgra", "notfound"));
+            vasaIgra = stringToIntList(prefs.getString("vasaIgra", "notfound"));
+            dataListMi2D = stringToIntList2D(prefs.getString("dataListMi2D", "notfound"));
+            dataListVi2D = stringToIntList2D(prefs.getString("dataListVi2D", "notfound"));
+            dealerCounter = prefs.getInt("dealerCounter", 0);
+            updateSums();
+            updateTable();
+            setDealerText();
+        }
+    }
+
+    String arrayList2DToString (List<List<Integer>> list) {
+        StringBuilder stringBuilder = new StringBuilder();
+        int i = 0;
+        for(i = 0; i < list.size(); i++) {
+            stringBuilder.append(arrayListToString(list.get(i)));
+            if (i < list.size()-1){
+                stringBuilder.append(";");
             }
         }
-        catch (NumberFormatException ignored){
+        return stringBuilder.toString();
+    }
 
+    String arrayListToString (List<Integer> list) {
+        StringBuilder stringBuilder = new StringBuilder();
+        int i = 0;
+        for(i = 0; i < list.size(); i++) {
+            stringBuilder.append(list.get(i));
+            if (i < list.size()-1){
+                stringBuilder.append(",");
+            }
         }
-            updateTable();
-            updateSums();
-            String temp = getString(R.string.dijeli) + dealeri[savedInstanceState.getInt("DEALER_COUNTER")];
-           djelitelj.setText(temp);
+        return stringBuilder.toString();
+    }
+
+    List<List<Integer>> stringToIntList2D (String input) {
+        List<List<Integer>> list = new ArrayList<>();
+        String[] temp = input.split(";");
+        if (!temp[0].equals("")){
+            int i;
+            for (i = 0; i < temp.length; i++) {
+                list.add(stringToIntList(temp[i]));
+            }
+        }
+        return list;
+    }
+
+    List<Integer> stringToIntList (String input) {
+        List<Integer> list = new ArrayList<>();
+        String[] temp = input.split(",");
+        if (!temp[0].equals("")){
+            int i;
+            for (i = 0; i < temp.length; i++) {
+                list.add(Integer.parseInt(temp[i]));
+            }
+        }
+        return list;
     }
 
     @Override
@@ -122,8 +165,6 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
                 partije.setListaMi(dataListMi2D);
                 partije.setListaVi(dataListVi2D);
                 intent.putExtra("data2D", partije);
-                intent.putExtra("brojZvanjaMi", brojZvanjaMi);
-                intent.putExtra("brojZvanjaVi", brojZvanjaVi);
 
                 StringBuilder str = new StringBuilder();
 
@@ -166,11 +207,10 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
+        prefs = getDefaultSharedPreferences(getApplicationContext());
+        editor = prefs.edit();
         initUI();
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-
-
-
     }
 
     private void initUI() {
@@ -197,7 +237,7 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
         builderGotovaIgra = new AlertDialog.Builder(MainActivity.this);
         builderGotovaIgra.setIcon(Drawable.createFromPath("drawable/ic_dialog.xml"));
         builderGotovaIgra.setTitle(getString(R.string.igra_je_gotova));
-        builderGotovaIgra.setMessage(R.string.nastavkom_ce_se_obrisati);
+        builderGotovaIgra.setMessage(R.string.nastavkom_ce_se_obrisati_gotova_igra);
         builderGotovaIgra.setPositiveButton(R.string.nastavi, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -225,6 +265,10 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
 //                updateDealerCounter();
                 nasaIgra.clear();
                 vasaIgra.clear();
+                nasaIgraHistory.clear();
+                vasaIgraHistory.clear();
+                dataListMi2D.clear();
+                dataListVi2D.clear();
                 setupRecyclerData();
                 updateSums();
                 gotovaIgra = false;
@@ -310,11 +354,6 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
                 }else{
                     updateDealerCounter();
                 }
-                if (data.getBooleanExtra("brojZvanjaMi", false)) {
-                    brojZvanjaMi++;
-                } else {
-                    brojZvanjaVi++;
-                }
                 updateTable();
             }
 //            if(!promijenjenDealer){
@@ -377,6 +416,8 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
         }
         if(nasaIgra.size() > 0)
             recycler.scrollToPosition(nasaIgra.size()-1);
+        saveGameState();
+        restoreGameState();
     }
 
     public static int getRandomIntegerBetween(){
@@ -393,6 +434,9 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
         }else{
             dealerCounter++;
         }
+        setDealerText();
+    }
+    public void setDealerText(){
         String text = getString(R.string.dijeli)+dealeri[dealerCounter];
         djelitelj.setText(text);
     }
@@ -474,6 +518,7 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
     public void onNameClick(int position) {
 //        Toast.makeText(this, "Position: " + position, Toast.LENGTH_SHORT).show();
         THIRD_ACTIVITY_REQUEST_CODE = position+20;
+
         Intent intent = new Intent(MainActivity.this, InputActivity.class);
         startActivityForResult(intent, THIRD_ACTIVITY_REQUEST_CODE);
     }
@@ -514,38 +559,7 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
         builderObrisiIgru.show();
     }
 
-//    public void addCell(int x, int y){
-//        recyclerAdapter.addNewCell(x, y);
-//    }
-
     private void setupRecyclerData(){
         recyclerAdapter.addData(nasaIgra, vasaIgra);
     }
-
-
-
-
-
-//    public class SavePick extends AsyncTask<Void,Void,Void> {
-//        DisclaimerBase dBase;
-//
-//        @Override
-//        protected Void doInBackground(Void... voids) {
-//            dBase = new DisclaimerBase();
-//            dBase.setAgreed(AGREED_TO_DISCLAIMER);
-//            dBase.setShown(DISCLAIMER_SHOWN);
-//            DatabaseClient.getInstance(getApplicationContext()).getAppDatabase()
-//                    .disclaimerDAO()
-//                    .insert(dBase);
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Void aVoid) {
-//            super.onPostExecute(aVoid);
-//            finish();
-//            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-//            Toast.makeText(getApplicationContext(), "Izbor pohranjen", Toast.LENGTH_LONG).show();
-//        }
-//    }
 }

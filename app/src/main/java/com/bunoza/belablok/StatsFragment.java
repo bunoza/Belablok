@@ -75,6 +75,7 @@ public class StatsFragment extends Fragment implements AdapterView.OnItemSelecte
         updateTV();
         setUpDataForSpinner();
         setUpSpinner();
+        selectLastPlayed();
     }
 
     private void setUpDataForSpinner() {
@@ -85,6 +86,10 @@ public class StatsFragment extends Fragment implements AdapterView.OnItemSelecte
             temp = i+1 +". " + dataList1.get(i) + " - " + dataList2.get(i);
             dropDownArray.add(i, temp);
         }
+    }
+
+    private void selectLastPlayed() {
+        spinner.setSelection(dropDownArray.size()-1, true);
     }
 
     private void setUpSpinner() {
@@ -150,8 +155,6 @@ public class StatsFragment extends Fragment implements AdapterView.OnItemSelecte
     private void updateTV() {
         winRateMi.setText(getResources().getString(R.string.winrate, 100.0*brojPobjedenihMi/brojOdigranihPartija));
         winRateVi.setText(getResources().getString(R.string.winrate, 100.0*brojPobjedenihVi/brojOdigranihPartija));
-        tvbrojZvanjaMi.setText(getResources().getString(R.string.broj_zvanja, brojZvanjaMi));
-        tvbrojZvanjaVi.setText(getResources().getString(R.string.broj_zvanja, brojZvanjaVi));
     }
 
     private void calculateWinRates() {
@@ -170,8 +173,6 @@ public class StatsFragment extends Fragment implements AdapterView.OnItemSelecte
     private void setUpViews(View view) {
         winRateMi = view.findViewById(R.id.tvWinRateMi);
         winRateVi = view.findViewById(R.id.tvWinRateVi);
-        tvbrojZvanjaMi = view.findViewById(R.id.brojZvanjaMi);
-        tvbrojZvanjaVi = view.findViewById(R.id.brojZvanjaVi);
         graphView = view.findViewById(R.id.graphView);
         spinner = view.findViewById(R.id.spinner);
     }
@@ -179,8 +180,6 @@ public class StatsFragment extends Fragment implements AdapterView.OnItemSelecte
     private void setUpData() {
         this.dataList1 = getArguments().getIntegerArrayList("datax");
         this.dataList2 = getArguments().getIntegerArrayList("datay");
-        brojZvanjaMi = getArguments().getInt("brojZvanjaMi", 0 );
-        brojZvanjaVi = getArguments().getInt("brojZvanjaVi", 0 );
 
         if(getArguments().getSerializable("data2D") != null){
             dataListMi2D = new ArrayList<>();

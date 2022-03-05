@@ -65,27 +65,6 @@
             app:layout_constraintStart_toStartOf="@+id/vi"
             tools:layout_editor_absoluteY="96dp" />
 
-        <TextView
-            android:id="@+id/brojZvanjaMi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
-            android:textColor="@color/eggshell"
-            android:textSize="@dimen/stats_fragment_text_size"
-            app:layout_constraintEnd_toEndOf="@+id/mi"
-            app:layout_constraintStart_toStartOf="@+id/mi"
-            app:layout_constraintTop_toBottomOf="@+id/tvWinRateMi" />
-
-        <TextView
-            android:id="@+id/brojZvanjaVi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/stats_fragment_text_size"
-            android:textColor="@color/eggshell"
-            app:layout_constraintBaseline_toBaselineOf="@id/brojZvanjaMi"
-            app:layout_constraintEnd_toEndOf="@+id/vi"
-            app:layout_constraintStart_toStartOf="@+id/vi" />
-
         <com.jjoe64.graphview.GraphView
             android:id="@+id/graphView"
             android:layout_width="match_parent"
@@ -101,14 +80,15 @@
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_height="48dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
 
+            android:layout_marginTop="64dp"
             android:layout_marginEnd="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/brojZvanjaMi" />
+            app:layout_constraintTop_toBottomOf="@+id/tvWinRateMi"
+            tools:ignore="SpeakableTextPresentCheck" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
