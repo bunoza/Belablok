@@ -169,6 +169,9 @@ public class MainActivity extends AppCompatActivity implements NameClickListener
         setContentView(R.layout.activity_main);
         initUI();
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
+
+
     }
 
     private void initUI() {
