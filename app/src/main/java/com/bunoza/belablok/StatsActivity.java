@@ -1,7 +1,11 @@
 package com.bunoza.belablok;
 
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
+
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import com.google.android.material.tabs.TabLayout;
@@ -13,14 +17,23 @@ public class StatsActivity extends AppCompatActivity{
     private TabLayout mTabLayout;
     private ScreenSlidePagerAdapter screenSlidePagerAdapter;
 
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
         initViews();
+        initPrefs();
         setUpPager();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
+
+    private void initPrefs() {
+        prefs = getDefaultSharedPreferences(getApplicationContext());
+        editor = prefs.edit();
     }
 
 

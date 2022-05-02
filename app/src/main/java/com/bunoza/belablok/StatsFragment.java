@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,8 @@ import java.util.List;
 
 
 public class StatsFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+
+    final String TAG = "StatsFragment";
 
     private List<List<Integer>> dataListMi2D;
     private List<List<Integer>> dataListVi2D;
@@ -102,6 +105,10 @@ public class StatsFragment extends Fragment implements AdapterView.OnItemSelecte
 
     private void updateGraphData(int odabranaPartija) {
         graphView.removeAllSeries();
+        if (odabranaPartija == dataListMi2D.size()) {
+            Log.e(TAG, "updateGraphData: INDEX == .SIZE(), " + odabranaPartija + " == " + dataListMi2D.size()  );
+            odabranaPartija--;
+        }
         DataPoint[] pointsMi = new DataPoint[dataListMi2D.get(odabranaPartija).size() + 1];
         DataPoint[] pointsVi = new DataPoint[dataListVi2D.get(odabranaPartija).size() + 1];
         pointsMi[0] = new DataPoint(0, 0);
@@ -198,6 +205,7 @@ public class StatsFragment extends Fragment implements AdapterView.OnItemSelecte
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        Log.d(TAG, "onItemSelected: " + position);
         updateGraphData(position);
         for(int i = 0; i < parent.getChildCount(); i++){
             ((TextView) parent.getChildAt(i)).setTextColor(Color.rgb(250,250,250));
@@ -206,6 +214,6 @@ public class StatsFragment extends Fragment implements AdapterView.OnItemSelecte
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        updateGraphData(dataList1.size());
+        updateGraphData(dataList1.size() - 1);
     }
 }
