@@ -8,17 +8,27 @@
 
 /* Begin PBXBuildFile section */
 		C57675A72AA384CE009CC959 /* Bela_BlokApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57675A62AA384CE009CC959 /* Bela_BlokApp.swift */; };
-		C57675A92AA384CE009CC959 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57675A82AA384CE009CC959 /* ContentView.swift */; };
+		C57675A92AA384CE009CC959 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57675A82AA384CE009CC959 /* MainView.swift */; };
 		C57675AB2AA384D1009CC959 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C57675AA2AA384D1009CC959 /* Assets.xcassets */; };
 		C57675AE2AA384D1009CC959 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C57675AD2AA384D1009CC959 /* Preview Assets.xcassets */; };
+		C57675B52AA387D0009CC959 /* ResultRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57675B42AA387D0009CC959 /* ResultRow.swift */; };
+		C5DB888E2AA398E900D702E0 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB888D2AA398E900D702E0 /* InputView.swift */; };
+		C5DB88912AA39EC800D702E0 /* UnderlinedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB88902AA39EC800D702E0 /* UnderlinedTextField.swift */; };
+		C5DB88942AA3A42A00D702E0 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB88932AA3A42A00D702E0 /* Game.swift */; };
+		C5DB88962AA3A74800D702E0 /* RoundedAccentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB88952AA3A74800D702E0 /* RoundedAccentButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		C57675A32AA384CE009CC959 /* Bela Blok.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bela Blok.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C57675A62AA384CE009CC959 /* Bela_BlokApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bela_BlokApp.swift; sourceTree = "<group>"; };
-		C57675A82AA384CE009CC959 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		C57675A82AA384CE009CC959 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		C57675AA2AA384D1009CC959 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C57675AD2AA384D1009CC959 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		C57675B42AA387D0009CC959 /* ResultRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultRow.swift; sourceTree = "<group>"; };
+		C5DB888D2AA398E900D702E0 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
+		C5DB88902AA39EC800D702E0 /* UnderlinedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlinedTextField.swift; sourceTree = "<group>"; };
+		C5DB88932AA3A42A00D702E0 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		C5DB88952AA3A74800D702E0 /* RoundedAccentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedAccentButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +42,50 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C54739C22AA3961F0097BAFD /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C57675AC2AA384D1009CC959 /* Preview Content */,
+				C57675AA2AA384D1009CC959 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		C54739C32AA396380097BAFD /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				C54739C42AA396520097BAFD /* Modules */,
+				C57675A62AA384CE009CC959 /* Bela_BlokApp.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		C54739C42AA396520097BAFD /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				C5DB888C2AA398DB00D702E0 /* InputModule */,
+				C54739C52AA396570097BAFD /* MainModule */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		C54739C52AA396570097BAFD /* MainModule */ = {
+			isa = PBXGroup;
+			children = (
+				C54739C62AA396620097BAFD /* SupportingView */,
+				C57675A82AA384CE009CC959 /* MainView.swift */,
+			);
+			path = MainModule;
+			sourceTree = "<group>";
+		};
+		C54739C62AA396620097BAFD /* SupportingView */ = {
+			isa = PBXGroup;
+			children = (
+				C57675B42AA387D0009CC959 /* ResultRow.swift */,
+			);
+			path = SupportingView;
+			sourceTree = "<group>";
+		};
 		C576759A2AA384CE009CC959 = {
 			isa = PBXGroup;
 			children = (
@@ -51,10 +105,8 @@
 		C57675A52AA384CE009CC959 /* Bela Blok */ = {
 			isa = PBXGroup;
 			children = (
-				C57675A62AA384CE009CC959 /* Bela_BlokApp.swift */,
-				C57675A82AA384CE009CC959 /* ContentView.swift */,
-				C57675AA2AA384D1009CC959 /* Assets.xcassets */,
-				C57675AC2AA384D1009CC959 /* Preview Content */,
+				C54739C32AA396380097BAFD /* Sources */,
+				C54739C22AA3961F0097BAFD /* Resources */,
 			);
 			path = "Bela Blok";
 			sourceTree = "<group>";
@@ -65,6 +117,33 @@
 				C57675AD2AA384D1009CC959 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		C5DB888C2AA398DB00D702E0 /* InputModule */ = {
+			isa = PBXGroup;
+			children = (
+				C5DB88922AA3A41800D702E0 /* Model */,
+				C5DB888F2AA39EB400D702E0 /* SupportingView */,
+				C5DB888D2AA398E900D702E0 /* InputView.swift */,
+			);
+			path = InputModule;
+			sourceTree = "<group>";
+		};
+		C5DB888F2AA39EB400D702E0 /* SupportingView */ = {
+			isa = PBXGroup;
+			children = (
+				C5DB88902AA39EC800D702E0 /* UnderlinedTextField.swift */,
+				C5DB88952AA3A74800D702E0 /* RoundedAccentButton.swift */,
+			);
+			path = SupportingView;
+			sourceTree = "<group>";
+		};
+		C5DB88922AA3A41800D702E0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C5DB88932AA3A42A00D702E0 /* Game.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,8 +216,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C57675A92AA384CE009CC959 /* ContentView.swift in Sources */,
+				C5DB88912AA39EC800D702E0 /* UnderlinedTextField.swift in Sources */,
+				C57675A92AA384CE009CC959 /* MainView.swift in Sources */,
+				C5DB88962AA3A74800D702E0 /* RoundedAccentButton.swift in Sources */,
+				C5DB888E2AA398E900D702E0 /* InputView.swift in Sources */,
 				C57675A72AA384CE009CC959 /* Bela_BlokApp.swift in Sources */,
+				C57675B52AA387D0009CC959 /* ResultRow.swift in Sources */,
+				C5DB88942AA3A42A00D702E0 /* Game.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,7 +350,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Bela Blok/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Bela Blok/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = 8Y9TGD2PJD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -274,7 +358,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -295,7 +379,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Bela Blok/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Bela Blok/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = 8Y9TGD2PJD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -303,7 +387,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
