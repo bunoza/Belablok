@@ -1,14 +1,22 @@
+import Combine
 import SwiftUI
 
 struct UnderlinedTextField: View {
-    @State private var text: String
+    @Binding private var text: String
     
-    init(text: String) {
-        self.text = text
+    init(text: Binding<String>) {
+        self._text = text
     }
     
     var body: some View {
         TextField("", text: $text)
+            .onReceive(Just(text)) { newValue in
+                let filtered = newValue.filter { "0123456789".contains($0) }
+                if filtered != newValue {
+                    self.text = filtered
+                }
+            }
+            .keyboardType(.numberPad)
             .font(.largeTitle)
             .multilineTextAlignment(.center)
             .labelsHidden()
@@ -26,6 +34,6 @@ struct UnderlinedTextField: View {
 
 struct UnderlinedTextField_Previews: PreviewProvider {
     static var previews: some View {
-        UnderlinedTextField(text: "Hello, World!")
+        UnderlinedTextField(text: .constant("Hello, World!"))
     }
 }

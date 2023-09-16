@@ -1,6 +1,7 @@
 import Foundation
 
-struct Game {
+struct Game: Codable, Hashable {
+    var id = UUID()
     public var weScoreString: String = "0"
     public var youScoreString: String = "0"
 
@@ -16,17 +17,8 @@ struct Game {
     
     var caller: Caller = .we
 
-    var weScore: Int = 0 {
-        didSet {
-            weScoreString = String(weScore)
-        }
-    }
-    
-    var youScore: Int = 0 {
-        didSet {
-            youScoreString = String(youScore)
-        }
-    }
+    var weScore: Int = 0
+    var youScore: Int = 0
     
     public func getWeCallsSum() -> Int {
         return weCall20 * 20 + weCall50 * 50 + weCall100 * 100 + weCallBelot * 1001
@@ -37,7 +29,7 @@ struct Game {
     }
 }
 
-enum Caller: CaseIterable {
+enum Caller: CaseIterable, Codable {
     case we
     case you
     

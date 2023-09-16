@@ -7,11 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C5035CCF2AA4ABEC00B3F3C3 /* CustomUserDefaultsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5035CCE2AA4ABEC00B3F3C3 /* CustomUserDefaultsObject.swift */; };
+		C5035CD12AA4ADC100B3F3C3 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5035CD02AA4ADC100B3F3C3 /* MainViewModel.swift */; };
+		C5035CD32AA4AF6300B3F3C3 /* InputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5035CD22AA4AF6300B3F3C3 /* InputViewModel.swift */; };
 		C57675A72AA384CE009CC959 /* Bela_BlokApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57675A62AA384CE009CC959 /* Bela_BlokApp.swift */; };
 		C57675A92AA384CE009CC959 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57675A82AA384CE009CC959 /* MainView.swift */; };
 		C57675AB2AA384D1009CC959 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C57675AA2AA384D1009CC959 /* Assets.xcassets */; };
 		C57675AE2AA384D1009CC959 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C57675AD2AA384D1009CC959 /* Preview Assets.xcassets */; };
 		C57675B52AA387D0009CC959 /* ResultRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57675B42AA387D0009CC959 /* ResultRow.swift */; };
+		C5A3E2092AA4AA700016EC3C /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A3E2082AA4AA700016EC3C /* AppState.swift */; };
 		C5DB888E2AA398E900D702E0 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB888D2AA398E900D702E0 /* InputView.swift */; };
 		C5DB88912AA39EC800D702E0 /* UnderlinedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB88902AA39EC800D702E0 /* UnderlinedTextField.swift */; };
 		C5DB88942AA3A42A00D702E0 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB88932AA3A42A00D702E0 /* Game.swift */; };
@@ -19,12 +23,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C5035CCE2AA4ABEC00B3F3C3 /* CustomUserDefaultsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUserDefaultsObject.swift; sourceTree = "<group>"; };
+		C5035CD02AA4ADC100B3F3C3 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		C5035CD22AA4AF6300B3F3C3 /* InputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewModel.swift; sourceTree = "<group>"; };
 		C57675A32AA384CE009CC959 /* Bela Blok.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bela Blok.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C57675A62AA384CE009CC959 /* Bela_BlokApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bela_BlokApp.swift; sourceTree = "<group>"; };
 		C57675A82AA384CE009CC959 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		C57675AA2AA384D1009CC959 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C57675AD2AA384D1009CC959 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C57675B42AA387D0009CC959 /* ResultRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultRow.swift; sourceTree = "<group>"; };
+		C5A3E2082AA4AA700016EC3C /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		C5DB888D2AA398E900D702E0 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		C5DB88902AA39EC800D702E0 /* UnderlinedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlinedTextField.swift; sourceTree = "<group>"; };
 		C5DB88932AA3A42A00D702E0 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
@@ -42,6 +50,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C5035CCD2AA4ABD900B3F3C3 /* Wrapper */ = {
+			isa = PBXGroup;
+			children = (
+				C5035CCE2AA4ABEC00B3F3C3 /* CustomUserDefaultsObject.swift */,
+			);
+			path = Wrapper;
+			sourceTree = "<group>";
+		};
 		C54739C22AA3961F0097BAFD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -54,8 +70,10 @@
 		C54739C32AA396380097BAFD /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				C5035CCD2AA4ABD900B3F3C3 /* Wrapper */,
 				C54739C42AA396520097BAFD /* Modules */,
 				C57675A62AA384CE009CC959 /* Bela_BlokApp.swift */,
+				C5A3E2082AA4AA700016EC3C /* AppState.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -74,6 +92,7 @@
 			children = (
 				C54739C62AA396620097BAFD /* SupportingView */,
 				C57675A82AA384CE009CC959 /* MainView.swift */,
+				C5035CD02AA4ADC100B3F3C3 /* MainViewModel.swift */,
 			);
 			path = MainModule;
 			sourceTree = "<group>";
@@ -125,6 +144,7 @@
 				C5DB88922AA3A41800D702E0 /* Model */,
 				C5DB888F2AA39EB400D702E0 /* SupportingView */,
 				C5DB888D2AA398E900D702E0 /* InputView.swift */,
+				C5035CD22AA4AF6300B3F3C3 /* InputViewModel.swift */,
 			);
 			path = InputModule;
 			sourceTree = "<group>";
@@ -219,10 +239,14 @@
 				C5DB88912AA39EC800D702E0 /* UnderlinedTextField.swift in Sources */,
 				C57675A92AA384CE009CC959 /* MainView.swift in Sources */,
 				C5DB88962AA3A74800D702E0 /* RoundedAccentButton.swift in Sources */,
+				C5A3E2092AA4AA700016EC3C /* AppState.swift in Sources */,
 				C5DB888E2AA398E900D702E0 /* InputView.swift in Sources */,
+				C5035CD12AA4ADC100B3F3C3 /* MainViewModel.swift in Sources */,
 				C57675A72AA384CE009CC959 /* Bela_BlokApp.swift in Sources */,
+				C5035CCF2AA4ABEC00B3F3C3 /* CustomUserDefaultsObject.swift in Sources */,
 				C57675B52AA387D0009CC959 /* ResultRow.swift in Sources */,
 				C5DB88942AA3A42A00D702E0 /* Game.swift in Sources */,
+				C5035CD32AA4AF6300B3F3C3 /* InputViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

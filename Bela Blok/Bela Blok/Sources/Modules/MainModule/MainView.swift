@@ -1,8 +1,13 @@
 import SwiftUI
 
 struct MainView: View {
-    @State private var showInputSheet: Bool = false
-    var tempData = ["1","2","3"]
+    @StateObject private var viewModel: MainViewModel
+    @State private var showInputSheet: Bool
+    
+    init() {
+        _viewModel = .init(wrappedValue: MainViewModel())
+        showInputSheet = false
+    }
     
     var body: some View {
         NavigationView {
@@ -15,14 +20,17 @@ struct MainView: View {
                         .padding(.vertical)
                         .padding(.vertical)
                     
-                    ForEach(tempData, id: \.self) { _ in
-                        ResultRow(weScore: "36", youScore: "126")
+                    ForEach(viewModel.currentGame, id: \.self) { game in
+                        ResultRow(weScore: game.weScoreString, youScore: game.youScoreString)
                     }
                 }
                 .scrollContentBackground(.hidden)
             }
-            .sheet(isPresented: $showInputSheet, content: {
-                InputView()
+            .onAppear { viewModel.onAppear() }
+            .sheet(isPresented: $showInputSheet, onDismiss: {
+                viewModel.onAppear()
+            }, content: {
+                InputView(viewModel: InputViewModel())
                     .interactiveDismissDisabled(true)
             })
             .toolbar {
