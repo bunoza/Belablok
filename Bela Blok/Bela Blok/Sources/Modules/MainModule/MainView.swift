@@ -3,40 +3,65 @@ import SwiftUI
 struct MainView: View {
     @StateObject private var viewModel: MainViewModel
     @State private var showInputSheet: Bool
-    
+    @State private var showDealerSheet: Bool
+        
     init() {
         _viewModel = .init(wrappedValue: MainViewModel())
         showInputSheet = false
+        showDealerSheet = false
     }
     
     var body: some View {
         NavigationView {
             ZStack {
-                Color.green.opacity(0.8).ignoresSafeArea()
+                Color.green.opacity(0.8).ignoresSafeArea(.all)
                 
-                List {
-                    ResultRow(weScore: "MI", youScore: "VI")
-                        .bold(true)
-                        .padding(.vertical)
-                        .padding(.vertical)
-                    
-                    ForEach(viewModel.currentGame, id: \.self) { game in
-                        ResultRow(weScore: game.weScoreString, youScore: game.youScoreString)
+                VStack {
+                    ResultRow(weLabel: "MI", youLabel: "VI")
+                        .bold()
+                        .padding(.bottom)
+                        .padding(.bottom)
+
+                    ScrollViewReader { reader in
+                        ScrollView {
+                            ForEach(viewModel.currentSession, id: \.id) { game in
+                                ResultRow(weScore: game.weTotal, youScore: game.youTotal)
+                                    .padding(.bottom, 2)
+                            }
+                        }
                     }
+                    .animation(.easeInOut, value: viewModel.currentSession)
+                    .scrollContentBackground(.hidden)
+                    
+                    ResultRow(
+                        weScore: viewModel.currentSession.weTotalAccumulated,
+                        youScore: viewModel.currentSession.youTotalAccumulated
+                    )
+                    .animation(.easeInOut, value: viewModel.currentSession)
+                    .padding(.vertical)
+                    .bold()
                 }
-                .scrollContentBackground(.hidden)
             }
             .onAppear { viewModel.onAppear() }
-            .sheet(isPresented: $showInputSheet, onDismiss: {
-                viewModel.onAppear()
-            }, content: {
-                InputView(viewModel: InputViewModel())
-                    .interactiveDismissDisabled(true)
-            })
+            .sheet(
+                isPresented: $showDealerSheet,
+                content: {
+                    DealerView(dealer: $viewModel.dealer)
+                        .presentationDetents([.medium])
+                }
+            )
+            .sheet(
+                isPresented: $showInputSheet,
+                onDismiss: { viewModel.onAppear() },
+                content: {
+                    InputView(viewModel: InputViewModel())
+                        .interactiveDismissDisabled(true)
+                }
+            )
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        //TODO: Show history
+                    NavigationLink {
+                        HistoryView(viewModel: HistoryViewModel())
                     } label: {
                         Image(systemName: "clock.arrow.circlepath")
                             .foregroundColor(.primary)
@@ -46,9 +71,10 @@ struct MainView: View {
                 ToolbarItem(placement: .bottomBar) {
                     HStack {
                         Button {
+                            showDealerSheet = true
                             //TODO: Implement counter
                         } label: {
-                            Text("Dijeli: Protivnik")
+                            Text("Dijeli: \(viewModel.dealer.description)")
                                 .font(.body)
                                 .foregroundColor(.primary)
                         }
@@ -64,7 +90,7 @@ struct MainView: View {
                 }
             }
             .navigationTitle("Bela Blok")
-            .navigationBarTitleDisplayMode(.large)
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }

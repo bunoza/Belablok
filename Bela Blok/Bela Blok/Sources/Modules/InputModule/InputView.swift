@@ -2,39 +2,57 @@ import Combine
 import SwiftUI
 
 struct InputView: View {
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismiss) private var dismiss
     
-    @ObservedObject var viewModel: InputViewModel
+    @ObservedObject private var viewModel: InputViewModel
+    
+    @State private var ignoreFlag: Bool = false
     
     init(viewModel: InputViewModel) {
         self.viewModel = viewModel
     }
     
+    //TODO: introduce geometry reader
     var body: some View {
         NavigationView {
             ZStack {
-                Color.green.opacity(0.8).ignoresSafeArea(.container)
+                Color.green.opacity(0.8).ignoresSafeArea(.all)
                 
                 List {
                     HStack {
-                        UnderlinedTextField(text: $viewModel.currentGame.weScoreString)
-                            .onChange(of: viewModel.currentGame.weScoreString) { newValue in
-                                viewModel.onChangeOfWeScore(weScore: newValue)
+                        Spacer()
+                        UnderlinedTextField(score: $viewModel.currentGame.weBaseScore)
+                            .onChange(of: viewModel.currentGame.weBaseScore) { newValue in
+                                if !ignoreFlag {
+                                    ignoreFlag = true
+                                    viewModel.onChangeOfWeScore()
+                                    ignoreFlag = false
+                                }
                             }
-                        
-                        UnderlinedTextField(text: $viewModel.currentGame.youScoreString)
-                            .onChange(of: viewModel.currentGame.youScoreString) { newValue in
-                                viewModel.onChangeOfYouScore(youScore: newValue)
+                        Spacer()
+                        UnderlinedTextField(score: $viewModel.currentGame.youBaseScore)
+                            .onChange(of: viewModel.currentGame.youBaseScore) { newValue in
+                                if !ignoreFlag {
+                                    ignoreFlag = true
+                                    viewModel.onChangeOfYouScore()
+                                    ignoreFlag = false
+                                }
                             }
+                        Spacer()
                     }
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
                     .padding()
                     
                     HStack {
-                        Text("Zvanje: \(viewModel.currentGame.getWeCallsSum())")
-                            .font(.subheadline)
-                        
+                        Spacer()
+                        VStack {
+                            Text("Zvanje")
+                                .font(.subheadline)
+                            Text("\(viewModel.currentGame.weCallsSum)")
+                                .font(.subheadline)
+                        }
+                        Spacer()
                         
                         Button {
                             viewModel.resetCalls()
@@ -44,10 +62,15 @@ struct InputView: View {
                         }
                         .buttonStyle(.borderedProminent)
                         .padding(.horizontal)
+                        Spacer()
                         
-                        
-                        Text("Zvanje: \(viewModel.currentGame.getYouCallsSum())")
-                            .font(.subheadline)
+                        VStack {
+                            Text("Zvanje")
+                                .font(.subheadline)
+                            Text("\(viewModel.currentGame.youCallsSum)")
+                                .font(.subheadline)
+                        }
+                        Spacer()
                     }
                     .listRowBackground(Color.clear)
                     .listRowSeparator(.hidden)
@@ -68,12 +91,13 @@ struct InputView: View {
                     renderButtonRow(call: 100)
                     renderButtonRow(call: 1001)
                 }
+                .scrollDismissesKeyboard(.immediately)
                 .scrollContentBackground(.hidden)
             }
             .navigationTitle("Unos")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .confirmationAction) {
                     Button {
                         viewModel.saveCurrentGame()
                         dismiss()
@@ -81,8 +105,9 @@ struct InputView: View {
                         Text("Spremi")
                             .foregroundColor(.primary)
                     }
+                    .disabled(viewModel.currentGame.weBaseScore + viewModel.currentGame.youBaseScore  != 162)
                 }
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .cancellationAction) {
                     Button {
                         dismiss()
                     } label: {
@@ -116,7 +141,7 @@ struct InputView: View {
         }
         .listRowBackground(Color.clear)
         .listRowSeparator(.hidden)
-    }    
+    }
 }
 
 struct InputView_Previews: PreviewProvider {
@@ -124,3 +149,4 @@ struct InputView_Previews: PreviewProvider {
         InputView(viewModel: InputViewModel())
     }
 }
+

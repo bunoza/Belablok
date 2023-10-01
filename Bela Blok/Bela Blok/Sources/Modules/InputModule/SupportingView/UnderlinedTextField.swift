@@ -2,19 +2,36 @@ import Combine
 import SwiftUI
 
 struct UnderlinedTextField: View {
-    @Binding private var text: String
+    @Binding private var score: Int
     
-    init(text: Binding<String>) {
-        self._text = text
+    @State private var text: String = ""
+    
+    init(score: Binding<Int>) {
+        self._score = score
     }
     
     var body: some View {
-        TextField("", text: $text)
-            .onReceive(Just(text)) { newValue in
-                let filtered = newValue.filter { "0123456789".contains($0) }
-                if filtered != newValue {
-                    self.text = filtered
+        TextField("0", text: $text)
+            .onChange(of: text) { [text] newState in
+                if newState.isEmpty {
+                    self.text = "0"
+                    self.score = 0
+                    return
                 }
+                
+                let filteredString = newState.filter { Constants.ACCEPTABLE_CHARS_FOR_INPUT.contains($0) }
+                
+                if let validInt = Int(filteredString),
+                   validInt >= 0,
+                   validInt <= 162 {
+                    self.text = String(validInt)
+                    self.score = validInt
+                } else {
+                    self.text = text
+                }
+            }
+            .onChange(of: score) { newState in
+                self.text = String(newState)
             }
             .keyboardType(.numberPad)
             .font(.largeTitle)
@@ -34,6 +51,6 @@ struct UnderlinedTextField: View {
 
 struct UnderlinedTextField_Previews: PreviewProvider {
     static var previews: some View {
-        UnderlinedTextField(text: .constant("Hello, World!"))
+        UnderlinedTextField(score: .constant(25))
     }
 }

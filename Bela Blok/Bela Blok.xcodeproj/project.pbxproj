@@ -10,11 +10,17 @@
 		C5035CCF2AA4ABEC00B3F3C3 /* CustomUserDefaultsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5035CCE2AA4ABEC00B3F3C3 /* CustomUserDefaultsObject.swift */; };
 		C5035CD12AA4ADC100B3F3C3 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5035CD02AA4ADC100B3F3C3 /* MainViewModel.swift */; };
 		C5035CD32AA4AF6300B3F3C3 /* InputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5035CD22AA4AF6300B3F3C3 /* InputViewModel.swift */; };
+		C5305F082AC9A9A1007F1914 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5305F072AC9A9A1007F1914 /* Constants.swift */; };
 		C57675A72AA384CE009CC959 /* Bela_BlokApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57675A62AA384CE009CC959 /* Bela_BlokApp.swift */; };
 		C57675A92AA384CE009CC959 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57675A82AA384CE009CC959 /* MainView.swift */; };
 		C57675AB2AA384D1009CC959 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C57675AA2AA384D1009CC959 /* Assets.xcassets */; };
 		C57675AE2AA384D1009CC959 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C57675AD2AA384D1009CC959 /* Preview Assets.xcassets */; };
 		C57675B52AA387D0009CC959 /* ResultRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57675B42AA387D0009CC959 /* ResultRow.swift */; };
+		C599C4F42AB762590011CA2B /* DealerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C599C4F32AB762590011CA2B /* DealerView.swift */; };
+		C599C4F72AB77FE70011CA2B /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C599C4F62AB77FE70011CA2B /* HistoryView.swift */; };
+		C599C4F92AB77FF80011CA2B /* HistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C599C4F82AB77FF80011CA2B /* HistoryViewModel.swift */; };
+		C59C1BDA2AB5FC4300E34056 /* Dealer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59C1BD92AB5FC4300E34056 /* Dealer.swift */; };
+		C59C1BDD2AB5FDB400E34056 /* Caller.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59C1BDC2AB5FDB400E34056 /* Caller.swift */; };
 		C5A3E2092AA4AA700016EC3C /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A3E2082AA4AA700016EC3C /* AppState.swift */; };
 		C5DB888E2AA398E900D702E0 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB888D2AA398E900D702E0 /* InputView.swift */; };
 		C5DB88912AA39EC800D702E0 /* UnderlinedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB88902AA39EC800D702E0 /* UnderlinedTextField.swift */; };
@@ -26,12 +32,18 @@
 		C5035CCE2AA4ABEC00B3F3C3 /* CustomUserDefaultsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUserDefaultsObject.swift; sourceTree = "<group>"; };
 		C5035CD02AA4ADC100B3F3C3 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		C5035CD22AA4AF6300B3F3C3 /* InputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewModel.swift; sourceTree = "<group>"; };
+		C5305F072AC9A9A1007F1914 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C57675A32AA384CE009CC959 /* Bela Blok.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bela Blok.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C57675A62AA384CE009CC959 /* Bela_BlokApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bela_BlokApp.swift; sourceTree = "<group>"; };
 		C57675A82AA384CE009CC959 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		C57675AA2AA384D1009CC959 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C57675AD2AA384D1009CC959 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C57675B42AA387D0009CC959 /* ResultRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultRow.swift; sourceTree = "<group>"; };
+		C599C4F32AB762590011CA2B /* DealerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealerView.swift; sourceTree = "<group>"; };
+		C599C4F62AB77FE70011CA2B /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		C599C4F82AB77FF80011CA2B /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
+		C59C1BD92AB5FC4300E34056 /* Dealer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dealer.swift; sourceTree = "<group>"; };
+		C59C1BDC2AB5FDB400E34056 /* Caller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Caller.swift; sourceTree = "<group>"; };
 		C5A3E2082AA4AA700016EC3C /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		C5DB888D2AA398E900D702E0 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		C5DB88902AA39EC800D702E0 /* UnderlinedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlinedTextField.swift; sourceTree = "<group>"; };
@@ -70,7 +82,6 @@
 		C54739C32AA396380097BAFD /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				C5035CCD2AA4ABD900B3F3C3 /* Wrapper */,
 				C54739C42AA396520097BAFD /* Modules */,
 				C57675A62AA384CE009CC959 /* Bela_BlokApp.swift */,
 				C5A3E2082AA4AA700016EC3C /* AppState.swift */,
@@ -81,6 +92,8 @@
 		C54739C42AA396520097BAFD /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				C599C4F52AB77FD60011CA2B /* HistoryModule */,
+				C59C1BD72AB5F8AB00E34056 /* Common */,
 				C5DB888C2AA398DB00D702E0 /* InputModule */,
 				C54739C52AA396570097BAFD /* MainModule */,
 			);
@@ -90,6 +103,7 @@
 		C54739C52AA396570097BAFD /* MainModule */ = {
 			isa = PBXGroup;
 			children = (
+				C59C1BD82AB5FC3800E34056 /* Model */,
 				C54739C62AA396620097BAFD /* SupportingView */,
 				C57675A82AA384CE009CC959 /* MainView.swift */,
 				C5035CD02AA4ADC100B3F3C3 /* MainViewModel.swift */,
@@ -101,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				C57675B42AA387D0009CC959 /* ResultRow.swift */,
+				C599C4F32AB762590011CA2B /* DealerView.swift */,
 			);
 			path = SupportingView;
 			sourceTree = "<group>";
@@ -138,10 +153,43 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		C5DB888C2AA398DB00D702E0 /* InputModule */ = {
+		C599C4F52AB77FD60011CA2B /* HistoryModule */ = {
+			isa = PBXGroup;
+			children = (
+				C599C4F62AB77FE70011CA2B /* HistoryView.swift */,
+				C599C4F82AB77FF80011CA2B /* HistoryViewModel.swift */,
+			);
+			path = HistoryModule;
+			sourceTree = "<group>";
+		};
+		C59C1BD72AB5F8AB00E34056 /* Common */ = {
 			isa = PBXGroup;
 			children = (
 				C5DB88922AA3A41800D702E0 /* Model */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		C59C1BD82AB5FC3800E34056 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C59C1BD92AB5FC4300E34056 /* Dealer.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C59C1BDB2AB5FDAB00E34056 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C59C1BDC2AB5FDB400E34056 /* Caller.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C5DB888C2AA398DB00D702E0 /* InputModule */ = {
+			isa = PBXGroup;
+			children = (
+				C59C1BDB2AB5FDAB00E34056 /* Model */,
 				C5DB888F2AA39EB400D702E0 /* SupportingView */,
 				C5DB888D2AA398E900D702E0 /* InputView.swift */,
 				C5035CD22AA4AF6300B3F3C3 /* InputViewModel.swift */,
@@ -161,7 +209,9 @@
 		C5DB88922AA3A41800D702E0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				C5035CCD2AA4ABD900B3F3C3 /* Wrapper */,
 				C5DB88932AA3A42A00D702E0 /* Game.swift */,
+				C5305F072AC9A9A1007F1914 /* Constants.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -239,14 +289,20 @@
 				C5DB88912AA39EC800D702E0 /* UnderlinedTextField.swift in Sources */,
 				C57675A92AA384CE009CC959 /* MainView.swift in Sources */,
 				C5DB88962AA3A74800D702E0 /* RoundedAccentButton.swift in Sources */,
+				C59C1BDD2AB5FDB400E34056 /* Caller.swift in Sources */,
+				C599C4F42AB762590011CA2B /* DealerView.swift in Sources */,
 				C5A3E2092AA4AA700016EC3C /* AppState.swift in Sources */,
 				C5DB888E2AA398E900D702E0 /* InputView.swift in Sources */,
+				C599C4F72AB77FE70011CA2B /* HistoryView.swift in Sources */,
 				C5035CD12AA4ADC100B3F3C3 /* MainViewModel.swift in Sources */,
 				C57675A72AA384CE009CC959 /* Bela_BlokApp.swift in Sources */,
 				C5035CCF2AA4ABEC00B3F3C3 /* CustomUserDefaultsObject.swift in Sources */,
+				C5305F082AC9A9A1007F1914 /* Constants.swift in Sources */,
+				C59C1BDA2AB5FC4300E34056 /* Dealer.swift in Sources */,
 				C57675B52AA387D0009CC959 /* ResultRow.swift in Sources */,
 				C5DB88942AA3A42A00D702E0 /* Game.swift in Sources */,
 				C5035CD32AA4AF6300B3F3C3 /* InputViewModel.swift in Sources */,
+				C599C4F92AB77FF80011CA2B /* HistoryViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -383,6 +439,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -412,6 +469,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

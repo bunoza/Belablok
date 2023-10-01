@@ -1,13 +1,16 @@
-
+import SwiftUI
 import Foundation
 
 class AppState: ObservableObject {
     static let shared = AppState()
     
-    @CustomUserDefaultsObject("finished_games", defaultValue: [:])
-    var finishedGames: [Int: [Game]]
+    @CustomUserDefaultsObject("finished_games", defaultValue: [])
+    var finishedGames: [[Game]]
     
     @CustomUserDefaultsObject("current_game", defaultValue: [])
     var currentGame: [Game]
+    
+    @CustomUserDefaultsObject("dealer", defaultValue: .me)
+    var dealer: Dealer
 }
 
