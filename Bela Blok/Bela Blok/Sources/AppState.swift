@@ -10,7 +10,7 @@ class AppState: ObservableObject {
     @CustomUserDefaultsObject("current_game", defaultValue: [])
     var currentGame: [Game]
     
-    @CustomUserDefaultsObject("dealer", defaultValue: .me)
-    var dealer: Dealer
+    @CustomUserDefaultsObject("current_dealer", defaultValue: .me)
+    var currentDealer: Dealer
 }
 

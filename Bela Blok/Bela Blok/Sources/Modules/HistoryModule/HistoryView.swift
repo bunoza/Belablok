@@ -1,40 +1,53 @@
 import SwiftUI
 
 struct HistoryView: View {
-    @ObservedObject private var viewModel: HistoryViewModel
+    @StateObject private var viewModel: HistoryViewModel
     
     init(viewModel: HistoryViewModel) {
-        self.viewModel = viewModel
+        self._viewModel = .init(wrappedValue: viewModel)
     }
     
     var body: some View {
         ZStack {
             Color.green.opacity(0.8).ignoresSafeArea(.all)
             
-            List {
-                ForEach(viewModel.history, id: \.id) { games in
-                    ResultRow(weScore: games.weTotalAccumulated, youScore: games.youTotalAccumulated)
+            VStack {
+                List {
+                    ForEach(viewModel.history, id: \.id) { games in
+                            ResultRow(weScore: games.weTotalAccumulated, youScore: games.youTotalAccumulated)
+                            .background {
+                                NavigationLink("") {
+                                    StatsView(viewModel: StatsViewModel(game: games))
+                                }
+                                .opacity(0)
+                            }
+                    }
+                    .onDelete(perform: viewModel.delete)
                 }
-                .onDelete(perform: delete)
+                .scrollContentBackground(.hidden)
+                .padding(.vertical)
+                
+                ResultRow(
+                    weScore: viewModel.history.filter { $0.weTotalAccumulated > $0.youTotalAccumulated }.count,
+                    youScore: viewModel.history.filter { $0.weTotalAccumulated < $0.youTotalAccumulated }.count
+                )
+                .padding(.vertical)
+                .bold()
             }
-            .scrollContentBackground(.hidden)
         }
-        .onAppear { viewModel.onAppear() }
         .navigationTitle("Povijest")
+        .navigationBarTitleDisplayMode(.large)
         .toolbar {
             EditButton()
                 .foregroundColor(.primary)
         }
     }
-    
-    func delete(at offsets: IndexSet) {
-        viewModel.history.remove(atOffsets: offsets)
-        AppState.shared.finishedGames = viewModel.history
-    }
 }
 
 struct HistoryView_Previews: PreviewProvider {
     static var previews: some View {
-        HistoryView(viewModel: HistoryViewModel())
+        let viewModel = HistoryViewModel()
+        viewModel.history = [[Game(),Game()],[Game()]]
+        return HistoryView(viewModel: viewModel)
     }
 }

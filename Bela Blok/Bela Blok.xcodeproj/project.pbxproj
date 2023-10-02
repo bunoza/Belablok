@@ -11,6 +11,8 @@
 		C5035CD12AA4ADC100B3F3C3 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5035CD02AA4ADC100B3F3C3 /* MainViewModel.swift */; };
 		C5035CD32AA4AF6300B3F3C3 /* InputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5035CD22AA4AF6300B3F3C3 /* InputViewModel.swift */; };
 		C5305F082AC9A9A1007F1914 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5305F072AC9A9A1007F1914 /* Constants.swift */; };
+		C5305F0B2ACA2691007F1914 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5305F0A2ACA2691007F1914 /* StatsView.swift */; };
+		C5305F0D2ACA26BB007F1914 /* StatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5305F0C2ACA26BB007F1914 /* StatsViewModel.swift */; };
 		C57675A72AA384CE009CC959 /* Bela_BlokApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57675A62AA384CE009CC959 /* Bela_BlokApp.swift */; };
 		C57675A92AA384CE009CC959 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57675A82AA384CE009CC959 /* MainView.swift */; };
 		C57675AB2AA384D1009CC959 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C57675AA2AA384D1009CC959 /* Assets.xcassets */; };
@@ -33,6 +35,8 @@
 		C5035CD02AA4ADC100B3F3C3 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		C5035CD22AA4AF6300B3F3C3 /* InputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewModel.swift; sourceTree = "<group>"; };
 		C5305F072AC9A9A1007F1914 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		C5305F0A2ACA2691007F1914 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		C5305F0C2ACA26BB007F1914 /* StatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewModel.swift; sourceTree = "<group>"; };
 		C57675A32AA384CE009CC959 /* Bela Blok.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bela Blok.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C57675A62AA384CE009CC959 /* Bela_BlokApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bela_BlokApp.swift; sourceTree = "<group>"; };
 		C57675A82AA384CE009CC959 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -70,6 +74,15 @@
 			path = Wrapper;
 			sourceTree = "<group>";
 		};
+		C5305F092ACA2684007F1914 /* StatsModule */ = {
+			isa = PBXGroup;
+			children = (
+				C5305F0A2ACA2691007F1914 /* StatsView.swift */,
+				C5305F0C2ACA26BB007F1914 /* StatsViewModel.swift */,
+			);
+			path = StatsModule;
+			sourceTree = "<group>";
+		};
 		C54739C22AA3961F0097BAFD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -92,6 +105,7 @@
 		C54739C42AA396520097BAFD /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				C5305F092ACA2684007F1914 /* StatsModule */,
 				C599C4F52AB77FD60011CA2B /* HistoryModule */,
 				C59C1BD72AB5F8AB00E34056 /* Common */,
 				C5DB888C2AA398DB00D702E0 /* InputModule */,
@@ -294,12 +308,14 @@
 				C5A3E2092AA4AA700016EC3C /* AppState.swift in Sources */,
 				C5DB888E2AA398E900D702E0 /* InputView.swift in Sources */,
 				C599C4F72AB77FE70011CA2B /* HistoryView.swift in Sources */,
+				C5305F0B2ACA2691007F1914 /* StatsView.swift in Sources */,
 				C5035CD12AA4ADC100B3F3C3 /* MainViewModel.swift in Sources */,
 				C57675A72AA384CE009CC959 /* Bela_BlokApp.swift in Sources */,
 				C5035CCF2AA4ABEC00B3F3C3 /* CustomUserDefaultsObject.swift in Sources */,
 				C5305F082AC9A9A1007F1914 /* Constants.swift in Sources */,
 				C59C1BDA2AB5FC4300E34056 /* Dealer.swift in Sources */,
 				C57675B52AA387D0009CC959 /* ResultRow.swift in Sources */,
+				C5305F0D2ACA26BB007F1914 /* StatsViewModel.swift in Sources */,
 				C5DB88942AA3A42A00D702E0 /* Game.swift in Sources */,
 				C5035CD32AA4AF6300B3F3C3 /* InputViewModel.swift in Sources */,
 				C599C4F92AB77FF80011CA2B /* HistoryViewModel.swift in Sources */,
