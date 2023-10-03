@@ -14,7 +14,8 @@ struct HistoryView: View {
             VStack {
                 List {
                     ForEach(viewModel.history, id: \.id) { games in
-                            ResultRow(weScore: games.weTotalAccumulated, youScore: games.youTotalAccumulated)
+                        ResultRow(weScore: games.weTotalAccumulated, youScore: games.youTotalAccumulated)
+                            .showChevron()
                             .background {
                                 NavigationLink("") {
                                     StatsView(viewModel: StatsViewModel(game: games))
@@ -25,7 +26,6 @@ struct HistoryView: View {
                     .onDelete(perform: viewModel.delete)
                 }
                 .scrollContentBackground(.hidden)
-                .padding(.vertical)
                 
                 ResultRow(
                     weScore: viewModel.history.filter { $0.weTotalAccumulated > $0.youTotalAccumulated }.count,

@@ -35,6 +35,18 @@ struct ResultRow: View {
         .listRowBackground(Color.clear)
         .listRowSeparator(.hidden)
     }
+    
+    func showChevron() -> some View {
+        ZStack {
+            self
+            HStack {
+                Spacer()
+                Image(systemName: "chevron.right")
+            }
+        }
+        .listRowBackground(Color.clear)
+        .listRowSeparator(.hidden)
+    }
 }
 
 struct ResultRow_Previews: PreviewProvider {
@@ -43,6 +55,7 @@ struct ResultRow_Previews: PreviewProvider {
             ResultRow(weScore: 36, youScore: 126)
             ResultRow(weScore: 36, youScore: 126)
             ResultRow(weScore: 36, youScore: 126)
+                .showChevron()
         }
     }
 }

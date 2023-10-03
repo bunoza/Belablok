@@ -47,4 +47,20 @@ extension [Game] {
     var youTotalAccumulated: Int {
         self.map(\.youTotal).reduce(0, +)
     }
+    
+    var weBaseGame: Int {
+        self.map(\.weBaseScore).reduce(0, +)
+    }
+    
+    var youBaseGame: Int {
+        self.map(\.youBaseScore).reduce(0, +)
+    }
+    
+    var weCallsSum: Int {
+        self.map(\.weCallsSum).reduce(0, +)
+    }
+    
+    var youCallsSum: Int {
+        self.map(\.youCallsSum).reduce(0, +)
+    }
 }
