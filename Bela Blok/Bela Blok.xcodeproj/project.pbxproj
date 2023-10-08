@@ -24,6 +24,7 @@
 		C59C1BDA2AB5FC4300E34056 /* Dealer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59C1BD92AB5FC4300E34056 /* Dealer.swift */; };
 		C59C1BDD2AB5FDB400E34056 /* Caller.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59C1BDC2AB5FDB400E34056 /* Caller.swift */; };
 		C5A3E2092AA4AA700016EC3C /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A3E2082AA4AA700016EC3C /* AppState.swift */; };
+		C5A9C3292AD2DB10003523B5 /* View+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A9C3282AD2DB10003523B5 /* View+Helpers.swift */; };
 		C5DB888E2AA398E900D702E0 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB888D2AA398E900D702E0 /* InputView.swift */; };
 		C5DB88912AA39EC800D702E0 /* UnderlinedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB88902AA39EC800D702E0 /* UnderlinedTextField.swift */; };
 		C5DB88942AA3A42A00D702E0 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB88932AA3A42A00D702E0 /* Game.swift */; };
@@ -49,6 +50,8 @@
 		C59C1BD92AB5FC4300E34056 /* Dealer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dealer.swift; sourceTree = "<group>"; };
 		C59C1BDC2AB5FDB400E34056 /* Caller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Caller.swift; sourceTree = "<group>"; };
 		C5A3E2082AA4AA700016EC3C /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		C5A9C3282AD2DB10003523B5 /* View+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Helpers.swift"; sourceTree = "<group>"; };
+		C5A9C32A2AD2EF46003523B5 /* Bela-Blok-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Bela-Blok-Info.plist"; sourceTree = SOURCE_ROOT; };
 		C5DB888D2AA398E900D702E0 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		C5DB88902AA39EC800D702E0 /* UnderlinedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlinedTextField.swift; sourceTree = "<group>"; };
 		C5DB88932AA3A42A00D702E0 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
@@ -79,6 +82,7 @@
 			children = (
 				C5305F0A2ACA2691007F1914 /* StatsView.swift */,
 				C5305F0C2ACA26BB007F1914 /* StatsViewModel.swift */,
+				C5A9C3282AD2DB10003523B5 /* View+Helpers.swift */,
 			);
 			path = StatsModule;
 			sourceTree = "<group>";
@@ -153,6 +157,7 @@
 		C57675A52AA384CE009CC959 /* Bela Blok */ = {
 			isa = PBXGroup;
 			children = (
+				C5A9C32A2AD2EF46003523B5 /* Bela-Blok-Info.plist */,
 				C54739C32AA396380097BAFD /* Sources */,
 				C54739C22AA3961F0097BAFD /* Resources */,
 			);
@@ -312,6 +317,7 @@
 				C5035CD12AA4ADC100B3F3C3 /* MainViewModel.swift in Sources */,
 				C57675A72AA384CE009CC959 /* Bela_BlokApp.swift in Sources */,
 				C5035CCF2AA4ABEC00B3F3C3 /* CustomUserDefaultsObject.swift in Sources */,
+				C5A9C3292AD2DB10003523B5 /* View+Helpers.swift in Sources */,
 				C5305F082AC9A9A1007F1914 /* Constants.swift in Sources */,
 				C59C1BDA2AB5FC4300E34056 /* Dealer.swift in Sources */,
 				C57675B52AA387D0009CC959 /* ResultRow.swift in Sources */,
@@ -444,12 +450,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Bela Blok/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = 8Y9TGD2PJD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Bela-Blok-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -463,6 +471,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "bunoza.Bela-Blok";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -474,12 +483,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Bela Blok/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = 8Y9TGD2PJD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Bela-Blok-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -493,6 +504,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "bunoza.Bela-Blok";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

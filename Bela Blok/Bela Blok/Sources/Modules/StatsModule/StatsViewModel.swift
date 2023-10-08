@@ -1,9 +1,13 @@
 import Foundation
+import SwiftUI
 
 class StatsViewModel: ObservableObject {
     @Published var game: [Game]
     @Published var weGraphData: [GraphData] = [GraphData(amount: 0, orderedNumber: 0)]
     @Published var youGraphData: [GraphData] = [GraphData(amount: 0, orderedNumber: 0)]
+    @Published var stats: Image?
+    @Published var graph: Image?
+    @Published var both: Image?
 
     var weTotal: Int {
         game.weTotalAccumulated
@@ -29,6 +33,12 @@ class StatsViewModel: ObservableObject {
             youGraphData.append(GraphData(amount: match.youTotal + (youGraphData.last?.amount ?? 0), orderedNumber: i))
             i += 1
         }
+    }
+    
+    @MainActor
+    func onAppear(_ stats: some View, _ graph: some View, _ both: some View) async {
+        self.stats = stats.setGreenBackground().snapshot()
+        self.graph = graph.snapshot()
     }
 }
 

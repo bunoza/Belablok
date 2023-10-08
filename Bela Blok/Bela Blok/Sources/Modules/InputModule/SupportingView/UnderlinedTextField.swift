@@ -8,7 +8,7 @@ struct UnderlinedTextField: View {
     
     init(score: Binding<Int>) {
         self._score = score
-        text = score.wrappedValue == -1 ? "0" : String(score.wrappedValue)
+        text = score.wrappedValue == -1 ? "" : String(score.wrappedValue)
     }
     
     var body: some View {

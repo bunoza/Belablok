@@ -95,23 +95,11 @@ struct MainView: View {
                 }
             )
             .toolbar {
-                ToolbarItemGroup(placement: .topBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink {
                         HistoryView(viewModel: HistoryViewModel())
                     } label: {
                         Image(systemName: "clock.arrow.circlepath")
-                            .foregroundColor(.primary)
-                    }
-
-                    Button {
-                        if viewModel.shouldStartNewGame {
-                            showGameFinishedAlert = true
-                        } else {
-                            showInputSheet = true
-                        }
-                    } label: {
-                        Image(systemName: "square.and.pencil")
-                            .imageScale(.large)
                             .foregroundColor(.primary)
                     }
                 }
@@ -127,6 +115,17 @@ struct MainView: View {
                                 .foregroundColor(.primary)
                         }
                         Spacer()
+                        Button {
+                            if viewModel.shouldStartNewGame {
+                                showGameFinishedAlert = true
+                            } else {
+                                showInputSheet = true
+                            }
+                        } label: {
+                            Image(systemName: "square.and.pencil")
+                                .imageScale(.large)
+                                .foregroundColor(.primary)
+                        }
                     }
                 }
             }
