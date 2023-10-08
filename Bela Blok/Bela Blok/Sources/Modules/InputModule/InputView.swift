@@ -4,25 +4,25 @@ import SwiftUI
 struct InputView: View {
     @Environment(\.dismiss) private var dismiss
     
-    @ObservedObject private var viewModel: InputViewModel
+    @StateObject private var viewModel: InputViewModel
     
     @State private var ignoreFlag: Bool = false
     
     init(viewModel: InputViewModel) {
-        self.viewModel = viewModel
+        self._viewModel = StateObject(wrappedValue: viewModel)
     }
     
     var body: some View {
         NavigationView {
             GeometryReader { geometryProxy in
                 ZStack {
-                    Color.green.opacity(0.8).ignoresSafeArea(.all)
+                    Color.green.opacity(0.7).ignoresSafeArea(.all)
                     
                     List {
                         HStack {
                             Spacer()
-                            UnderlinedTextField(score: $viewModel.currentGame.weBaseScore)
-                                .onChange(of: viewModel.currentGame.weBaseScore) { newValue in
+                            UnderlinedTextField(score: $viewModel.currentGameEdit.weBaseScore)
+                                .onChange(of: viewModel.currentGameEdit.weBaseScore) { newValue in
                                     if !ignoreFlag {
                                         ignoreFlag = true
                                         viewModel.onChangeOfWeScore()
@@ -30,8 +30,8 @@ struct InputView: View {
                                     }
                                 }
                             Spacer()
-                            UnderlinedTextField(score: $viewModel.currentGame.youBaseScore)
-                                .onChange(of: viewModel.currentGame.youBaseScore) { newValue in
+                            UnderlinedTextField(score: $viewModel.currentGameEdit.youBaseScore)
+                                .onChange(of: viewModel.currentGameEdit.youBaseScore) { newValue in
                                     if !ignoreFlag {
                                         ignoreFlag = true
                                         viewModel.onChangeOfYouScore()
@@ -49,7 +49,7 @@ struct InputView: View {
                             VStack {
                                 Text("Zvanje")
                                     .font(.subheadline)
-                                Text("\(viewModel.currentGame.weCallsSum)")
+                                Text("\(viewModel.currentGameEdit.weCallsSum)")
                                     .font(.subheadline)
                             }
                             Spacer()
@@ -60,14 +60,14 @@ struct InputView: View {
                                 Text("Obriši zvanja")
                                     .font(.subheadline)
                             }
-                            .buttonStyle(.borderedProminent)
+                            .roundedAccentButton(width: geometryProxy.size.width/3.5, height: geometryProxy.size.height/20)
                             .padding(.horizontal)
                             Spacer()
                             
                             VStack {
                                 Text("Zvanje")
                                     .font(.subheadline)
-                                Text("\(viewModel.currentGame.youCallsSum)")
+                                Text("\(viewModel.currentGameEdit.youCallsSum)")
                                     .font(.subheadline)
                             }
                             Spacer()
@@ -76,7 +76,7 @@ struct InputView: View {
                         .listRowSeparator(.hidden)
                         .padding()
                         
-                        Picker("", selection: $viewModel.currentGame.caller) {
+                        Picker("", selection: $viewModel.currentGameEdit.caller) {
                             ForEach(Caller.allCases, id: \.self) { caller in
                                 Text(caller.description)
                             }
@@ -107,7 +107,7 @@ struct InputView: View {
                         Text("Spremi")
                             .foregroundColor(.primary)
                     }
-                    .disabled(viewModel.currentGame.weBaseScore + viewModel.currentGame.youBaseScore  != 162)
+                    .disabled(viewModel.currentGameEdit.weBaseScore + viewModel.currentGameEdit.youBaseScore  != 162)
                 }
                 ToolbarItem(placement: .cancellationAction) {
                     Button {
@@ -125,7 +125,7 @@ struct InputView: View {
         HStack {
             HStack {
                 Button {
-                    viewModel.currentGame.weCall20 -= 1
+                    viewModel.currentGameEdit.weCall20 -= 1
                 } label: {
                     Image(systemName: "minus.circle")
                         .resizable()
@@ -134,9 +134,9 @@ struct InputView: View {
                         .frame(width: geometryProxy.size.width/15, height: geometryProxy.size.width/15)
                 }
                 .buttonStyle(.plain)
-                .disabled(viewModel.currentGame.weCall20 <= 0)
-                .opacity(viewModel.currentGame.weCall20 > 0 ? 1 : 0)
-                .animation(.bouncy, value: viewModel.currentGame.weCall20)
+                .disabled(viewModel.currentGameEdit.weCall20 <= 0)
+                .opacity(viewModel.currentGameEdit.weCall20 > 0 ? 1 : 0)
+                .animation(.bouncy, value: viewModel.currentGameEdit.weCall20)
                 .padding()
                 
                 Button {
@@ -162,7 +162,7 @@ struct InputView: View {
                 .buttonStyle(.plain)
 
                 Button {
-                    viewModel.currentGame.youCall20 -= 1
+                    viewModel.currentGameEdit.youCall20 -= 1
                 } label: {
                     Image(systemName: "minus.circle")
                         .resizable()
@@ -171,9 +171,9 @@ struct InputView: View {
                         .frame(width: geometryProxy.size.width/15, height: geometryProxy.size.width/15)
                 }
                 .buttonStyle(.plain)
-                .disabled(viewModel.currentGame.youCall20 <= 0)
-                .opacity(viewModel.currentGame.youCall20 > 0 ? 1 : 0)
-                .animation(.bouncy, value: viewModel.currentGame.youCall20)
+                .disabled(viewModel.currentGameEdit.youCall20 <= 0)
+                .opacity(viewModel.currentGameEdit.youCall20 > 0 ? 1 : 0)
+                .animation(.bouncy, value: viewModel.currentGameEdit.youCall20)
                 .padding()
             }
         }
@@ -185,7 +185,7 @@ struct InputView: View {
         HStack {
             HStack {
                 Button {
-                    viewModel.currentGame.weCall50 -= 1
+                    viewModel.currentGameEdit.weCall50 -= 1
                 } label: {
                     Image(systemName: "minus.circle")
                         .resizable()
@@ -194,9 +194,9 @@ struct InputView: View {
                         .frame(width: geometryProxy.size.width/15, height: geometryProxy.size.width/15)
                 }
                 .buttonStyle(.plain)
-                .disabled(viewModel.currentGame.weCall50 <= 0)
-                .opacity(viewModel.currentGame.weCall50 > 0 ? 1 : 0)
-                .animation(.bouncy, value: viewModel.currentGame.weCall50)
+                .disabled(viewModel.currentGameEdit.weCall50 <= 0)
+                .opacity(viewModel.currentGameEdit.weCall50 > 0 ? 1 : 0)
+                .animation(.bouncy, value: viewModel.currentGameEdit.weCall50)
                 .padding()
 
                 Button {
@@ -222,7 +222,7 @@ struct InputView: View {
                 .buttonStyle(.plain)
 
                 Button {
-                    viewModel.currentGame.youCall50 -= 1
+                    viewModel.currentGameEdit.youCall50 -= 1
                 } label: {
                     Image(systemName: "minus.circle")
                         .resizable()
@@ -231,9 +231,9 @@ struct InputView: View {
                         .frame(width: geometryProxy.size.width/15, height: geometryProxy.size.width/15)
                 }
                 .buttonStyle(.plain)
-                .disabled(viewModel.currentGame.youCall50 <= 0)
-                .opacity(viewModel.currentGame.youCall50 > 0 ? 1 : 0)
-                .animation(.bouncy, value: viewModel.currentGame.youCall50)
+                .disabled(viewModel.currentGameEdit.youCall50 <= 0)
+                .opacity(viewModel.currentGameEdit.youCall50 > 0 ? 1 : 0)
+                .animation(.bouncy, value: viewModel.currentGameEdit.youCall50)
                 .padding()
             }
         }
@@ -245,7 +245,7 @@ struct InputView: View {
         HStack {
             HStack {
                 Button {
-                    viewModel.currentGame.weCall100 -= 1
+                    viewModel.currentGameEdit.weCall100 -= 1
                 } label: {
                     Image(systemName: "minus.circle")
                         .resizable()
@@ -254,9 +254,9 @@ struct InputView: View {
                         .frame(width: geometryProxy.size.width/15, height: geometryProxy.size.width/15)
                 }
                 .buttonStyle(.plain)
-                .disabled(viewModel.currentGame.weCall100 <= 0)
-                .opacity(viewModel.currentGame.weCall100 > 0 ? 1 : 0)
-                .animation(.bouncy, value: viewModel.currentGame.weCall100)
+                .disabled(viewModel.currentGameEdit.weCall100 <= 0)
+                .opacity(viewModel.currentGameEdit.weCall100 > 0 ? 1 : 0)
+                .animation(.bouncy, value: viewModel.currentGameEdit.weCall100)
                 .padding()
 
                 Button {
@@ -282,7 +282,7 @@ struct InputView: View {
                 .buttonStyle(.plain)
                 
                 Button {
-                    viewModel.currentGame.youCall100 -= 1
+                    viewModel.currentGameEdit.youCall100 -= 1
                 } label: {
                     Image(systemName: "minus.circle")
                         .resizable()
@@ -291,9 +291,9 @@ struct InputView: View {
                         .frame(width: geometryProxy.size.width/15, height: geometryProxy.size.width/15)
                 }
                 .buttonStyle(.plain)
-                .disabled(viewModel.currentGame.youCall100 <= 0)
-                .opacity(viewModel.currentGame.youCall100 > 0 ? 1 : 0)
-                .animation(.bouncy, value: viewModel.currentGame.youCall100)
+                .disabled(viewModel.currentGameEdit.youCall100 <= 0)
+                .opacity(viewModel.currentGameEdit.youCall100 > 0 ? 1 : 0)
+                .animation(.bouncy, value: viewModel.currentGameEdit.youCall100)
                 .padding()
             }
         }
@@ -305,7 +305,7 @@ struct InputView: View {
         HStack {
             HStack {
                 Button {
-                    viewModel.currentGame.weCallBelot -= 1
+                    viewModel.currentGameEdit.weCallBelot -= 1
                 } label: {
                     Image(systemName: "minus.circle")
                         .resizable()
@@ -314,9 +314,9 @@ struct InputView: View {
                         .frame(width: geometryProxy.size.width/15, height: geometryProxy.size.width/15)
                 }
                 .buttonStyle(.plain)
-                .disabled(viewModel.currentGame.weCallBelot <= 0)
-                .opacity(viewModel.currentGame.weCallBelot > 0 ? 1 : 0)
-                .animation(.bouncy, value: viewModel.currentGame.weCallBelot)
+                .disabled(viewModel.currentGameEdit.weCallBelot <= 0)
+                .opacity(viewModel.currentGameEdit.weCallBelot > 0 ? 1 : 0)
+                .animation(.bouncy, value: viewModel.currentGameEdit.weCallBelot)
                 .padding()
 
                 Button {
@@ -342,7 +342,7 @@ struct InputView: View {
                 .buttonStyle(.plain)
                 
                 Button {
-                    viewModel.currentGame.youCallBelot -= 1
+                    viewModel.currentGameEdit.youCallBelot -= 1
                 } label: {
                     Image(systemName: "minus.circle")
                         .resizable()
@@ -351,9 +351,9 @@ struct InputView: View {
                         .frame(width: geometryProxy.size.width/15, height: geometryProxy.size.width/15)
                 }
                 .buttonStyle(.plain)
-                .disabled(viewModel.currentGame.youCallBelot <= 0)
-                .opacity(viewModel.currentGame.youCallBelot > 0 ? 1 : 0)
-                .animation(.bouncy, value: viewModel.currentGame.youCallBelot)
+                .disabled(viewModel.currentGameEdit.youCallBelot <= 0)
+                .opacity(viewModel.currentGameEdit.youCallBelot > 0 ? 1 : 0)
+                .animation(.bouncy, value: viewModel.currentGameEdit.youCallBelot)
                 .padding()
             }
         }

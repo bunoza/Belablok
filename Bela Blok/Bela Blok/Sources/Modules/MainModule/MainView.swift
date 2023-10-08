@@ -16,24 +16,35 @@ struct MainView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Color.green.opacity(0.8).ignoresSafeArea(.all)
+                Color.green.opacity(0.7).ignoresSafeArea(.all)
                 
                 VStack {
                     ResultRow(weLabel: "MI", youLabel: "VI")
                         .bold()
-                        .padding(.bottom)
-                        .padding(.bottom)
+                        .padding(.top)
                     
-                    ScrollViewReader { reader in
-                        ScrollView {
-                            ForEach(viewModel.currentSession, id: \.id) { game in
-                                ResultRow(weScore: game.weTotal, youScore: game.youTotal)
-                                    .padding(.bottom, 2)
-                                if viewModel.currentSession.count > 1 {
-                                    Divider()
-                                        .padding(.horizontal, 48)
+                    List {
+                        ForEach(viewModel.currentSession, id: \.id) { game in
+                            ResultRow(weScore: game.weTotal, youScore: game.youTotal)
+                                .padding(.bottom, 2)
+                                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                                    Button {
+                                        viewModel.editingGame = game
+                                        showInputSheet = true
+                                    } label: {
+                                        Image(systemName: "rectangle.and.pencil.and.ellipsis")
+                                    }
+                                    .tint(Color.blue)
+                                    
                                 }
-                            }
+                                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                                    Button {
+                                        viewModel.delete(game)
+                                    } label: {
+                                        Image(systemName: "trash")
+                                    }
+                                    .tint(Color.red)
+                                }
                         }
                     }
                     .animation(.easeInOut, value: viewModel.currentSession)
@@ -63,18 +74,44 @@ struct MainView: View {
             )
             .sheet(
                 isPresented: $showInputSheet,
-                onDismiss: { viewModel.updateState() },
+                onDismiss: {
+                    if let editingGame = viewModel.editingGame {
+                        viewModel.change(editingGame)
+                    }
+                    viewModel.updateState()
+                    viewModel.editingGame = nil
+                },
                 content: {
-                    InputView(viewModel: InputViewModel())
+                    if viewModel.editingGame != nil {
+                        InputView(viewModel: InputViewModel(
+                            editGame: $viewModel.editingGame,
+                            isEditing: true
+                        ))
                         .interactiveDismissDisabled(true)
+                    } else {
+                        InputView(viewModel: InputViewModel())
+                            .interactiveDismissDisabled(true)
+                    }
                 }
             )
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItemGroup(placement: .topBarTrailing) {
                     NavigationLink {
                         HistoryView(viewModel: HistoryViewModel())
                     } label: {
                         Image(systemName: "clock.arrow.circlepath")
+                            .foregroundColor(.primary)
+                    }
+
+                    Button {
+                        if viewModel.shouldStartNewGame {
+                            showGameFinishedAlert = true
+                        } else {
+                            showInputSheet = true
+                        }
+                    } label: {
+                        Image(systemName: "square.and.pencil")
+                            .imageScale(.large)
                             .foregroundColor(.primary)
                     }
                 }
@@ -90,36 +127,25 @@ struct MainView: View {
                                 .foregroundColor(.primary)
                         }
                         Spacer()
-                        Button {
-                            if viewModel.shouldStartNewGame {
-                                showGameFinishedAlert = true
-                            } else {
-                                showInputSheet = true
-                            }
-                        } label: {
-                            Image(systemName: "square.and.pencil")
-                                .imageScale(.large)
-                                .foregroundColor(.primary)
-                        }
                     }
                 }
             }
-            .alert("Nova igra?", isPresented: $showGameFinishedAlert) {
-                Button(role: .cancel) {
-                    viewModel.startNewGame()
-                } label: {
-                    Text("Nastavi")
-                }
-                
-                Button(role: .destructive) {
-                    showGameFinishedAlert = false
-                } label: {
-                    Text("Odustani")
-                }
-            }
-            .navigationTitle("Bela Blok")
-            .navigationBarTitleDisplayMode(.inline)
         }
+        .alert("Nova igra?", isPresented: $showGameFinishedAlert) {
+            Button(role: .cancel) {
+                viewModel.startNewGame()
+            } label: {
+                Text("Nastavi")
+            }
+            
+            Button(role: .destructive) {
+                showGameFinishedAlert = false
+            } label: {
+                Text("Odustani")
+            }
+        }
+        .navigationTitle("Bela Blok")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

@@ -4,10 +4,11 @@ import SwiftUI
 struct UnderlinedTextField: View {
     @Binding private var score: Int
     
-    @State private var text: String = ""
+    @State private var text: String
     
     init(score: Binding<Int>) {
         self._score = score
+        text = score.wrappedValue == -1 ? "0" : String(score.wrappedValue)
     }
     
     var body: some View {

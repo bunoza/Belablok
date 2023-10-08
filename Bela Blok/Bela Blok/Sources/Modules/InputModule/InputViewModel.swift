@@ -1,74 +1,83 @@
 import Combine
 import Foundation
+import SwiftUI
 
 class InputViewModel: ObservableObject {
-    @Published var currentGame: Game
+    @Binding var currentGame: Game?
+    @Published var currentGameEdit: Game = .init()
+    var isEditing: Bool
     
-    init(editGame: Game = .init()) {
-        self.currentGame = editGame
+    init(editGame: Binding<Game?> = .constant(.init()), isEditing: Bool = false) {
+        _currentGame = editGame
+        self.isEditing = isEditing
+        if isEditing, let editGame = editGame.wrappedValue {
+            currentGameEdit = editGame
+        } else {
+            currentGameEdit = .init()
+        }
     }
     
     private func transferCalls(to: Caller) {
         switch to {
         case .we:
-            currentGame.weCall20 += currentGame.youCall20
-            currentGame.weCall50 += currentGame.youCall50
-            currentGame.weCall100 += currentGame.youCall100
-            currentGame.weCallBelot += currentGame.youCallBelot
+            currentGameEdit.weCall20 += currentGameEdit.youCall20
+            currentGameEdit.weCall50 += currentGameEdit.youCall50
+            currentGameEdit.weCall100 += currentGameEdit.youCall100
+            currentGameEdit.weCallBelot += currentGameEdit.youCallBelot
             
-            currentGame.youCall20 = 0
-            currentGame.youCall50 = 0
-            currentGame.youCall100 = 0
-            currentGame.youCallBelot = 0
+            currentGameEdit.youCall20 = 0
+            currentGameEdit.youCall50 = 0
+            currentGameEdit.youCall100 = 0
+            currentGameEdit.youCallBelot = 0
         case .you:
-            currentGame.youCall20 += currentGame.weCall20
-            currentGame.youCall50 += currentGame.weCall50
-            currentGame.youCall100 += currentGame.weCall100
-            currentGame.youCallBelot += currentGame.weCallBelot
+            currentGameEdit.youCall20 += currentGameEdit.weCall20
+            currentGameEdit.youCall50 += currentGameEdit.weCall50
+            currentGameEdit.youCall100 += currentGameEdit.weCall100
+            currentGameEdit.youCallBelot += currentGameEdit.weCallBelot
             
-            currentGame.weCall20 = 0
-            currentGame.weCall50 = 0
-            currentGame.weCall100 = 0
-            currentGame.weCallBelot = 0
+            currentGameEdit.weCall20 = 0
+            currentGameEdit.weCall50 = 0
+            currentGameEdit.weCall100 = 0
+            currentGameEdit.weCallBelot = 0
         }
     }
     
     private func handleFall() {
-        switch currentGame.caller {
+        switch currentGameEdit.caller {
         case .we:
-            if currentGame.weTotal <= currentGame.youTotal {
-                currentGame.youBaseScore = 162
-                currentGame.weBaseScore = 0
+            if currentGameEdit.weTotal <= currentGameEdit.youTotal {
+                currentGameEdit.youBaseScore = 162
+                currentGameEdit.weBaseScore = 0
                 transferCalls(to: .you)
             }
         case .you:
-            if currentGame.youTotal <= currentGame.weTotal {
-                currentGame.weBaseScore = 162
-                currentGame.youBaseScore = 0
+            if currentGameEdit.youTotal <= currentGameEdit.weTotal {
+                currentGameEdit.weBaseScore = 162
+                currentGameEdit.youBaseScore = 0
                 transferCalls(to: .we)
             }
         }
     }
 
     func onChangeOfWeScore() {
-        currentGame.youBaseScore = 162 - currentGame.weBaseScore
+        currentGameEdit.youBaseScore = 162 - currentGameEdit.weBaseScore
     }
 
     func onChangeOfYouScore() {
-        currentGame.weBaseScore = 162 - currentGame.youBaseScore
+        currentGameEdit.weBaseScore = 162 - currentGameEdit.youBaseScore
     }
 
     func handleWeCallUpdate(amount: Int) {
-        if currentGame.weCallsSum < 1001 {
+        if currentGameEdit.weCallsSum < 1001 {
             switch amount {
             case 20:
-                if currentGame.weCall20 < 7 { currentGame.weCall20 += 1 }
+                if currentGameEdit.weCall20 < 7 { currentGameEdit.weCall20 += 1 }
             case 50:
-                if currentGame.weCall50 < 6 { currentGame.weCall50 += 1 }
+                if currentGameEdit.weCall50 < 6 { currentGameEdit.weCall50 += 1 }
             case 100:
-                if currentGame.weCall100 < 4 { currentGame.weCall100 += 1 }
+                if currentGameEdit.weCall100 < 4 { currentGameEdit.weCall100 += 1 }
             case 1001:
-                if currentGame.weCallBelot == 0 { currentGame.weCallBelot += 1 }
+                if currentGameEdit.weCallBelot == 0 { currentGameEdit.weCallBelot += 1 }
             default:
                 break
             }
@@ -76,16 +85,16 @@ class InputViewModel: ObservableObject {
     }
     
     func handleYouCallUpdate(amount: Int) {
-        if currentGame.youCallsSum < 1001 {
+        if currentGameEdit.youCallsSum < 1001 {
             switch amount {
             case 20:
-                if currentGame.youCall20 < 7 { currentGame.youCall20 += 1 }
+                if currentGameEdit.youCall20 < 7 { currentGameEdit.youCall20 += 1 }
             case 50:
-                if currentGame.youCall50 < 6 { currentGame.youCall50 += 1 }
+                if currentGameEdit.youCall50 < 6 { currentGameEdit.youCall50 += 1 }
             case 100:
-                if currentGame.youCall100 < 4 { currentGame.youCall100 += 1 }
+                if currentGameEdit.youCall100 < 4 { currentGameEdit.youCall100 += 1 }
             case 1001:
-                if currentGame.youCallBelot == 0 { currentGame.youCallBelot += 1 }
+                if currentGameEdit.youCallBelot == 0 { currentGameEdit.youCallBelot += 1 }
             default:
                 break
             }
@@ -94,18 +103,21 @@ class InputViewModel: ObservableObject {
 
     func saveCurrentGame() {
         handleFall()
-        
-        AppState.shared.currentGame.append(currentGame)
+        if isEditing {
+            self.currentGame = currentGameEdit
+        } else {
+            AppState.shared.currentGame.append(currentGameEdit)
+        }
     }
     
     func resetCalls() {
-        currentGame.weCall20 = 0
-        currentGame.weCall50 = 0
-        currentGame.weCall100 = 0
-        currentGame.weCallBelot = 0
-        currentGame.youCall20 = 0
-        currentGame.youCall50 = 0
-        currentGame.youCall100 = 0
-        currentGame.youCallBelot = 0
+        currentGameEdit.weCall20 = 0
+        currentGameEdit.weCall50 = 0
+        currentGameEdit.weCall100 = 0
+        currentGameEdit.weCallBelot = 0
+        currentGameEdit.youCall20 = 0
+        currentGameEdit.youCall50 = 0
+        currentGameEdit.youCall100 = 0
+        currentGameEdit.youCallBelot = 0
     }
 }

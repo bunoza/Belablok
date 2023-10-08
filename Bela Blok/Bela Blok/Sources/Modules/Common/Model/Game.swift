@@ -15,8 +15,8 @@ struct Game: Codable, Hashable {
     
     var caller: Caller = .we
 
-    var weBaseScore: Int = 0
-    var youBaseScore: Int = 0
+    var weBaseScore: Int = -1
+    var youBaseScore: Int = -1
     
     public var weCallsSum: Int {
         weCall20 * 20 + weCall50 * 50 + weCall100 * 100 + weCallBelot * 1001

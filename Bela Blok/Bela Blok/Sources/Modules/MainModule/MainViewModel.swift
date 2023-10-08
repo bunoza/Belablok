@@ -3,6 +3,7 @@ import Foundation
 class MainViewModel: ObservableObject {
     @Published var currentSession: [Game] = []
     @Published var dealer: Dealer = .me
+    @Published var editingGame: Game?
     
     init() {
         updateState()
@@ -50,6 +51,26 @@ class MainViewModel: ObservableObject {
     func updateDealer() {
         dealer = dealer.nextDealer
         setDealer()
+    }
+    
+    func delete(_ game: Game) {
+        let appState = AppState.shared
+        currentSession.removeAll { $0 == game }
+        appState.currentGame = currentSession
+    }
+    
+    func change(_ game: Game) {
+        let updateFlag = shouldStartNewGame
+        let appState = AppState.shared
+        if let editingGame = editingGame,
+           let index = currentSession.map(\.id) .firstIndex(of: editingGame.id) {
+            self.currentSession[index] = editingGame
+        }
+        appState.currentGame = currentSession
+        
+        if updateFlag, !shouldStartNewGame {
+            updateDealer()
+        }
     }
     
     func setDealer() {

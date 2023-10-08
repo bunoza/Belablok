@@ -9,7 +9,7 @@ struct HistoryView: View {
     
     var body: some View {
         ZStack {
-            Color.green.opacity(0.8).ignoresSafeArea(.all)
+            Color.green.opacity(0.7).ignoresSafeArea(.all)
             
             VStack {
                 List {
