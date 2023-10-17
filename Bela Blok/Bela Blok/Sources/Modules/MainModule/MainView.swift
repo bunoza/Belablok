@@ -58,6 +58,12 @@ struct MainView: View {
                     .padding(.vertical)
                     .bold()
                 }
+                
+                if viewModel.shouldStartNewGame {
+                    LottieView(name: "confetti-animation")
+                        .allowsHitTesting(false)
+                        .ignoresSafeArea()
+                }
             }
             .onChange(of: viewModel.currentSession.count) { [count = viewModel.currentSession.count] newCount in
                 if newCount > count {
