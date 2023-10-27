@@ -1,31 +1,4 @@
 <resources>
-    <string name="app_name">Bela blok</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="dijeli">Dijeli: \</string>
-    <string name="igra_je_gotova">Igra je gotova!</string>
-    <string name="obrisi_partiju">Brisanje partije?</string>
-    <string name="nastavkom_ce_se_obrisati_gotova_igra">Nastavkom će se pohraniti podaci o trenutnoj igri i povijesti igara.</string>
-    <string name="nastavkom_ce_se_obrisati">Nastavkom će se obrisati podaci o trenutnoj igri i povijesti igara.</string>
-    <string name="brisanje_partije">Nastavkom će se obrisati podaci o odabranoj partiji.</string>
-    <string name="nastavi">Nastavi</string>
-    <string name="obrisi">Obriši</string>
-    <string name="button">Button</string>
-    <string name="vi">VI</string>
-    <string name="mi">MI</string>
-    <string name="_0">0</string>
-    <string name="_20">20</string>
-    <string name="_50">50</string>
-    <string name="_100">100</string>
-    <string name="belot">BELOT</string>
-    <string name="upisi">UPIŠI</string>
-    <string name="mi_smo_zvali">Mi smo zvali</string>
-    <string name="vi_ste_zvali">Vi ste zvali</string>
-    <string name="obrisi_zvanja">Obriši <br></br>zvanja</string>
-    <string name="zvanje">"Zvanje: "</string>
-    <string name="povijest_odigranih_partija">Povijest odigranih partija</string>
-    <string name="datami">datami%d</string>
-    <string name="datavi">datavi%d</string>
-    <string name="winrate">Pobjede: \n %.2f%% </string>
-    <string name="broj_zvanja">Broj zvanja: %d</string>
+    <string name="app_name">BelaBlok</string>
+    <string name="zero_points">0</string>
 </resources>
