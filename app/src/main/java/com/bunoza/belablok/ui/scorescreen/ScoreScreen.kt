@@ -1,6 +1,5 @@
 package com.bunoza.belablok.ui.scorescreen
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -10,10 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomSheetScaffold
-import androidx.compose.material3.BottomSheetScaffoldState
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -34,21 +30,17 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunoza.belablok.R
 import com.bunoza.belablok.data.database.model.SingleGame
-import com.bunoza.belablok.ui.EmptyGameScreen
 import com.bunoza.belablok.ui.UIState
 import com.bunoza.belablok.ui.destinations.HistoryScreenDestination
 import com.bunoza.belablok.ui.destinations.InputScoreScreenDestination
 import com.bunoza.belablok.ui.errorscreen.ErrorScreen
 import com.bunoza.belablok.ui.loadingscreen.LoadingScreen
-import com.bunoza.belablok.ui.theme.BelaBlokTheme
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -119,7 +111,6 @@ fun ScoreScreen(navigator: DestinationsNavigator) {
                             null
                         )
                     )
-
                 },
                 singleGameList = (uiState as UIState.Success<List<SingleGame>>).data,
                 totalScoreWe = scoreScreenViewModel.totalWeScore.value,
@@ -150,8 +141,6 @@ fun ScoreScreen(navigator: DestinationsNavigator) {
             )
         }
     }
-
-
 }
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
@@ -171,7 +160,6 @@ fun ScoreScreenContent(
     onHistoryButtonClick: () -> Unit,
     onSingleGameClick: (SingleGame) -> Unit
 ) {
-
     if (isAlertDialogOpened) {
         NewGameAlertDialog(
             onConfirmClick = onAlertDialogConfirmClick,
@@ -204,15 +192,17 @@ fun ScoreScreenContent(
             Column(modifier = Modifier.background(MaterialTheme.colorScheme.primary)) {
                 TotalScoreItem(
                     firstPlayerText = totalScoreWe.toString(),
-                    secondPlayerText = totalScoreThem.toString(),
+                    secondPlayerText = totalScoreThem.toString()
                 )
-                Text(text = "Dijeli: $dealer",
+                Text(
+                    text = "Dijeli: $dealer",
                     color = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier
                         .padding(12.dp)
                         .clickable {
                             onDealerCounterClick.invoke()
-                        })
+                        }
+                )
             }
         },
         floatingActionButton = {
@@ -257,4 +247,3 @@ fun ScoreScreenContent(
         }
     }
 }
-

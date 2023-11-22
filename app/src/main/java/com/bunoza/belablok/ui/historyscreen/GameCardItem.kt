@@ -17,12 +17,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.bunoza.belablok.data.database.model.Game
 import com.bunoza.belablok.ui.theme.BelaBlokTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GameItem(firstPlayerText:String,secondPlayerText:String,onCardClick:()->Unit) {
+fun GameItem(firstPlayerText: String, secondPlayerText: String, onCardClick: () -> Unit) {
     OutlinedCard(modifier = Modifier.fillMaxWidth(), onClick = onCardClick) {
         Row(
             modifier = Modifier
@@ -57,14 +56,12 @@ fun GameItem(firstPlayerText:String,secondPlayerText:String,onCardClick:()->Unit
             )
         }
     }
-
 }
 
 @Preview
 @Composable
 fun PreviewGameItem() {
     BelaBlokTheme {
-        GameItem("100","62",{})
+        GameItem("100", "62", {})
     }
-
 }

@@ -13,12 +13,14 @@ import com.bunoza.belablok.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HistoryTopBar(onBackClick:()->Unit) {
+fun HistoryTopBar(onBackClick: () -> Unit) {
     TopAppBar(
         title = { Text(text = "Povijest igara") },
-        navigationIcon = { IconButton(onClick = onBackClick) {
-            Icon(painter = painterResource(id = R.drawable.baseline_arrow_back_24), contentDescription = null, tint = MaterialTheme.colorScheme.onPrimary)
-        }},
+        navigationIcon = {
+            IconButton(onClick = onBackClick) {
+                Icon(painter = painterResource(id = R.drawable.baseline_arrow_back_24), contentDescription = null, tint = MaterialTheme.colorScheme.onPrimary)
+            } 
+        },
         colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primary)
     )
 }

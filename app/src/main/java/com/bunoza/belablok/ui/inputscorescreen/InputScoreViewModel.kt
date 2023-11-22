@@ -4,23 +4,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.yml.charts.common.extensions.isNotNull
-import com.bunoza.belablok.data.database.model.Game
 import com.bunoza.belablok.data.database.model.SingleGame
 import com.bunoza.belablok.data.repositories.DatabaseRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class InputScoreViewModel(private val databaseRepository: DatabaseRepository,private var game: SingleGame?) : ViewModel() {
+class InputScoreViewModel(private val databaseRepository: DatabaseRepository, private var game: SingleGame?) : ViewModel() {
     val radioOptions = listOf("MI", "VI")
     val selectedOption = mutableStateOf(radioOptions[0])
-    private val dealer= mutableStateOf("Ja")
+    private val dealer = mutableStateOf("Ja")
     val firstPlayerPoints = mutableStateOf("")
     val secondPlayerPoints = mutableStateOf("")
     val isButtonEnabled = MutableStateFlow(false)
     val timesCalledUs = MutableStateFlow(0)
     val timesCalledThem = MutableStateFlow(0)
-    private val afterBasePointsWe= mutableStateOf(0)
-    private val afterBasePointsThem= mutableStateOf(0)
+    private val afterBasePointsWe = mutableStateOf(0)
+    private val afterBasePointsThem = mutableStateOf(0)
     val callTwentyUsState =
         MutableStateFlow(
             CallState(
@@ -92,23 +91,23 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository,pri
         )
     )
     init {
-        if(game.isNotNull()){
-            firstPlayerPoints.value=game?.baseGamePointsWe.toString()
-            secondPlayerPoints.value=game?.baseGamePointsThem.toString()
-            isButtonEnabled.value=true
-            timesCalledUs.value= game?.accumulatedCallsWe!!
+        if (game.isNotNull()) {
+            firstPlayerPoints.value = game?.baseGamePointsWe.toString()
+            secondPlayerPoints.value = game?.baseGamePointsThem.toString()
+            isButtonEnabled.value = true
+            timesCalledUs.value = game?.accumulatedCallsWe!!
             timesCalledThem.value = game!!.accumulatedCallsThem
-            callTwentyUsState.value=callTwentyUsState.value.copy(
+            callTwentyUsState.value = callTwentyUsState.value.copy(
                 timesCalled = game!!.callTwentyWe,
                 visibility = checkIfCallVisible(game!!.callTwentyWe),
                 timesCalledVisibility = checkIfCallVisible(game!!.callTwentyWe)
             )
-            callTwentyThemState.value=callTwentyThemState.value.copy(
+            callTwentyThemState.value = callTwentyThemState.value.copy(
                 timesCalled = game!!.callTwentyThem,
                 visibility = checkIfCallVisible(game!!.callTwentyThem),
                 timesCalledVisibility = checkIfCallVisible(game!!.callTwentyThem)
             )
-            callFiftyUsState.value=callFiftyUsState.value.copy(
+            callFiftyUsState.value = callFiftyUsState.value.copy(
                 timesCalled = game!!.callFiftyWe,
                 visibility = checkIfCallVisible(game!!.callFiftyWe),
                 timesCalledVisibility = checkIfCallVisible(game!!.callFiftyWe)
@@ -123,7 +122,7 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository,pri
                 visibility = checkIfCallVisible(game!!.callHundredWe),
                 timesCalledVisibility = checkIfCallVisible(game!!.callHundredWe)
             )
-            callHundredThemState.value=callHundredThemState.value.copy(
+            callHundredThemState.value = callHundredThemState.value.copy(
                 timesCalled = game!!.callHundredThem,
                 visibility = checkIfCallVisible(game!!.callHundredThem),
                 timesCalledVisibility = checkIfCallVisible(game!!.callHundredThem)
@@ -141,15 +140,16 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository,pri
         }
     }
 
-
     fun onTwentyCallUsClick() {
         viewModelScope.launch {
-            callTwentyUsState.value = callTwentyUsState.value.copy(
-                timesCalled = callTwentyUsState.value.timesCalled + 1,
-                visibility = true,
-                timesCalledVisibility = true
-            )
-            timesCalledUs.value = timesCalledUs.value + 20
+            if (callTwentyUsState.value.timesCalled < 7) {
+                callTwentyUsState.value = callTwentyUsState.value.copy(
+                    timesCalled = callTwentyUsState.value.timesCalled + 1,
+                    visibility = true,
+                    timesCalledVisibility = true
+                )
+                timesCalledUs.value = timesCalledUs.value + 20
+            }
         }
     }
 
@@ -173,12 +173,14 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository,pri
 
     fun onTwentyCallThemClick() {
         viewModelScope.launch {
-            callTwentyThemState.value = callTwentyThemState.value.copy(
-                timesCalled = callTwentyThemState.value.timesCalled + 1,
-                visibility = true,
-                timesCalledVisibility = true
-            )
-            timesCalledThem.value = timesCalledThem.value + 20
+            if (callTwentyThemState.value.timesCalled < 7) {
+                callTwentyThemState.value = callTwentyThemState.value.copy(
+                    timesCalled = callTwentyThemState.value.timesCalled + 1,
+                    visibility = true,
+                    timesCalledVisibility = true
+                )
+                timesCalledThem.value = timesCalledThem.value + 20
+            }
         }
     }
 
@@ -202,12 +204,14 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository,pri
 
     fun onFiftyCallUsClick() {
         viewModelScope.launch {
-            callFiftyUsState.value = callFiftyUsState.value.copy(
-                timesCalled = callFiftyUsState.value.timesCalled + 1,
-                visibility = true,
-                timesCalledVisibility = true
-            )
-            timesCalledUs.value = timesCalledUs.value + 50
+            if (callFiftyUsState.value.timesCalled < 6) {
+                callFiftyUsState.value = callFiftyUsState.value.copy(
+                    timesCalled = callFiftyUsState.value.timesCalled + 1,
+                    visibility = true,
+                    timesCalledVisibility = true
+                )
+                timesCalledUs.value = timesCalledUs.value + 50
+            }
         }
     }
 
@@ -231,12 +235,14 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository,pri
 
     fun onFiftyCallThemClick() {
         viewModelScope.launch {
-            callFiftyThemState.value = callFiftyThemState.value.copy(
-                timesCalled = callFiftyThemState.value.timesCalled + 1,
-                visibility = true,
-                timesCalledVisibility = true
-            )
-            timesCalledThem.value = timesCalledThem.value + 50
+            if (callFiftyThemState.value.timesCalled < 6) {
+                callFiftyThemState.value = callFiftyThemState.value.copy(
+                    timesCalled = callFiftyThemState.value.timesCalled + 1,
+                    visibility = true,
+                    timesCalledVisibility = true
+                )
+                timesCalledThem.value = timesCalledThem.value + 50
+            }
         }
     }
 
@@ -260,12 +266,14 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository,pri
 
     fun onHundredCallUsClick() {
         viewModelScope.launch {
-            callHundredUsState.value = callHundredUsState.value.copy(
-                timesCalled = callHundredUsState.value.timesCalled + 1,
-                visibility = true,
-                timesCalledVisibility = true
-            )
-            timesCalledUs.value = timesCalledUs.value + 100
+            if (callHundredUsState.value.timesCalled < 5) {
+                callHundredUsState.value = callHundredUsState.value.copy(
+                    timesCalled = callHundredUsState.value.timesCalled + 1,
+                    visibility = true,
+                    timesCalledVisibility = true
+                )
+                timesCalledUs.value = timesCalledUs.value + 100
+            }
         }
     }
 
@@ -289,12 +297,14 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository,pri
 
     fun onHundredCallThemClick() {
         viewModelScope.launch {
-            callHundredThemState.value = callHundredThemState.value.copy(
-                timesCalled = callHundredThemState.value.timesCalled + 1,
-                visibility = true,
-                timesCalledVisibility = true
-            )
-            timesCalledThem.value = timesCalledThem.value + 100
+            if (callHundredThemState.value.timesCalled < 5) {
+                callHundredThemState.value = callHundredThemState.value.copy(
+                    timesCalled = callHundredThemState.value.timesCalled + 1,
+                    visibility = true,
+                    timesCalledVisibility = true
+                )
+                timesCalledThem.value = timesCalledThem.value + 100
+            }
         }
     }
 
@@ -450,7 +460,7 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository,pri
                 secondPlayerPoints.value = ""
                 firstPlayerPoints.value = "162"
             }
-            if (input.isNotBlank()&& input.matches(Regex("^(0|[1-9][0-9]*)$"))) {
+            if (input.isNotBlank() && input.matches(Regex("^(0|[1-9][0-9]*)$"))) {
                 if (input.toInt() < 0 || input.toInt() > 162) {
                     secondPlayerPoints.value = input.dropLast(1)
                 } else {
@@ -474,13 +484,13 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository,pri
         callBelotThem: Int,
         totalScoreWe: Int,
         totalScoreThem: Int,
-        afterBasePointsWe:Int,
-        afterBasePointsThem:Int,
-        dealer:String
+        afterBasePointsWe: Int,
+        afterBasePointsThem: Int,
+        dealer: String
     ) {
         viewModelScope.launch {
-            if(game.isNotNull()){
-                game= game?.copy(
+            if (game.isNotNull()) {
+                game = game?.copy(
                     baseGamePointsWe = basePointsWe,
                     baseGamePointsThem = basePointsThem,
                     callTwentyWe = callTwentyWe,
@@ -501,9 +511,8 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository,pri
                 databaseRepository.updateSingleGame(
                     game!!
                 )
-
-            }else{
-                val singleGame=SingleGame(
+            } else {
+                val singleGame = SingleGame(
                     baseGamePointsWe = basePointsWe,
                     baseGamePointsThem = basePointsThem,
                     callTwentyWe = callTwentyWe,
@@ -524,7 +533,6 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository,pri
                     singleGame
                 )
             }
-
         }
     }
 
@@ -539,22 +547,22 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository,pri
                     firstPlayerTotalPoints = 0
                     secondPlayerTotalPoints =
                         162 + callTwentyUsState.value.callValue * callTwentyUsState.value.timesCalled + callFiftyUsState.value.callValue * callFiftyUsState.value.timesCalled + callHundredUsState.value.callValue * callHundredUsState.value.timesCalled + callBelotUsState.value.callValue * callBelotUsState.value.timesCalled + callTwentyThemState.value.callValue * callTwentyThemState.value.timesCalled + callFiftyThemState.value.timesCalled * callFiftyThemState.value.callValue + callHundredThemState.value.callValue * callHundredThemState.value.timesCalled + callBelotThemState.value.timesCalled * callBelotThemState.value.callValue
-                    afterBasePointsWe.value=0
-                    afterBasePointsThem.value=162
-                }else{
-                    afterBasePointsWe.value=firstPlayerPoints.value.toInt()
-                    afterBasePointsThem.value=secondPlayerPoints.value.toInt()
+                    afterBasePointsWe.value = 0
+                    afterBasePointsThem.value = 162
+                } else {
+                    afterBasePointsWe.value = firstPlayerPoints.value.toInt()
+                    afterBasePointsThem.value = secondPlayerPoints.value.toInt()
                 }
             } else {
                 if (firstPlayerTotalPoints > secondPlayerTotalPoints) {
                     secondPlayerTotalPoints = 0
                     firstPlayerTotalPoints =
                         162 + callTwentyThemState.value.callValue * callTwentyThemState.value.timesCalled + callFiftyThemState.value.timesCalled * callFiftyThemState.value.callValue + callHundredThemState.value.callValue * callHundredThemState.value.timesCalled + callBelotThemState.value.timesCalled * callBelotThemState.value.callValue + callTwentyUsState.value.callValue * callTwentyUsState.value.timesCalled + callFiftyUsState.value.callValue * callFiftyUsState.value.timesCalled + callHundredUsState.value.callValue * callHundredUsState.value.timesCalled + callBelotUsState.value.callValue * callBelotUsState.value.timesCalled
-                    afterBasePointsThem.value=0
-                    afterBasePointsWe.value=162
-                }else{
-                    afterBasePointsWe.value=firstPlayerPoints.value.toInt()
-                    afterBasePointsThem.value=secondPlayerPoints.value.toInt()
+                    afterBasePointsThem.value = 0
+                    afterBasePointsWe.value = 162
+                } else {
+                    afterBasePointsWe.value = firstPlayerPoints.value.toInt()
+                    afterBasePointsThem.value = secondPlayerPoints.value.toInt()
                 }
             }
             insertSingleGame(
@@ -572,7 +580,7 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository,pri
                 totalScoreThem = secondPlayerTotalPoints,
                 afterBasePointsWe = afterBasePointsWe.value,
                 afterBasePointsThem = afterBasePointsThem.value,
-                dealer=dealer.value
+                dealer = dealer.value
             )
         }
     }
@@ -582,10 +590,10 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository,pri
             selectedOption.value = clickedOption
         }
     }
-    fun setDealer(input:String){
-        dealer.value=input
+    fun setDealer(input: String) {
+        dealer.value = input
     }
-    fun checkIfCallVisible(timesCalled:Int):Boolean{
-        return timesCalled>0
+    fun checkIfCallVisible(timesCalled: Int): Boolean {
+        return timesCalled > 0
     }
 }

@@ -19,5 +19,5 @@ interface GameDao {
     suspend fun deleteAllGames()
 
     @Query("SELECT * from game where id=:id")
-    fun getGameById(id:Int):Flow<Game>
+    fun getGameById(id: Int): Flow<Game>
 }

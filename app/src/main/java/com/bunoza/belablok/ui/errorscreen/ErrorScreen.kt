@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun ErrorScreen(onTryAgainClick:()->Unit) {
+fun ErrorScreen(onTryAgainClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -42,12 +42,14 @@ fun ErrorScreen(onTryAgainClick:()->Unit) {
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.weight(1F))
-        Button(onClick = onTryAgainClick, modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp), colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.background, contentColor = MaterialTheme.colorScheme.primary)) {
+        Button(
+            onClick = onTryAgainClick,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.background, contentColor = MaterialTheme.colorScheme.primary)
+        ) {
             Text(text = "Try again")
         }
     }
-
-
 }

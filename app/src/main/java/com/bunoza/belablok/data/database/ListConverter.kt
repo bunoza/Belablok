@@ -7,24 +7,23 @@ import kotlinx.serialization.json.Json
 
 class ListConverter {
 
-
     @TypeConverter
-    fun fromGameToString(singleGame:SingleGame): String {
+    fun fromGameToString(singleGame: SingleGame): String {
         return Json.encodeToString(singleGame)
     }
 
     @TypeConverter
-    fun fromStringToGame(string: String):SingleGame{
+    fun fromStringToGame(string: String): SingleGame {
         return Json.decodeFromString(string)
     }
 
     @TypeConverter
-    fun fromGameListToString(singleGameList: List<SingleGame>):String{
+    fun fromGameListToString(singleGameList: List<SingleGame>): String {
         return Json.encodeToString(singleGameList)
     }
 
     @TypeConverter
-    fun fromStringToGameList(string: String):List<SingleGame>{
+    fun fromStringToGameList(string: String): List<SingleGame> {
         return Json.decodeFromString(string)
     }
 }

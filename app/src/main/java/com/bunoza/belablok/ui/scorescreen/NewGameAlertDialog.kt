@@ -2,8 +2,6 @@ package com.bunoza.belablok.ui.scorescreen
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.AlertDialogDefaults
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -20,11 +18,10 @@ fun NewGameAlertDialog(onConfirmClick: () -> Unit, whoWon: String) {
                 Text(text = "U redu")
             }
         },
-        title = { Text(text = "$whoWon su pobijedili.Pokrenite novu igru.")},
+        title = { Text(text = "$whoWon su pobijedili.Pokrenite novu igru.") },
         containerColor = MaterialTheme.colorScheme.background,
         titleContentColor = MaterialTheme.colorScheme.primary
     )
-
 }
 
 @Preview
@@ -37,7 +34,7 @@ private fun PreviewNewGameAlertDialog() {
 
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
-private fun PreviewNewGameAlertDialogDarkTheme(){
+private fun PreviewNewGameAlertDialogDarkTheme() {
     BelaBlokTheme {
         NewGameAlertDialog(onConfirmClick = {}, whoWon = "VI")
     }

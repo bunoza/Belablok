@@ -20,9 +20,9 @@ import com.bunoza.belablok.R
 
 @Composable
 fun InputScoreComposable(
-    pointsValue:String,
-    onPointsChanged:(String)->Unit
-    ) {
+    pointsValue: String,
+    onPointsChanged: (String) -> Unit
+) {
     TextField(
         value = pointsValue,
         onValueChange = { onPointsChanged.invoke(it) },

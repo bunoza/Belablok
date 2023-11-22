@@ -46,10 +46,11 @@ fun TotalScoreItem(
                 textAlign = TextAlign.Center
             )
         }
-        Box(modifier = Modifier
-            .clip(RoundedCornerShape(topStart = 48F, bottomStart = 48F))
-            .background(MaterialTheme.colorScheme.background)
-            .padding(vertical = 10.dp)
+        Box(
+            modifier = Modifier
+                .clip(RoundedCornerShape(topStart = 48F, bottomStart = 48F))
+                .background(MaterialTheme.colorScheme.background)
+                .padding(vertical = 10.dp)
         ) {
             Text(
                 text = secondPlayerText,
@@ -60,7 +61,5 @@ fun TotalScoreItem(
                 textAlign = TextAlign.Center
             )
         }
-
     }
-
 }

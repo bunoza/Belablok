@@ -13,7 +13,7 @@ import com.bunoza.belablok.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GameDetailsTopBar(onShareClick:()->Unit) {
+fun GameDetailsTopBar(onShareClick: () -> Unit) {
     TopAppBar(
         title = { Text(text = "Statistika", color = MaterialTheme.colorScheme.onPrimary) },
         colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primary),
@@ -23,5 +23,4 @@ fun GameDetailsTopBar(onShareClick:()->Unit) {
             }
         }
     )
-
 }

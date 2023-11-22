@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun CallsComposable(collectedTimesCalledUsState:Int,collectedTimesCalledThemState:Int, onDeleteClick:()->Unit) {
+fun CallsComposable(collectedTimesCalledUsState: Int, collectedTimesCalledThemState: Int, onDeleteClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -24,7 +24,7 @@ fun CallsComposable(collectedTimesCalledUsState:Int,collectedTimesCalledThemStat
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "Zvanja:${collectedTimesCalledUsState}",
+            text = "Zvanja:$collectedTimesCalledUsState",
             color = MaterialTheme.colorScheme.background,
             fontSize = 14.sp
         )
@@ -38,11 +38,9 @@ fun CallsComposable(collectedTimesCalledUsState:Int,collectedTimesCalledThemStat
             Text(text = "Obriši zvanja")
         }
         Text(
-            text = "Zvanja:${collectedTimesCalledThemState}",
+            text = "Zvanja:$collectedTimesCalledThemState",
             color = MaterialTheme.colorScheme.background,
             fontSize = 14.sp
         )
     }
-
-
 }

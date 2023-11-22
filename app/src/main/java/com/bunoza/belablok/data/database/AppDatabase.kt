@@ -2,7 +2,6 @@ package com.bunoza.belablok.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import com.bunoza.belablok.data.database.model.Game
 import com.bunoza.belablok.data.database.model.SingleGame

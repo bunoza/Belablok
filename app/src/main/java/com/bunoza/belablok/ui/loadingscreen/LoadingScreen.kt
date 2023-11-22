@@ -18,7 +18,5 @@ fun LoadingScreen() {
         CircularProgressIndicator(
             color = MaterialTheme.colorScheme.onPrimary
         )
-
     }
-
 }

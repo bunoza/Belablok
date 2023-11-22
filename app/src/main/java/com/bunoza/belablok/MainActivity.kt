@@ -3,13 +3,15 @@ package com.bunoza.belablok
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.navigation.compose.NavHost
 import com.bunoza.belablok.ui.NavGraphs
-import com.bunoza.belablok.ui.inputscorescreen.InputScoreScreen
 import com.bunoza.belablok.ui.theme.BelaBlokTheme
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import com.ramcosta.composedestinations.DestinationsNavHost
 
 class MainActivity : ComponentActivity() {
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -17,5 +19,6 @@ class MainActivity : ComponentActivity() {
                 DestinationsNavHost(navGraph = NavGraphs.root)
             }
         }
+        firebaseAnalytics = Firebase.analytics
     }
 }

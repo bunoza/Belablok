@@ -21,29 +21,26 @@ import co.yml.charts.ui.linechart.model.LinePlotData
 import co.yml.charts.ui.linechart.model.LineStyle
 import co.yml.charts.ui.linechart.model.LineType
 import co.yml.charts.ui.linechart.model.SelectionHighlightPoint
-import co.yml.charts.ui.linechart.model.SelectionHighlightPopUp
 import co.yml.charts.ui.linechart.model.ShadowUnderLine
 
-
 @Composable
-fun ChartDetailsComposable(wePointsData:List<Point>,themPointsData:List<Point>) {
+fun ChartDetailsComposable(wePointsData: List<Point>, themPointsData: List<Point>) {
     val configuration = LocalConfiguration.current
     val screenWidthInDp = configuration.screenWidthDp.dp
-    val xAxisData=AxisData.Builder()
-        .steps(wePointsData.count()-1)
-        .axisStepSize(screenWidthInDp/wePointsData.size)
+    val xAxisData = AxisData.Builder()
+        .steps(wePointsData.count() - 1)
+        .axisStepSize(screenWidthInDp / wePointsData.size)
         .labelData {
             it.toString()
         }
         .backgroundColor(Color.Transparent)
         .build()
-    val yAxisData=AxisData.Builder()
+    val yAxisData = AxisData.Builder()
         .steps(wePointsData.size)
         .backgroundColor(Color.Transparent)
         .labelData {
-            val yScale = 1000/wePointsData.count()
-            (it*yScale).toString()
-
+            val yScale = 1000 / wePointsData.count()
+            (it * yScale).toString()
         }
         .axisLineColor(MaterialTheme.colorScheme.primary)
         .build()
@@ -67,7 +64,7 @@ fun ChartDetailsComposable(wePointsData:List<Point>,themPointsData:List<Point>) 
                     ShadowUnderLine(Color.Transparent),
                     null
                 )
-            ),
+            )
         ),
         xAxisData = xAxisData,
         yAxisData = yAxisData,
@@ -75,10 +72,11 @@ fun ChartDetailsComposable(wePointsData:List<Point>,themPointsData:List<Point>) 
         backgroundColor = MaterialTheme.colorScheme.background,
         isZoomAllowed = false
     )
-    Box (modifier = Modifier
-        .fillMaxWidth()
-        .height(300.dp)){
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(300.dp)
+    ) {
         LineChart(modifier = Modifier.fillMaxWidth(), lineChartData = lineChartData)
-
     }
 }

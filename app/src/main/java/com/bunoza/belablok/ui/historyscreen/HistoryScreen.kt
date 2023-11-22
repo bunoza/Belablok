@@ -1,6 +1,5 @@
 package com.bunoza.belablok.ui.historyscreen
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunoza.belablok.data.database.model.Game
 import com.bunoza.belablok.ui.EmptyGameScreen
@@ -21,20 +19,20 @@ import com.bunoza.belablok.ui.UIState
 import com.bunoza.belablok.ui.destinations.GameDetailsScreenDestination
 import com.bunoza.belablok.ui.errorscreen.ErrorScreen
 import com.bunoza.belablok.ui.loadingscreen.LoadingScreen
-import com.bunoza.belablok.ui.theme.BelaBlokTheme
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import org.koin.androidx.compose.koinViewModel
-
 
 @Composable
 @Destination
 fun HistoryScreen(navigator: DestinationsNavigator) {
     val historyViewModel = koinViewModel<HistoryViewModel>()
     val uiState by historyViewModel.uiState.collectAsState()
-    Scaffold (topBar = { HistoryTopBar {
-        navigator.navigateUp()
-    }}){ paddingValues->
+    Scaffold(topBar = {
+        HistoryTopBar {
+            navigator.navigateUp()
+        } 
+    }) { paddingValues ->
         when (uiState) {
             is UIState.Loading -> LoadingScreen()
             is UIState.Error -> ErrorScreen {
@@ -45,11 +43,9 @@ fun HistoryScreen(navigator: DestinationsNavigator) {
                 historyViewModel.getAllGames()
             }
 
-            is UIState.Success<*> -> HistoryScreenContent(gameList = (uiState as UIState.Success<*>).data as List<Game>, onCardClick = {navigator.navigate(GameDetailsScreenDestination(it.id))},paddingValues)
+            is UIState.Success<*> -> HistoryScreenContent(gameList = (uiState as UIState.Success<*>).data as List<Game>, onCardClick = { navigator.navigate(GameDetailsScreenDestination(it.id)) }, paddingValues)
         }
     }
-
-
 }
 
 @Composable
@@ -69,11 +65,10 @@ private fun HistoryScreenContent(gameList: List<Game>, onCardClick: (Game) -> Un
             GameItem(
                 firstPlayerText = game.totalPointsWe.toString(),
                 secondPlayerText = game.totalPointsThem.toString(),
-                onCardClick = { onCardClick.invoke(game) })
-
+                onCardClick = { onCardClick.invoke(game) }
+            )
         }
     }
-
 }
 
 /*@Preview

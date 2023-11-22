@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun EmptyGameScreen(onTryAgainClick:()->Unit) {
+fun EmptyGameScreen(onTryAgainClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -42,11 +42,14 @@ fun EmptyGameScreen(onTryAgainClick:()->Unit) {
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.weight(1F))
-        Button(onClick = onTryAgainClick, modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp), colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.background, contentColor = MaterialTheme.colorScheme.primary)) {
+        Button(
+            onClick = onTryAgainClick,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.background, contentColor = MaterialTheme.colorScheme.primary)
+        ) {
             Text(text = "Try again")
         }
     }
-
 }

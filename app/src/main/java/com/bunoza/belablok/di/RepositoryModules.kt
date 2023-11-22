@@ -6,7 +6,7 @@ import com.bunoza.belablok.data.repositories.PreferenceRepository
 import org.koin.dsl.module
 
 val repositoryModule = module {
-    single { DatabaseRepository(get(),get()) }
-    single {PreferenceManager(get())}
+    single { DatabaseRepository(get(), get()) }
+    single { PreferenceManager(get()) }
     single { PreferenceRepository(get()) }
 }

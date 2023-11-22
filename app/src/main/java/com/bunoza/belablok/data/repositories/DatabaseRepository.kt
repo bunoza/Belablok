@@ -21,28 +21,28 @@ class DatabaseRepository(private val scoreDao: ScoreDao, private val gameDao: Ga
         return scoreDao.getAllSingleGames().flowOn(Dispatchers.IO)
     }
 
-    suspend fun deleteAllGames(){
-        withContext(Dispatchers.IO){
+    suspend fun deleteAllGames() {
+        withContext(Dispatchers.IO) {
             scoreDao.deleteSingleGame()
         }
     }
 
-    suspend fun insertWholeGame(game: Game){
-        withContext(Dispatchers.IO){
+    suspend fun insertWholeGame(game: Game) {
+        withContext(Dispatchers.IO) {
             gameDao.insertGame(game)
         }
     }
 
-    fun getAllGames():Flow<List<Game>>{
+    fun getAllGames(): Flow<List<Game>> {
         return gameDao.getAllGames().flowOn(Dispatchers.IO)
     }
 
-    fun getGameById(id:Int):Flow<Game>{
+    fun getGameById(id: Int): Flow<Game> {
         return gameDao.getGameById(id).flowOn(Dispatchers.IO)
     }
 
-    suspend fun updateSingleGame(singleGame: SingleGame){
-        withContext(Dispatchers.IO){
+    suspend fun updateSingleGame(singleGame: SingleGame) {
+        withContext(Dispatchers.IO) {
             scoreDao.updateSingleGame(singleGame)
         }
     }
