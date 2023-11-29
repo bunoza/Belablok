@@ -14,8 +14,9 @@ struct RoundedAccentButton: ViewModifier {
             .font(.title)
             .background {
                 RoundedRectangle(cornerRadius: 7)
-                    .fill(Color("ButtonBackground"))
+                    .fill(Color("temp"))
                     .frame(width: width, height: height)
+                    .shadow(radius: 5)
             }
             .padding()
     }

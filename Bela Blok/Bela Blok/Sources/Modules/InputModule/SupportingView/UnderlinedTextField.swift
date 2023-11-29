@@ -20,7 +20,9 @@ struct UnderlinedTextField: View {
                     return
                 }
                 
-                let filteredString = newState.filter { Constants.ACCEPTABLE_CHARS_FOR_INPUT.contains($0) }
+                let filteredString = newState.filter { 
+                    Constants.ACCEPTABLE_CHARS_FOR_INPUT.contains($0)
+                }
                 
                 if let validInt = Int(filteredString),
                    validInt >= 0,

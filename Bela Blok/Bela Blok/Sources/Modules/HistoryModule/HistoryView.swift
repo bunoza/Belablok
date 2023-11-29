@@ -9,8 +9,6 @@ struct HistoryView: View {
     
     var body: some View {
         ZStack {
-            Color.green.opacity(0.7).ignoresSafeArea(.all)
-            
             VStack {
                 List {
                     ForEach(viewModel.history, id: \.id) { games in

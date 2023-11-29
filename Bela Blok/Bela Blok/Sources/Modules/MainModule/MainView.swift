@@ -16,8 +16,6 @@ struct MainView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Color.green.opacity(0.7).ignoresSafeArea(.all)
-                
                 VStack {
                     ResultRow(weLabel: "MI", youLabel: "VI")
                         .bold()
@@ -108,6 +106,7 @@ struct MainView: View {
                         Image(systemName: "clock.arrow.circlepath")
                             .foregroundColor(.primary)
                     }
+                    .disabled(AppState.shared.finishedGames.isEmpty)
                 }
                 
                 ToolbarItem(placement: .bottomBar) {
@@ -135,22 +134,22 @@ struct MainView: View {
                     }
                 }
             }
-        }
-        .alert("Nova igra?", isPresented: $showGameFinishedAlert) {
-            Button(role: .cancel) {
-                viewModel.startNewGame()
-            } label: {
-                Text("Nastavi")
+            .alert("Nova igra?", isPresented: $showGameFinishedAlert) {
+                Button(role: .cancel) {
+                    viewModel.startNewGame()
+                } label: {
+                    Text("Nastavi")
+                }
+                
+                Button(role: .destructive) {
+                    showGameFinishedAlert = false
+                } label: {
+                    Text("Odustani")
+                }
             }
-            
-            Button(role: .destructive) {
-                showGameFinishedAlert = false
-            } label: {
-                Text("Odustani")
-            }
+            .navigationTitle("Bela Blok")
+            .navigationBarTitleDisplayMode(.inline)
         }
-        .navigationTitle("Bela Blok")
-        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

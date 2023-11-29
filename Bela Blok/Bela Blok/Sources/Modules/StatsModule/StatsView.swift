@@ -81,17 +81,6 @@ struct StatsView: View {
                 Spacer()
             }
             .padding(.vertical)
-            
-            //                HStack {
-            //                    Spacer()
-            //                    Button {
-            //                        showGraph.toggle()
-            //                    } label: {
-            //                        Text("Prikaži graf")
-            //                    }
-            //                    Spacer()
-            //                }
-            //                .padding(.vertical)
         }
         .listRowBackground(Color.clear)
         .listRowInsets(EdgeInsets())
@@ -143,14 +132,20 @@ struct StatsView: View {
         Group {
             stats
             if showGraph {
-                graph
-                    .background {
-                        RoundedRectangle(cornerRadius: 7)
-                            .fill(colorScheme == .dark
-                                  ? Color.black.opacity(0.8)
-                                  : Color.white.opacity(0.8)
-                            )
-                    }
+                HStack {
+                    Spacer()
+                    graph
+//                        .background {
+//                            RoundedRectangle(cornerRadius: 7)
+//                                .fill(colorScheme == .dark
+//                                      ? Color.black.opacity(0.8)
+//                                      : Color.white.opacity(0.8)
+//                                )
+//                        }
+                    Spacer()
+                }
+                .listRowSeparator(.hidden)
+                .listRowBackground(Color.clear)
             }
         }
     }
@@ -161,8 +156,6 @@ struct StatsView: View {
     
     var body: some View {
         ZStack {
-            Color.green.opacity(0.7).ignoresSafeArea(.all)
-            
             List {
                 statsContent
             }
