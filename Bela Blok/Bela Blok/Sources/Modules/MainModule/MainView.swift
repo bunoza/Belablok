@@ -5,11 +5,13 @@ struct MainView: View {
     @State private var showInputSheet: Bool
     @State private var showDealerSheet: Bool
     @State private var showGameFinishedAlert: Bool
+    @State private var showSettingsSheet: Bool
     
     init() {
         _viewModel = .init(wrappedValue: MainViewModel())
         showInputSheet = false
         showDealerSheet = false
+        showSettingsSheet = false
         showGameFinishedAlert = false
     }
     
@@ -69,6 +71,13 @@ struct MainView: View {
                 }
             }
             .sheet(
+                isPresented: $showSettingsSheet,
+                content: {
+                    SettingsView()
+                        .presentationDetents([.medium])
+                }
+            )
+            .sheet(
                 isPresented: $showDealerSheet,
                 onDismiss: { viewModel.setDealer() },
                 content: {
@@ -99,6 +108,15 @@ struct MainView: View {
                 }
             )
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        showSettingsSheet = true
+                    } label: {
+                        Image(systemName: "gear")
+                            .foregroundColor(.primary)
+                    }
+                }
+
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink {
                         HistoryView(viewModel: HistoryViewModel())

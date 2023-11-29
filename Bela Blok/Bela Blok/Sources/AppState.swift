@@ -12,5 +12,8 @@ class AppState: ObservableObject {
     
     @CustomUserDefaultsObject("current_dealer", defaultValue: .me)
     var currentDealer: Dealer
+    
+    @CustomUserDefaultsObject("should_keep_screen_on", defaultValue: UIApplication.shared.isIdleTimerDisabled)
+    var isIdleTimerDisabled: Bool
 }
 

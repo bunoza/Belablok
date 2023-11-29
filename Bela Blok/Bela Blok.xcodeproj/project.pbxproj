@@ -49,6 +49,7 @@
 		C5B2EE4F2ADB20A800CA476D /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B2EE4E2ADB20A800CA476D /* LottieView.swift */; };
 		C5B2EE522ADB22BE00CA476D /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = C5B2EE512ADB22BE00CA476D /* Lottie */; };
 		C5B2EE542ADB22F600CA476D /* confetti-animation.json in Resources */ = {isa = PBXBuildFile; fileRef = C5B2EE532ADB22F600CA476D /* confetti-animation.json */; };
+		C5CA55B82B17BCAE007B23C0 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CA55B72B17BCAE007B23C0 /* SettingsView.swift */; };
 		C5DB888E2AA398E900D702E0 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB888D2AA398E900D702E0 /* InputView.swift */; };
 		C5DB88912AA39EC800D702E0 /* UnderlinedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB88902AA39EC800D702E0 /* UnderlinedTextField.swift */; };
 		C5DB88942AA3A42A00D702E0 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB88932AA3A42A00D702E0 /* Game.swift */; };
@@ -91,6 +92,7 @@
 		C5A9C3282AD2DB10003523B5 /* View+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Helpers.swift"; sourceTree = "<group>"; };
 		C5B2EE4E2ADB20A800CA476D /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		C5B2EE532ADB22F600CA476D /* confetti-animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "confetti-animation.json"; sourceTree = "<group>"; };
+		C5CA55B72B17BCAE007B23C0 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C5DB888D2AA398E900D702E0 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		C5DB88902AA39EC800D702E0 /* UnderlinedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlinedTextField.swift; sourceTree = "<group>"; };
 		C5DB88932AA3A42A00D702E0 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 		C54739C42AA396520097BAFD /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				C5CA55B62B17BC9D007B23C0 /* SettingsModule */,
 				C5305F092ACA2684007F1914 /* StatsModule */,
 				C599C4F52AB77FD60011CA2B /* HistoryModule */,
 				C59C1BD72AB5F8AB00E34056 /* Common */,
@@ -268,6 +271,14 @@
 				C59C1BDC2AB5FDB400E34056 /* Caller.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		C5CA55B62B17BC9D007B23C0 /* SettingsModule */ = {
+			isa = PBXGroup;
+			children = (
+				C5CA55B72B17BCAE007B23C0 /* SettingsView.swift */,
+			);
+			path = SettingsModule;
 			sourceTree = "<group>";
 		};
 		C5DB888C2AA398DB00D702E0 /* InputModule */ = {
@@ -430,6 +441,7 @@
 				C5DB88942AA3A42A00D702E0 /* Game.swift in Sources */,
 				C5035CD32AA4AF6300B3F3C3 /* InputViewModel.swift in Sources */,
 				C599C4F92AB77FF80011CA2B /* HistoryViewModel.swift in Sources */,
+				C5CA55B82B17BCAE007B23C0 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
