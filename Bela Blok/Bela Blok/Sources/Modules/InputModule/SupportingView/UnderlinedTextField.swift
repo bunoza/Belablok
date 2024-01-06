@@ -45,7 +45,6 @@ struct UnderlinedTextField: View {
                     Spacer()
                     Rectangle()
                         .frame(height: 2.0, alignment: .bottom)
-                        .foregroundColor(.primary)
                 }
                 .padding(.horizontal)
             }

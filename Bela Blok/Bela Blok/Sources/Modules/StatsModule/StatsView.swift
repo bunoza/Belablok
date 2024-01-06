@@ -2,8 +2,7 @@ import Charts
 import SwiftUI
 
 struct StatsView: View {
-    @Environment(\.colorScheme) var colorScheme
-    
+    @StateObject private var appState: AppState = .shared
     @StateObject private var viewModel: StatsViewModel
     @State private var showGraph: Bool = true
 
@@ -135,13 +134,6 @@ struct StatsView: View {
                 HStack {
                     Spacer()
                     graph
-//                        .background {
-//                            RoundedRectangle(cornerRadius: 7)
-//                                .fill(colorScheme == .dark
-//                                      ? Color.black.opacity(0.8)
-//                                      : Color.white.opacity(0.8)
-//                                )
-//                        }
                     Spacer()
                 }
                 .listRowSeparator(.hidden)
@@ -156,6 +148,14 @@ struct StatsView: View {
     
     var body: some View {
         ZStack {
+            if appState.powerSavingMode {
+                Color.black
+                    .ignoresSafeArea()
+            } else {
+                Color(.defaultBackground)
+                    .ignoresSafeArea()
+            }
+            
             List {
                 statsContent
             }
@@ -205,7 +205,6 @@ struct StatsView: View {
                             Text("Loading")
                         }
                     }
-
                 } label: {
                     Image(systemName: "square.and.arrow.up")
                 }

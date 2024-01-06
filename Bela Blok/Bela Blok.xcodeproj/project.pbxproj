@@ -34,6 +34,7 @@
 		C5305F082AC9A9A1007F1914 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5305F072AC9A9A1007F1914 /* Constants.swift */; };
 		C5305F0B2ACA2691007F1914 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5305F0A2ACA2691007F1914 /* StatsView.swift */; };
 		C5305F0D2ACA26BB007F1914 /* StatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5305F0C2ACA26BB007F1914 /* StatsViewModel.swift */; };
+		C548AF022B49A8E500B49C45 /* PossibleGameEndScores.swift in Sources */ = {isa = PBXBuildFile; fileRef = C548AF012B49A8E500B49C45 /* PossibleGameEndScores.swift */; };
 		C57675A72AA384CE009CC959 /* Bela_BlokApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57675A62AA384CE009CC959 /* Bela_BlokApp.swift */; };
 		C57675A92AA384CE009CC959 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57675A82AA384CE009CC959 /* MainView.swift */; };
 		C57675AB2AA384D1009CC959 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C57675AA2AA384D1009CC959 /* Assets.xcassets */; };
@@ -77,6 +78,7 @@
 		C5305F072AC9A9A1007F1914 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C5305F0A2ACA2691007F1914 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
 		C5305F0C2ACA26BB007F1914 /* StatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewModel.swift; sourceTree = "<group>"; };
+		C548AF012B49A8E500B49C45 /* PossibleGameEndScores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PossibleGameEndScores.swift; sourceTree = "<group>"; };
 		C57675A32AA384CE009CC959 /* Bela Blok.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bela Blok.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C57675A62AA384CE009CC959 /* Bela_BlokApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bela_BlokApp.swift; sourceTree = "<group>"; };
 		C57675A82AA384CE009CC959 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -205,6 +207,14 @@
 			path = SupportingView;
 			sourceTree = "<group>";
 		};
+		C548AF002B49A8C900B49C45 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C548AF012B49A8E500B49C45 /* PossibleGameEndScores.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		C576759A2AA384CE009CC959 = {
 			isa = PBXGroup;
 			children = (
@@ -276,6 +286,7 @@
 		C5CA55B62B17BC9D007B23C0 /* SettingsModule */ = {
 			isa = PBXGroup;
 			children = (
+				C548AF002B49A8C900B49C45 /* Models */,
 				C5CA55B72B17BCAE007B23C0 /* SettingsView.swift */,
 			);
 			path = SettingsModule;
@@ -429,6 +440,7 @@
 				C5DB888E2AA398E900D702E0 /* InputView.swift in Sources */,
 				C599C4F72AB77FE70011CA2B /* HistoryView.swift in Sources */,
 				C5305F0B2ACA2691007F1914 /* StatsView.swift in Sources */,
+				C548AF022B49A8E500B49C45 /* PossibleGameEndScores.swift in Sources */,
 				C5035CD12AA4ADC100B3F3C3 /* MainViewModel.swift in Sources */,
 				C57675A72AA384CE009CC959 /* Bela_BlokApp.swift in Sources */,
 				C5B2EE4F2ADB20A800CA476D /* LottieView.swift in Sources */,
@@ -580,7 +592,6 @@
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -614,7 +625,6 @@
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (

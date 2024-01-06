@@ -1,6 +1,7 @@
 import Foundation
 
 class MainViewModel: ObservableObject {
+    @Published private var appState = AppState.shared
     @Published var currentSession: [Game] = []
     @Published var dealer: Dealer = .me
     @Published var editingGame: Game?
@@ -14,13 +15,14 @@ class MainViewModel: ObservableObject {
     }
     
     var shouldStartNewGame: Bool {
-        currentSession.weTotalAccumulated >= 1001 || currentSession.youTotalAccumulated >= 1001
+        currentSession.weTotalAccumulated >= appState.gameEndScore.amount
+        || currentSession.youTotalAccumulated >= appState.gameEndScore.amount
     }
     
     private func updateDealerOnGameFinished() {
         dealer = dealer.nextDealer
-        if currentSession.weTotalAccumulated >= 1001,
-           currentSession.youTotalAccumulated >= 1001 {
+        if currentSession.weTotalAccumulated >= appState.gameEndScore.amount,
+           currentSession.youTotalAccumulated >= appState.gameEndScore.amount {
             if currentSession.weTotalAccumulated > currentSession.youTotalAccumulated {
                 if ![.me, .partner].contains(dealer) {
                     dealer = dealer.nextDealer
@@ -35,17 +37,22 @@ class MainViewModel: ObservableObject {
                 }
             }
         }
-        if currentSession.weTotalAccumulated >= 1001 {
+        if currentSession.weTotalAccumulated >= appState.gameEndScore.amount {
             if [.leftOpponent, .rightOpponent].contains(dealer) {
                 dealer = dealer.nextDealer
             }
         }
-        if currentSession.youTotalAccumulated >= 1001 {
+        if currentSession.youTotalAccumulated >= appState.gameEndScore.amount {
             if [.me, .partner].contains(dealer) {
                 dealer = dealer.nextDealer
             }
         }
         setDealer()
+    }
+    
+    func getOrderedNumberOfGame(_ game: Game) -> Int? {
+        guard let index = currentSession.firstIndex(of: game) else { return nil }
+        return index + 1
     }
     
     func updateDealer() {

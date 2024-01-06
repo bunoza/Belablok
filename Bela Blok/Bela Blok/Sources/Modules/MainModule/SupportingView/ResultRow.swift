@@ -1,10 +1,12 @@
 import SwiftUI
 
 struct ResultRow: View {
+    private var numberOfGame: Int?
     private let weScore: String
     private let youScore: String
     
-    init(weScore: Int,youScore: Int) {
+    init(numberOfGame: Int? = nil, weScore: Int,youScore: Int) {
+        self.numberOfGame = numberOfGame
         self.weScore = String(weScore)
         self.youScore = String(youScore)
     }
@@ -15,23 +17,35 @@ struct ResultRow: View {
     }
     
     var body: some View {
-        HStack {
-            VStack(alignment: .center) {
-                Text(weScore)
-                    .font(.largeTitle)
-                    .frame(alignment: .center)
+        ZStack {
+            if let numberOfGame {
+                HStack {
+                    Text("\(numberOfGame).")
+                        .font(.title3)
+                        .frame(alignment: .leading)
+                    Spacer()
+                }
             }
-            .frame(maxWidth: .infinity)
             
-            VStack(alignment: .center) {
-                Text(youScore)
-                    .font(.largeTitle)
-                    .frame(alignment: .center)
+            HStack {
+                VStack(alignment: .center) {
+                    Text(weScore)
+                        .font(.largeTitle)
+                        .frame(alignment: .center)
+                }
+                .frame(maxWidth: .infinity)
+                
+                VStack(alignment: .center) {
+                    Text(youScore)
+                        .font(.largeTitle)
+                        .frame(alignment: .center)
+                }
+                .frame(maxWidth: .infinity)
             }
-            .frame(maxWidth: .infinity)
+            .padding(.leading, numberOfGame != nil ? 8 : 0)
+            .padding(.horizontal)
+            .padding(.horizontal)
         }
-        .padding(.horizontal)
-        .padding(.horizontal)
         .listRowBackground(Color.clear)
         .listRowSeparator(.hidden)
     }

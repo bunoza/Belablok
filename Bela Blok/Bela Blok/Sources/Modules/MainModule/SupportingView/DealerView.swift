@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct DealerView: View {
+    @StateObject private var appState = AppState.shared
     @Binding private var dealer: Dealer
     
     init(dealer: Binding<Dealer>) {
@@ -9,59 +10,74 @@ struct DealerView: View {
     
     var body: some View {
         ZStack {
-            Color.accentColor.opacity(0.2).ignoresSafeArea(.all)
-
+            if appState.powerSavingMode {
+                Color.black
+                    .ignoresSafeArea()
+            } else {
+                Color(.defaultBackground)
+                    .ignoresSafeArea()
+            }
+            
             GeometryReader { geo in
                 VStack {
                     HStack {
+                        Spacer()
                         Text("Dijeli: \(dealer.description)")
-                            .foregroundColor(.primary)
-                            .font(.system(size: geo.size.height/15))
+                            .font(.system(size: geo.size.height/17))
                             .padding(.horizontal)
                         Spacer()
                     }
                     
                     Group {
                         HStack {
-                            Image(systemName: dealer == .partner ? "person.fill" : "person")
-                                .resizable()
-                                .scaledToFit()
-                                .foregroundColor(.accentColor)
-                                .frame(width: geo.size.width/7)
-                                .padding()
-                                .onTapGesture { dealer = .partner }
+                            Button {
+                                dealer = .partner
+                            } label: {
+                                Image(systemName: dealer == .partner ? "person.fill" : "person")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: geo.size.width/7)
+                                    .padding()
+                            }
                         }
                         
                         HStack {
-                            Image(systemName: dealer == .leftOpponent ? "person.fill" : "person")
-                                .resizable()
-                                .scaledToFit()
-                                .foregroundColor(.accentColor)
-                                .frame(width: geo.size.width/7)
-                                .padding()
-                                .onTapGesture { dealer = .leftOpponent }
-                            
+                            Button {
+                                dealer = .leftOpponent
+                            } label: {
+                                Image(systemName: dealer == .leftOpponent ? "person.fill" : "person")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: geo.size.width/7)
+                                    .padding()
+                            }
+
                             RoundedRectangle(cornerSize: CGSize(width: 8, height: 8))
-                                .fill(Color.accentColor.opacity(0.8))
                                 .frame(width: geo.size.width/4, height: geo.size.width/4, alignment: .center)
+                                .foregroundStyle(Color.accentColor.opacity(0.8))
                                 .padding(4)
-                            Image(systemName: dealer == .rightOpponent ? "person.fill" : "person")
-                                .resizable()
-                                .scaledToFit()
-                                .foregroundColor(.accentColor)
-                                .frame(width: geo.size.width/7)
-                                .padding()
-                                .onTapGesture { dealer = .rightOpponent }
+                            
+                            Button {
+                                dealer = .rightOpponent
+                            } label: {
+                                Image(systemName: dealer == .rightOpponent ? "person.fill" : "person")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: geo.size.width/7)
+                                    .padding()
+                            }
                         }
 
                         HStack {
-                            Image(systemName: dealer == .me ? "person.fill" : "person")
-                                .resizable()
-                                .scaledToFit()
-                                .foregroundColor(.accentColor)
-                                .frame(width: geo.size.width/7)
-                                .padding()
-                                .onTapGesture { dealer = .me }
+                            Button {
+                                dealer = .me
+                            } label: {
+                                Image(systemName: dealer == .me ? "person.fill" : "person")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: geo.size.width/7)
+                                    .padding()
+                            }
                         }
                     }
                     .animation(.easeInOut, value: dealer)

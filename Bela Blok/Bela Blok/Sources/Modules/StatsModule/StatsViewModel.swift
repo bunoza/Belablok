@@ -37,7 +37,7 @@ class StatsViewModel: ObservableObject {
     
     @MainActor
     func onAppear(_ stats: some View, _ graph: some View, _ both: some View) async {
-        self.stats = stats.setGreenBackground().snapshot()
+        self.stats = stats.snapshot()
         self.graph = graph.snapshot()
     }
 }

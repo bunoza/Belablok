@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct MainView: View {
+    @StateObject private var appState: AppState = .shared
     @StateObject private var viewModel: MainViewModel
     @State private var showInputSheet: Bool
     @State private var showDealerSheet: Bool
@@ -18,38 +19,47 @@ struct MainView: View {
     var body: some View {
         NavigationView {
             ZStack {
+                if appState.powerSavingMode {
+                    Color.black
+                        .ignoresSafeArea()
+                } else {
+                    Color(.defaultBackground)
+                        .ignoresSafeArea()
+                }
                 VStack {
                     ResultRow(weLabel: "MI", youLabel: "VI")
                         .bold()
                         .padding(.top)
                     
-                    List {
-                        ForEach(viewModel.currentSession, id: \.id) { game in
-                            ResultRow(weScore: game.weTotal, youScore: game.youTotal)
+                    ScrollViewReader { scrollReader in
+                        List(viewModel.currentSession) { game in
+                            ResultRow(
+                                numberOfGame: viewModel.getOrderedNumberOfGame(game),
+                                weScore: game.weTotal,
+                                youScore: game.youTotal
+                            )
                                 .padding(.bottom, 2)
                                 .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                                    Button {
+                                    Button(role: .cancel) {
                                         viewModel.editingGame = game
                                         showInputSheet = true
                                     } label: {
                                         Image(systemName: "rectangle.and.pencil.and.ellipsis")
                                     }
-                                    .tint(Color.blue)
-                                    
                                 }
                                 .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                                    Button {
+                                    Button(role: .destructive) {
                                         viewModel.delete(game)
                                     } label: {
                                         Image(systemName: "trash")
                                     }
-                                    .tint(Color.red)
                                 }
                         }
                     }
                     .animation(.easeInOut, value: viewModel.currentSession)
                     .scrollContentBackground(.hidden)
-                    
+
+                    Spacer()
                     ResultRow(
                         weScore: viewModel.currentSession.weTotalAccumulated,
                         youScore: viewModel.currentSession.youTotalAccumulated
@@ -72,10 +82,8 @@ struct MainView: View {
             }
             .sheet(
                 isPresented: $showSettingsSheet,
-                content: {
-                    SettingsView()
-                        .presentationDetents([.medium])
-                }
+                onDismiss: { viewModel.updateState() },
+                content: { SettingsView() }
             )
             .sheet(
                 isPresented: $showDealerSheet,
@@ -113,7 +121,8 @@ struct MainView: View {
                         showSettingsSheet = true
                     } label: {
                         Image(systemName: "gear")
-                            .foregroundColor(.primary)
+                            .rotationEffect(.degrees(showSettingsSheet ? 180 : 0))
+                            .animation(.easeInOut, value: showSettingsSheet)
                     }
                 }
 
@@ -122,7 +131,6 @@ struct MainView: View {
                         HistoryView(viewModel: HistoryViewModel())
                     } label: {
                         Image(systemName: "clock.arrow.circlepath")
-                            .foregroundColor(.primary)
                     }
                     .disabled(AppState.shared.finishedGames.isEmpty)
                 }
@@ -135,7 +143,6 @@ struct MainView: View {
                             Text("Dijeli: \(viewModel.dealer.description)")
                                 .animation(.easeInOut, value: viewModel.dealer)
                                 .font(.body)
-                                .foregroundColor(.primary)
                         }
                         Spacer()
                         Button {
@@ -147,7 +154,6 @@ struct MainView: View {
                         } label: {
                             Image(systemName: "square.and.pencil")
                                 .imageScale(.large)
-                                .foregroundColor(.primary)
                         }
                     }
                 }

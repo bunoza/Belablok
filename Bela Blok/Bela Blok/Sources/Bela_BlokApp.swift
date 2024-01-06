@@ -1,11 +1,13 @@
+import Combine
 import SwiftUI
 import Firebase
 
 @main
 struct Bela_BlokApp: App {
     @Environment(\.scenePhase) var scenePhase
-    
-    @State private var appState: AppState = .shared
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var appState: AppState = .shared
     
     init() {
         FirebaseApp.configure()

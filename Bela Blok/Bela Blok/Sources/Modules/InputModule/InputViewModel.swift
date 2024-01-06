@@ -3,6 +3,7 @@ import Foundation
 import SwiftUI
 
 class InputViewModel: ObservableObject {
+    @State private var appState = AppState.shared
     @Binding var currentGame: Game?
     @Published var currentGameEdit: Game = .init()
     var isEditing: Bool
@@ -68,7 +69,7 @@ class InputViewModel: ObservableObject {
     }
 
     func handleWeCallUpdate(amount: Int) {
-        if currentGameEdit.weCallsSum < 1001 {
+        if currentGameEdit.weCallsSum < appState.gameEndScore.amount {
             switch amount {
             case 20:
                 if currentGameEdit.weCall20 < 7 { currentGameEdit.weCall20 += 1 }
@@ -85,7 +86,7 @@ class InputViewModel: ObservableObject {
     }
     
     func handleYouCallUpdate(amount: Int) {
-        if currentGameEdit.youCallsSum < 1001 {
+        if currentGameEdit.youCallsSum < appState.gameEndScore.amount {
             switch amount {
             case 20:
                 if currentGameEdit.youCall20 < 7 { currentGameEdit.youCall20 += 1 }

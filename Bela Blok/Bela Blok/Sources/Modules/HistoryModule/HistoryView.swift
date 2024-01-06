@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct HistoryView: View {
+    @StateObject private var appState: AppState = .shared
     @StateObject private var viewModel: HistoryViewModel
     
     init(viewModel: HistoryViewModel) {
@@ -9,19 +10,37 @@ struct HistoryView: View {
     
     var body: some View {
         ZStack {
+            if appState.powerSavingMode {
+                Color.black
+                    .ignoresSafeArea()
+            } else {
+                Color(.defaultBackground)
+                    .ignoresSafeArea()
+            }
+
             VStack {
                 List {
                     ForEach(viewModel.history, id: \.id) { games in
-                        ResultRow(weScore: games.weTotalAccumulated, youScore: games.youTotalAccumulated)
-                            .showChevron()
-                            .background {
-                                NavigationLink("") {
-                                    StatsView(viewModel: StatsViewModel(game: games))
-                                }
-                                .opacity(0)
+                        ResultRow(
+                            numberOfGame: viewModel.getOrderedNumberOfGame(games),
+                            weScore: games.weTotalAccumulated,
+                            youScore: games.youTotalAccumulated
+                        )
+                        .showChevron()
+                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                            Button(role: .destructive) {
+                                viewModel.delete(games)
+                            } label: {
+                                Image(systemName: "trash")
                             }
+                        }
+                        .background {
+                            NavigationLink("") {
+                                StatsView(viewModel: StatsViewModel(game: games))
+                            }
+                            .opacity(0)
+                        }
                     }
-                    .onDelete(perform: viewModel.delete)
                 }
                 .scrollContentBackground(.hidden)
                 
@@ -35,10 +54,6 @@ struct HistoryView: View {
         }
         .navigationTitle("Povijest")
         .navigationBarTitleDisplayMode(.large)
-        .toolbar {
-            EditButton()
-                .foregroundColor(.primary)
-        }
     }
 }
 

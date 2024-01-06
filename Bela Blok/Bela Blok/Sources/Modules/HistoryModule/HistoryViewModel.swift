@@ -9,8 +9,15 @@ class HistoryViewModel: ObservableObject {
     }
     
     
-    func delete(at offsets: IndexSet) {
-        history.remove(atOffsets: offsets)
-        AppState.shared.finishedGames = history
+    func delete(_ games: [Game]) {
+        if let index = history.firstIndex(of: games) {
+            history.remove(at: index)
+            AppState.shared.finishedGames = history
+        }
+    }
+    
+    func getOrderedNumberOfGame(_ games: [Game]) -> Int? {
+        guard let index = history.firstIndex(of: games) else { return nil }
+        return index + 1
     }
 }

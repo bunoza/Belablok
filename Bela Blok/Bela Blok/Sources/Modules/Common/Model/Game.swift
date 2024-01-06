@@ -1,6 +1,6 @@
 import Foundation
 
-struct Game: Codable, Hashable {
+struct Game: Codable, Hashable, Identifiable {
     var id = UUID()
     
     var weCall20: Int = 0

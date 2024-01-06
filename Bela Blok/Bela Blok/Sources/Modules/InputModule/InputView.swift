@@ -4,6 +4,7 @@ import SwiftUI
 struct InputView: View {
     @Environment(\.dismiss) private var dismiss
     
+    @StateObject private var appState: AppState = .shared
     @StateObject private var viewModel: InputViewModel
     @State private var ignoreFlag: Bool = false
     
@@ -14,6 +15,13 @@ struct InputView: View {
     var body: some View {
         NavigationView {
             ZStack {
+                if appState.powerSavingMode {
+                    Color.black
+                        .ignoresSafeArea()
+                } else {
+                    Color(.defaultBackground)
+                        .ignoresSafeArea()
+                }
                 List {
                     HStack {
                         Spacer()
@@ -102,7 +110,6 @@ struct InputView: View {
                         dismiss()
                     } label: {
                         Text("Spremi")
-                            .foregroundColor(.primary)
                     }
                     .disabled(viewModel.currentGameEdit.weBaseScore + viewModel.currentGameEdit.youBaseScore  != 162)
                 }
@@ -111,7 +118,6 @@ struct InputView: View {
                         dismiss()
                     } label: {
                         Text("Odustani")
-                            .foregroundColor(.primary)
                     }
                 }
             }
@@ -127,7 +133,7 @@ struct InputView: View {
                     Image(systemName: "minus.circle")
                         .resizable()
                         .scaledToFit()
-                        .foregroundColor(.secondary)
+//                        .foregroundColor(.secondary)
                         .frame(width: 28, height: 28)
                 }
                 .buttonStyle(.plain)
@@ -164,7 +170,7 @@ struct InputView: View {
                     Image(systemName: "minus.circle")
                         .resizable()
                         .scaledToFit()
-                        .foregroundColor(.secondary)
+//                        .foregroundColor(.secondary)
                         .frame(width: 28, height: 28)
                 }
                 .buttonStyle(.plain)
@@ -187,7 +193,7 @@ struct InputView: View {
                     Image(systemName: "minus.circle")
                         .resizable()
                         .scaledToFit()
-                        .foregroundColor(.secondary)
+//                        .foregroundColor(.secondary)
                         .frame(width: 28, height: 28)
                 }
                 .buttonStyle(.plain)
@@ -224,7 +230,7 @@ struct InputView: View {
                     Image(systemName: "minus.circle")
                         .resizable()
                         .scaledToFit()
-                        .foregroundColor(.secondary)
+//                        .foregroundColor(.secondary)
                         .frame(width: 28, height: 28)
                 }
                 .buttonStyle(.plain)
@@ -247,7 +253,7 @@ struct InputView: View {
                     Image(systemName: "minus.circle")
                         .resizable()
                         .scaledToFit()
-                        .foregroundColor(.secondary)
+//                        .foregroundColor(.secondary)
                         .frame(width: 28, height: 28)
                 }
                 .buttonStyle(.plain)
@@ -284,7 +290,7 @@ struct InputView: View {
                     Image(systemName: "minus.circle")
                         .resizable()
                         .scaledToFit()
-                        .foregroundColor(.secondary)
+//                        .foregroundColor(.secondary)
                         .frame(width: 28, height: 28)
                 }
                 .buttonStyle(.plain)
@@ -307,7 +313,7 @@ struct InputView: View {
                     Image(systemName: "minus.circle")
                         .resizable()
                         .scaledToFit()
-                        .foregroundColor(.secondary)
+//                        .foregroundColor(.secondary)
                         .frame(width: 28, height: 28)
                 }
                 .buttonStyle(.plain)
@@ -344,7 +350,7 @@ struct InputView: View {
                     Image(systemName: "minus.circle")
                         .resizable()
                         .scaledToFit()
-                        .foregroundColor(.secondary)
+//                        .foregroundColor(.secondary)
                         .frame(width: 28, height: 28)
                 }
                 .buttonStyle(.plain)

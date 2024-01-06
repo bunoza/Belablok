@@ -9,10 +9,10 @@ extension View {
         return Image(uiImage: renderer.uiImage ?? UIImage())
     }
     
-    func setGreenBackground() -> some View {
-        ZStack {
-            Color.green.opacity(0.7).ignoresSafeArea(.all)
-            self
-        }
-    }
+//    func setGreenBackground() -> some View {
+//        ZStack {
+//            Color.green.opacity(0.7).ignoresSafeArea(.all)
+//            self
+//        }
+//    }
 }
