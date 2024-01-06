@@ -1,6 +1,7 @@
 package com.bunoza.belablok.ui.historyscreen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -34,12 +35,12 @@ fun HistoryScreen(navigator: DestinationsNavigator) {
         } 
     }) { paddingValues ->
         when (uiState) {
-            is UIState.Loading -> LoadingScreen()
-            is UIState.Error -> ErrorScreen {
+            UIState.Loading -> LoadingScreen()
+            UIState.Error -> ErrorScreen {
                 historyViewModel.getAllGames()
             }
 
-            is UIState.EmptyListState -> EmptyGameScreen {
+            UIState.EmptyListState -> EmptyGameScreen {
                 historyViewModel.getAllGames()
             }
 
@@ -59,7 +60,8 @@ private fun HistoryScreenContent(gameList: List<Game>, onCardClick: (Game) -> Un
                 end = 16.dp,
                 top = paddingValues.calculateTopPadding(),
                 bottom = 16.dp
-            )
+            ),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(gameList) { game ->
             GameItem(

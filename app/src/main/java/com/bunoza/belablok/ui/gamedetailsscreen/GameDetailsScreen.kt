@@ -21,6 +21,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
@@ -55,33 +57,42 @@ fun GameDetailsScreen(navigator: DestinationsNavigator, id: Int) {
     val wePointsList by gameDetailsViewModel.wePointsList.collectAsState()
     val themPointsList by gameDetailsViewModel.themPointsList.collectAsState()
     val context = LocalContext.current
-    val configuration = LocalConfiguration.current
     val view = LocalView.current
+    val showDeleteGameAlertDialog = remember{
+        mutableStateOf(false)
+    }
 
     Scaffold(
         topBar = {
-            GameDetailsTopBar {
-                val bmp = Bitmap.createBitmap(
-                    view.width,
-                    view.height,
-                    Bitmap.Config.ARGB_8888
-                ).applyCanvas {
-                    view.draw(this)
-                }
-            /*bmp.let {
-                File(context.filesDir, "screenshot.png")
-                    .writeBitmap(bmp, Bitmap.CompressFormat.PNG, 85)
-            }*/
+            GameDetailsTopBar(
+                onShareClick = {
+                    val bmp = Bitmap.createBitmap(
+                        view.width,
+                        view.height,
+                        Bitmap.Config.ARGB_8888
+                    ).applyCanvas {
+                        view.draw(this)
+                    }
+                    /*bmp.let {
+                        File(context.filesDir, "screenshot.png")
+                            .writeBitmap(bmp, Bitmap.CompressFormat.PNG, 85)
+                    }*/
 
-                val sendIntent: Intent = Intent().apply {
-                    action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_STREAM, getImageUriFromBitmap(context, bmp))
-                    type = "image/*"
-                    flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    val sendIntent: Intent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(Intent.EXTRA_STREAM, getImageUriFromBitmap(context, bmp))
+                        type = "image/*"
+                        flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    }
+                    val shareIntent = Intent.createChooser(sendIntent, null)
+                    context.startActivity(shareIntent)
+                },
+                onDeleteClick = {
+                    showDeleteGameAlertDialog.value=true
                 }
-                val shareIntent = Intent.createChooser(sendIntent, null)
-                context.startActivity(shareIntent)
-            } 
+            )
+
+
         }
     ) {
         when (uiState) {
@@ -92,9 +103,24 @@ fun GameDetailsScreen(navigator: DestinationsNavigator, id: Int) {
             is UIState.EmptyListState -> EmptyGameScreen {
                 gameDetailsViewModel.getGameById()
             }
-            is UIState.Success<*> -> GameDetailsContent(game = (uiState as UIState.Success<*>).data as Game, it, wePointsList, themPointsList)
+            is UIState.Success<*> -> {
+                GameDetailsContent(game = (uiState as UIState.Success<*>).data as Game, it, wePointsList, themPointsList)
+                if(showDeleteGameAlertDialog.value){
+                    DeleteGameAlertDialog(
+                        onDismissClick = {
+                            showDeleteGameAlertDialog.value=false
+                        },
+                        onConfirmClick = {
+                            navigator.navigateUp()
+                        }
+                    )
+
+
+                }
+            }
         }
     }
+
 }
 
 @Composable

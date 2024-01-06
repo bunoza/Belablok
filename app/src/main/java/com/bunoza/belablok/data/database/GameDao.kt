@@ -3,6 +3,8 @@ package com.bunoza.belablok.data.database
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
 import com.bunoza.belablok.data.database.model.Game
 import kotlinx.coroutines.flow.Flow
 
@@ -15,8 +17,7 @@ interface GameDao {
     @Query("SELECT * FROM game")
     fun getAllGames(): Flow<List<Game>>
 
-    @Query("Delete from game")
-    suspend fun deleteAllGames()
+
 
     @Query("SELECT * from game where id=:id")
     fun getGameById(id: Int): Flow<Game>

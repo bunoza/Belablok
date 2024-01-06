@@ -9,13 +9,14 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import com.bunoza.belablok.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HistoryTopBar(onBackClick: () -> Unit) {
     TopAppBar(
-        title = { Text(text = "Povijest igara") },
+        title = { Text(text = "Povijest igara", color = MaterialTheme.colorScheme.onPrimary) },
         navigationIcon = {
             IconButton(onClick = onBackClick) {
                 Icon(painter = painterResource(id = R.drawable.baseline_arrow_back_24), contentDescription = null, tint = MaterialTheme.colorScheme.onPrimary)

@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -43,7 +44,8 @@ fun TotalScoreItem(
                 fontWeight = FontWeight.Bold,
                 fontSize = 32.sp,
                 modifier = Modifier.width(100.dp),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                fontFamily = FontFamily.Cursive
             )
         }
         Box(
@@ -58,7 +60,8 @@ fun TotalScoreItem(
                 fontWeight = FontWeight.Bold,
                 fontSize = 32.sp,
                 modifier = Modifier.width(100.dp),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                fontFamily = FontFamily.Cursive
             )
         }
     }

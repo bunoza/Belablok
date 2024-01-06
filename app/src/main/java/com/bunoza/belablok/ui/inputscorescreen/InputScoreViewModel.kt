@@ -191,7 +191,7 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
                     timesCalled = callTwentyThemState.value.timesCalled - 1
                 )
                 timesCalledThem.value = timesCalledThem.value - 20
-            } else if (callTwentyUsState.value.timesCalled == 1) {
+            } else if (callTwentyThemState.value.timesCalled == 1) {
                 callTwentyThemState.value = callTwentyThemState.value.copy(
                     timesCalled = callTwentyThemState.value.timesCalled - 1,
                     visibility = false,

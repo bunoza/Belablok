@@ -113,7 +113,7 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
     fun deleteAllGames() {
         viewModelScope.launch {
             insertWholeGame(gameList)
-            databaseRepository.deleteAllGames()
+            databaseRepository.deleteAllSingleGames()
         }
     }
     fun resetNavigation() {

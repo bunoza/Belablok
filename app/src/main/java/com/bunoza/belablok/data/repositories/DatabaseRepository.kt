@@ -21,7 +21,7 @@ class DatabaseRepository(private val scoreDao: ScoreDao, private val gameDao: Ga
         return scoreDao.getAllSingleGames().flowOn(Dispatchers.IO)
     }
 
-    suspend fun deleteAllGames() {
+    suspend fun deleteAllSingleGames() {
         withContext(Dispatchers.IO) {
             scoreDao.deleteSingleGame()
         }
@@ -46,4 +46,7 @@ class DatabaseRepository(private val scoreDao: ScoreDao, private val gameDao: Ga
             scoreDao.updateSingleGame(singleGame)
         }
     }
+
+
+
 }
