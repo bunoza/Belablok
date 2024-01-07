@@ -191,6 +191,7 @@ struct InputView: View {
 
     private func counter(bindedInt: Binding<Int>) -> some View {
         Text("x\(bindedInt.wrappedValue)")
+            .monospaced()
             .opacity(bindedInt.wrappedValue == 0 ? 0 : 1)
     }
 
