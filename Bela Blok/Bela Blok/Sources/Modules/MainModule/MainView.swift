@@ -7,6 +7,7 @@ struct MainView: View {
     @State private var showDealerSheet: Bool
     @State private var showGameFinishedAlert: Bool
     @State private var showSettingsSheet: Bool
+    @State private var showBottomBar: Bool
     
     init() {
         _viewModel = .init(wrappedValue: MainViewModel())
@@ -14,6 +15,7 @@ struct MainView: View {
         showDealerSheet = false
         showSettingsSheet = false
         showGameFinishedAlert = false
+        showBottomBar = false
     }
     
     var body: some View {
@@ -74,6 +76,12 @@ struct MainView: View {
                         .allowsHitTesting(false)
                         .ignoresSafeArea()
                 }
+            }
+            .onAppear {
+                showBottomBar = true
+            }
+            .onDisappear {
+                showBottomBar = false
             }
             .onChange(of: viewModel.currentSession.count) { [count = viewModel.currentSession.count] newCount in
                 if newCount > count {
@@ -136,24 +144,26 @@ struct MainView: View {
                 }
                 
                 ToolbarItem(placement: .bottomBar) {
-                    HStack {
-                        Button {
-                            showDealerSheet = true
-                        } label: {
-                            Text("Dijeli: \(viewModel.dealer.description)")
-                                .animation(.easeInOut, value: viewModel.dealer)
-                                .font(.body)
-                        }
-                        Spacer()
-                        Button {
-                            if viewModel.shouldStartNewGame {
-                                showGameFinishedAlert = true
-                            } else {
-                                showInputSheet = true
+                    if showBottomBar {
+                        HStack {
+                            Button {
+                                showDealerSheet = true
+                            } label: {
+                                Text("Dijeli: \(viewModel.dealer.description)")
+                                    .animation(.easeInOut, value: viewModel.dealer)
+                                    .font(.body)
                             }
-                        } label: {
-                            Image(systemName: "square.and.pencil")
-                                .imageScale(.large)
+                            Spacer()
+                            Button {
+                                if viewModel.shouldStartNewGame {
+                                    showGameFinishedAlert = true
+                                } else {
+                                    showInputSheet = true
+                                }
+                            } label: {
+                                Image(systemName: "square.and.pencil")
+                                    .imageScale(.large)
+                            }
                         }
                     }
                 }

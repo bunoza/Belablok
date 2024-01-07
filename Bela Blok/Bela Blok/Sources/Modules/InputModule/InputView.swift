@@ -7,7 +7,7 @@ struct InputView: View {
     @StateObject private var appState: AppState = .shared
     @StateObject private var viewModel: InputViewModel
     @State private var ignoreFlag: Bool = false
-    
+
     init(viewModel: InputViewModel) {
         self._viewModel = StateObject(wrappedValue: viewModel)
     }
@@ -22,6 +22,7 @@ struct InputView: View {
                     Color(.defaultBackground)
                         .ignoresSafeArea()
                 }
+                
                 List {
                     HStack {
                         Spacer()
@@ -92,11 +93,34 @@ struct InputView: View {
                     .padding(.horizontal)
                     .padding()
                     
-                    
-                    render20Row()
-                    render50Row()
-                    render100Row()
-                    renderBelotRow()
+                    Group {
+                        renderCallButtonRow(
+                            weCall: $viewModel.currentGameEdit.weCall20,
+                            youCall: $viewModel.currentGameEdit.youCall20,
+                            amount: 20
+                        )
+                        
+                        renderCallButtonRow(
+                            weCall: $viewModel.currentGameEdit.weCall50,
+                            youCall: $viewModel.currentGameEdit.youCall50,
+                            amount: 50
+                        )
+                        
+                        renderCallButtonRow(
+                            weCall: $viewModel.currentGameEdit.weCall100,
+                            youCall: $viewModel.currentGameEdit.youCall100,
+                            amount: 100
+                        )
+                        
+                        renderCallButtonRow(
+                            weCall: $viewModel.currentGameEdit.weCallBelot,
+                            youCall: $viewModel.currentGameEdit.youCallBelot,
+                            amount: 1001
+                        )
+                    }
+                    .listRowInsets(EdgeInsets())
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
                 }
                 .scrollDismissesKeyboard(.immediately)
                 .scrollContentBackground(.hidden)
@@ -124,246 +148,66 @@ struct InputView: View {
         }
     }
     
-    private func render20Row() -> some View {
+    private func renderCallButtonRow(weCall: Binding<Int>, youCall: Binding<Int>, amount: Int) -> some View {
         HStack {
-            HStack {
-                Button {
-                    viewModel.currentGameEdit.weCall20 -= 1
-                } label: {
-                    Image(systemName: "minus.circle")
-                        .resizable()
-                        .scaledToFit()
-//                        .foregroundColor(.secondary)
-                        .frame(width: 28, height: 28)
+            VStack {
+                HStack {
+                    minusButton(bindedInt: weCall)
+                    counter(bindedInt: weCall)
+                    Spacer()
+                    renderCallButton(caller: .we, amount: amount)
+                    Spacer()
                 }
-                .buttonStyle(.plain)
-                .disabled(viewModel.currentGameEdit.weCall20 <= 0)
-                .opacity(viewModel.currentGameEdit.weCall20 > 0 ? 1 : 0)
-                .animation(.bouncy, value: viewModel.currentGameEdit.weCall20)
-                .padding()
-                
-                Button {
-                    viewModel.handleWeCallUpdate(amount: 20)
-                } label: {
-                    Text("20")
-                        .font(.system(size: 24))
-                }
-                .roundedAccentButton(width: 80, height: 44)
-                .buttonStyle(.plain)
             }
             
-            Spacer()
-            
-            HStack {
-                Button {
-                    viewModel.handleYouCallUpdate(amount: 20)
-                } label: {
-                    Text("20")
-                        .font(.system(size: 24))
+            VStack{
+                HStack {
+                    Spacer()
+                    renderCallButton(caller: .you, amount: amount)
+                    Spacer()
+                    counter(bindedInt: youCall)
+                    minusButton(bindedInt: youCall)
                 }
-                .roundedAccentButton(width: 80, height: 44)
-                .buttonStyle(.plain)
-                
-                Button {
-                    viewModel.currentGameEdit.youCall20 -= 1
-                } label: {
-                    Image(systemName: "minus.circle")
-                        .resizable()
-                        .scaledToFit()
-//                        .foregroundColor(.secondary)
-                        .frame(width: 28, height: 28)
-                }
-                .buttonStyle(.plain)
-                .disabled(viewModel.currentGameEdit.youCall20 <= 0)
-                .opacity(viewModel.currentGameEdit.youCall20 > 0 ? 1 : 0)
-                .animation(.bouncy, value: viewModel.currentGameEdit.youCall20)
-                .padding()
             }
         }
-        .listRowBackground(Color.clear)
-        .listRowSeparator(.hidden)
+        .frame(maxWidth: .infinity)
+        .padding(.vertical)
     }
     
-    private func render50Row() -> some View {
-        HStack {
-            HStack {
-                Button {
-                    viewModel.currentGameEdit.weCall50 -= 1
-                } label: {
-                    Image(systemName: "minus.circle")
-                        .resizable()
-                        .scaledToFit()
-//                        .foregroundColor(.secondary)
-                        .frame(width: 28, height: 28)
-                }
-                .buttonStyle(.plain)
-                .disabled(viewModel.currentGameEdit.weCall50 <= 0)
-                .opacity(viewModel.currentGameEdit.weCall50 > 0 ? 1 : 0)
-                .animation(.bouncy, value: viewModel.currentGameEdit.weCall50)
-                .padding()
-                
-                Button {
-                    viewModel.handleWeCallUpdate(amount: 50)
-                } label: {
-                    Text("50")
-                        .font(.system(size: 24))
-                }
-                .roundedAccentButton(width: 80, height: 44)
-                .buttonStyle(.plain)
-            }
-            
-            Spacer()
-            
-            HStack {
-                Button {
-                    viewModel.handleYouCallUpdate(amount: 50)
-                } label: {
-                    Text("50")
-                        .font(.system(size: 24))
-                }
-                .roundedAccentButton(width: 80, height: 44)
-                .buttonStyle(.plain)
-                
-                Button {
-                    viewModel.currentGameEdit.youCall50 -= 1
-                } label: {
-                    Image(systemName: "minus.circle")
-                        .resizable()
-                        .scaledToFit()
-//                        .foregroundColor(.secondary)
-                        .frame(width: 28, height: 28)
-                }
-                .buttonStyle(.plain)
-                .disabled(viewModel.currentGameEdit.youCall50 <= 0)
-                .opacity(viewModel.currentGameEdit.youCall50 > 0 ? 1 : 0)
-                .animation(.bouncy, value: viewModel.currentGameEdit.youCall50)
-                .padding()
-            }
+    private func minusButton(bindedInt: Binding<Int>) -> some View {
+        Button {
+            bindedInt.wrappedValue -= 1
+        } label: {
+            Image(systemName: "minus.circle")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 28, height: 28)
         }
-        .listRowBackground(Color.clear)
-        .listRowSeparator(.hidden)
+        .buttonStyle(.plain)
+        .disabled(bindedInt.wrappedValue <= 0)
+        .opacity(bindedInt.wrappedValue > 0 ? 1 : 0)
+        .animation(.bouncy, value: bindedInt.wrappedValue)
     }
     
-    private func render100Row() -> some View {
-        HStack {
-            HStack {
-                Button {
-                    viewModel.currentGameEdit.weCall100 -= 1
-                } label: {
-                    Image(systemName: "minus.circle")
-                        .resizable()
-                        .scaledToFit()
-//                        .foregroundColor(.secondary)
-                        .frame(width: 28, height: 28)
-                }
-                .buttonStyle(.plain)
-                .disabled(viewModel.currentGameEdit.weCall100 <= 0)
-                .opacity(viewModel.currentGameEdit.weCall100 > 0 ? 1 : 0)
-                .animation(.bouncy, value: viewModel.currentGameEdit.weCall100)
-                .padding()
-                
-                Button {
-                    viewModel.handleWeCallUpdate(amount: 100)
-                } label: {
-                    Text("100")
-                        .font(.system(size: 24))
-                }
-                .roundedAccentButton(width: 80, height: 44)
-                .buttonStyle(.plain)
+    private func counter(bindedInt: Binding<Int>) -> some View {
+        Text("x\(bindedInt.wrappedValue)")
+            .opacity(bindedInt.wrappedValue == 0 ? 0 : 1)
+    }
+    
+    private func renderCallButton(caller: Caller, amount: Int) -> some View {
+        Button {
+            if caller == .we {
+                viewModel.handleWeCallUpdate(amount: amount)
+            } else {
+                viewModel.handleYouCallUpdate(amount: amount)
             }
-            
-            Spacer()
-            
-            HStack {
-                Button {
-                    viewModel.handleYouCallUpdate(amount: 100)
-                } label: {
-                    Text("100")
-                        .font(.system(size: 24))
-                }
-                .roundedAccentButton(width: 80, height: 44)
-                .buttonStyle(.plain)
-                
-                Button {
-                    viewModel.currentGameEdit.youCall100 -= 1
-                } label: {
-                    Image(systemName: "minus.circle")
-                        .resizable()
-                        .scaledToFit()
-//                        .foregroundColor(.secondary)
-                        .frame(width: 28, height: 28)
-                }
-                .buttonStyle(.plain)
-                .disabled(viewModel.currentGameEdit.youCall100 <= 0)
-                .opacity(viewModel.currentGameEdit.youCall100 > 0 ? 1 : 0)
-                .animation(.bouncy, value: viewModel.currentGameEdit.youCall100)
-                .padding()
-            }
+        } label: {
+            Text(amount == 1001 ? "Belot" : String(amount))
+                .font(.system(size: 24))
         }
-        .listRowBackground(Color.clear)
-        .listRowSeparator(.hidden)
+        .roundedAccentButton(width: 80, height: 44)
+        .buttonStyle(.plain)
     }
-    
-    private func renderBelotRow() -> some View {
-        HStack {
-            HStack {
-                Button {
-                    viewModel.currentGameEdit.weCallBelot -= 1
-                } label: {
-                    Image(systemName: "minus.circle")
-                        .resizable()
-                        .scaledToFit()
-//                        .foregroundColor(.secondary)
-                        .frame(width: 28, height: 28)
-                }
-                .buttonStyle(.plain)
-                .disabled(viewModel.currentGameEdit.weCallBelot <= 0)
-                .opacity(viewModel.currentGameEdit.weCallBelot > 0 ? 1 : 0)
-                .animation(.bouncy, value: viewModel.currentGameEdit.weCallBelot)
-                .padding()
-                
-                Button {
-                    viewModel.handleWeCallUpdate(amount: 1001)
-                } label: {
-                    Text("Belot")
-                        .font(.system(size: 18))
-                }
-                .roundedAccentButton(width: 80, height: 44)
-                .buttonStyle(.plain)
-            }
-            
-            Spacer()
-            
-            HStack {
-                Button {
-                    viewModel.handleYouCallUpdate(amount: 1001)
-                } label: {
-                    Text("Belot")
-                        .font(.system(size: 18))
-                }
-                .roundedAccentButton(width: 80, height: 44)
-                .buttonStyle(.plain)
-                
-                Button {
-                    viewModel.currentGameEdit.youCallBelot -= 1
-                } label: {
-                    Image(systemName: "minus.circle")
-                        .resizable()
-                        .scaledToFit()
-//                        .foregroundColor(.secondary)
-                        .frame(width: 28, height: 28)
-                }
-                .buttonStyle(.plain)
-                .disabled(viewModel.currentGameEdit.youCallBelot <= 0)
-                .opacity(viewModel.currentGameEdit.youCallBelot > 0 ? 1 : 0)
-                .animation(.bouncy, value: viewModel.currentGameEdit.youCallBelot)
-                .padding()
-            }
-        }
-        .listRowBackground(Color.clear)
-        .listRowSeparator(.hidden)
-    }
-    
 }
 
 struct InputView_Previews: PreviewProvider {

@@ -12,13 +12,14 @@ struct RoundedAccentButton: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(.title)
-            .padding()
+//            .padding()
             .background(
                 RoundedRectangle(
                     cornerRadius: 7,
                     style: .circular
                 )
                 .stroke(.primary, lineWidth: 1)
+                .frame(width: width, height: height, alignment: .center)
                 .shadow(radius: 2)
             )
     }
