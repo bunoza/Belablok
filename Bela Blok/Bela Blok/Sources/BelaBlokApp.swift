@@ -3,7 +3,7 @@ import Firebase
 import SwiftUI
 
 @main
-struct Bela_BlokApp: App {
+struct BelaBlokApp: App {
     @Environment(\.scenePhase) var scenePhase
     @Environment(\.colorScheme) private var colorScheme
 
