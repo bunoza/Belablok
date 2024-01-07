@@ -42,7 +42,7 @@ struct ResultRow: View {
                 }
                 .frame(maxWidth: .infinity)
             }
-            .padding(.leading, numberOfGame != nil ? 8 : 0)
+//            .padding(.leading, numberOfGame != nil ? 8 : 0)
             .padding(.horizontal)
             .padding(.horizontal)
         }

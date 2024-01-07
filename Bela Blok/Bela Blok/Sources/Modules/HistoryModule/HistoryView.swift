@@ -19,31 +19,42 @@ struct HistoryView: View {
             }
 
             VStack {
-                List {
-                    ForEach(viewModel.history, id: \.id) { games in
-                        ResultRow(
-                            numberOfGame: viewModel.getOrderedNumberOfGame(games),
-                            weScore: games.weTotalAccumulated,
-                            youScore: games.youTotalAccumulated
-                        )
-                        .showChevron()
-                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                            Button(role: .destructive) {
-                                viewModel.delete(games)
-                            } label: {
-                                Image(systemName: "trash")
+                ScrollViewReader { scrollReader in
+                    List {
+                        ForEach(viewModel.history, id: \.id) { games in
+                            ResultRow(
+                                numberOfGame: viewModel.getOrderedNumberOfGame(games),
+                                weScore: games.weTotalAccumulated,
+                                youScore: games.youTotalAccumulated
+                            )
+                            .showChevron()
+                            .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                                Button(role: .destructive) {
+                                    viewModel.delete(games)
+                                } label: {
+                                    Image(systemName: "trash")
+                                }
+                            }
+                            .background {
+                                NavigationLink("") {
+                                    StatsView(viewModel: StatsViewModel(game: games))
+                                }
+                                .opacity(0)
                             }
                         }
-                        .background {
-                            NavigationLink("") {
-                                StatsView(viewModel: StatsViewModel(game: games))
-                            }
-                            .opacity(0)
-                        }
+                        
+                        Rectangle()
+                            .frame(height: 2, alignment: .center)
+                            .listRowBackground(Color.clear)
+                            .listRowSeparator(.hidden)
+                            .id(Constants.BOTTOM_SCROLL_ID)
+                    }
+                    .scrollContentBackground(.hidden)
+                    .onAppear {
+                        scrollReader.scrollTo(Constants.BOTTOM_SCROLL_ID, anchor: .bottom)
                     }
                 }
-                .scrollContentBackground(.hidden)
-                
+
                 ResultRow(
                     weScore: viewModel.history.filter { $0.weTotalAccumulated > $0.youTotalAccumulated }.count,
                     youScore: viewModel.history.filter { $0.weTotalAccumulated < $0.youTotalAccumulated }.count

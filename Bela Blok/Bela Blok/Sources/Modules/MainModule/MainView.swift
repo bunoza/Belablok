@@ -28,55 +28,106 @@ struct MainView: View {
                     Color(.defaultBackground)
                         .ignoresSafeArea()
                 }
-                VStack {
-                    ResultRow(weLabel: "MI", youLabel: "VI")
+                
+                if !viewModel.currentSession.isEmpty {
+                    VStack {
+                        ResultRow(weLabel: "MI", youLabel: "VI")
+                            .bold()
+                            .padding(.top)
+                            .padding(.horizontal)
+                            .padding(.horizontal)
+                            .padding(.horizontal)
+                        
+                        ScrollViewReader { scrollReader in
+                            List {
+                                ForEach(viewModel.currentSession) { game in
+                                    ResultRow(
+                                        numberOfGame: viewModel.getOrderedNumberOfGame(game),
+                                        weScore: game.weTotal,
+                                        youScore: game.youTotal
+                                    )
+                                    .padding(.bottom, 2)
+                                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                                        Button(role: .cancel) {
+                                            viewModel.editingGame = game
+                                            showInputSheet = true
+                                        } label: {
+                                            Image(systemName: "rectangle.and.pencil.and.ellipsis")
+                                        }
+                                    }
+                                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                                        Button(role: .destructive) {
+                                            viewModel.delete(game)
+                                        } label: {
+                                            Image(systemName: "trash")
+                                        }
+                                    }
+                                }
+                                
+                                Rectangle()
+                                    .frame(height: 2, alignment: .center)
+                                    .listRowBackground(Color.clear)
+                                    .listRowSeparator(.hidden)
+                                    .id(Constants.BOTTOM_SCROLL_ID)
+                            }
+                            .onChange(of: viewModel.currentSession) { [oldValue = viewModel.currentSession] newValue in
+                                if newValue.count >= oldValue.count {
+                                    scrollReader.scrollTo(Constants.BOTTOM_SCROLL_ID, anchor: .bottom)
+                                }
+                            }
+                            .onAppear {
+                                scrollReader.scrollTo(Constants.BOTTOM_SCROLL_ID, anchor: .bottom)
+                            }
+                        }
+                        .animation(.easeInOut, value: viewModel.currentSession)
+                        .scrollContentBackground(.hidden)
+                        
+                        ResultRow(
+                            weScore: viewModel.currentSession.weTotalAccumulated,
+                            youScore: viewModel.currentSession.youTotalAccumulated
+                        )
+                        .animation(.easeInOut, value: viewModel.currentSession)
+                        .padding(.bottom)
+                        .padding(.horizontal)
+                        .padding(.horizontal)
+                        .padding(.horizontal)
                         .bold()
-                        .padding(.top)
+                    }
                     
-                    ScrollViewReader { scrollReader in
-                        List(viewModel.currentSession) { game in
-                            ResultRow(
-                                numberOfGame: viewModel.getOrderedNumberOfGame(game),
-                                weScore: game.weTotal,
-                                youScore: game.youTotal
-                            )
-                                .padding(.bottom, 2)
-                                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                                    Button(role: .cancel) {
-                                        viewModel.editingGame = game
-                                        showInputSheet = true
-                                    } label: {
-                                        Image(systemName: "rectangle.and.pencil.and.ellipsis")
-                                    }
-                                }
-                                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                                    Button(role: .destructive) {
-                                        viewModel.delete(game)
-                                    } label: {
-                                        Image(systemName: "trash")
-                                    }
-                                }
+                    
+                    if viewModel.shouldStartNewGame {
+                        LottieView(name: "confetti-animation")
+                            .allowsHitTesting(false)
+                            .ignoresSafeArea()
+                    }
+                } else {
+                    GeometryReader { geo in
+                        VStack {
+                            Spacer()
+
+                            HStack {
+                                Spacer()
+                                LottieView(name: "cards-animation", loopMode: .autoReverse)
+                                    .frame(width: geo.size.width * 0.9, height: geo.size.height * 0.275)
+                                    .allowsHitTesting(false)
+                                Spacer()
+                            }
+
+                            HStack {
+                                Text("Pristini na ")
+                                    .font(.footnote)
+                                Image(systemName: "square.and.pencil")
+                                    .imageScale(.medium)
+                                Text("za početak")
+                                    .font(.footnote)
+                            }
+                            
+                            Spacer()
                         }
                     }
-                    .animation(.easeInOut, value: viewModel.currentSession)
-                    .scrollContentBackground(.hidden)
-
-                    Spacer()
-                    ResultRow(
-                        weScore: viewModel.currentSession.weTotalAccumulated,
-                        youScore: viewModel.currentSession.youTotalAccumulated
-                    )
-                    .animation(.easeInOut, value: viewModel.currentSession)
-                    .padding(.vertical)
-                    .bold()
-                }
-                
-                if viewModel.shouldStartNewGame {
-                    LottieView(name: "confetti-animation")
-                        .allowsHitTesting(false)
-                        .ignoresSafeArea()
                 }
             }
+            .animation(.easeInOut, value: viewModel.currentSession)
             .onAppear {
                 showBottomBar = true
             }
@@ -133,7 +184,7 @@ struct MainView: View {
                             .animation(.easeInOut, value: showSettingsSheet)
                     }
                 }
-
+                
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink {
                         HistoryView(viewModel: HistoryViewModel())
