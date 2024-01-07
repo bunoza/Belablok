@@ -8,12 +8,14 @@ struct StatsView: View {
 
     private var stats: some View {
         VStack {
-            //MARK: MI - VI
+            // MARK: MI - VI
+
             ResultRow(weLabel: "MI", youLabel: "VI")
                 .bold()
                 .padding(.vertical)
-            
-            //MARK: Ukupno bodova
+
+            // MARK: Ukupno bodova
+
             HStack {
                 Spacer()
                 VStack {
@@ -32,8 +34,9 @@ struct StatsView: View {
                 Spacer()
             }
             .padding(.vertical)
-            
-            //MARK: Broj zvanja
+
+            // MARK: Broj zvanja
+
             HStack {
                 Spacer()
                 VStack {
@@ -48,8 +51,9 @@ struct StatsView: View {
                 Spacer()
             }
             .padding(.vertical)
-            
-            //MARK: Bodovi iz zvanja
+
+            // MARK: Bodovi iz zvanja
+
             HStack {
                 Spacer()
                 VStack {
@@ -64,8 +68,9 @@ struct StatsView: View {
                 Spacer()
             }
             .padding(.vertical)
-            
-            //MARK: Bodovi iz igre
+
+            // MARK: Bodovi iz igre
+
             HStack {
                 Spacer()
                 VStack {
@@ -84,49 +89,49 @@ struct StatsView: View {
         .listRowBackground(Color.clear)
         .listRowInsets(EdgeInsets())
     }
-    
+
     private var graph: some View {
-            Chart {
+        Chart {
+            LineMark(
+                x: .value("Redni broj", 0),
+                y: .value("Bodovi", 0),
+                series: .value("Tim", "Mi")
+            )
+            .foregroundStyle(by: .value("Tim", "Mi"))
+
+            LineMark(
+                x: .value("Redni broj", 0),
+                y: .value("Bodovi", 0),
+                series: .value("Tim", "Vi")
+            )
+            .foregroundStyle(by: .value("Tim", "Vi"))
+
+            ForEach(viewModel.weGraphData, id: \.self) { data in
                 LineMark(
-                    x: .value("Redni broj", 0),
-                    y: .value("Bodovi", 0),
+                    x: .value("Redni broj", data.orderedNumber),
+                    y: .value("Bodovi", data.amount),
                     series: .value("Tim", "Mi")
                 )
-                .foregroundStyle(by: .value("Tim", "Mi"))
-                
+            }
+            .foregroundStyle(by: .value("Tim", "Mi"))
+
+            ForEach(viewModel.youGraphData, id: \.self) { data in
                 LineMark(
-                    x: .value("Redni broj", 0),
-                    y: .value("Bodovi", 0),
+                    x: .value("Redni broj", data.orderedNumber),
+                    y: .value("Bodovi", data.amount),
                     series: .value("Tim", "Vi")
                 )
                 .foregroundStyle(by: .value("Tim", "Vi"))
-                
-                ForEach(viewModel.weGraphData, id: \.self) { data in
-                    LineMark(
-                        x: .value("Redni broj", data.orderedNumber),
-                        y: .value("Bodovi", data.amount),
-                        series: .value("Tim", "Mi")
-                    )
-                }
-                .foregroundStyle(by: .value("Tim", "Mi"))
-                
-                ForEach(viewModel.youGraphData, id: \.self) { data in
-                    LineMark(
-                        x: .value("Redni broj", data.orderedNumber),
-                        y: .value("Bodovi", data.amount),
-                        series: .value("Tim", "Vi")
-                    )
-                    .foregroundStyle(by: .value("Tim", "Vi"))
-                }
             }
-            .listRowBackground(Color.clear)
-            .padding(.top)
-            .frame(width: 300, height: 250)
-            .chartYAxisLabel("Bodovi", position: .leading, alignment: .center, spacing: 5)
-            .listRowSeparator(.hidden)
-            .padding()
+        }
+        .listRowBackground(Color.clear)
+        .padding(.top)
+        .frame(width: 300, height: 250)
+        .chartYAxisLabel("Bodovi", position: .leading, alignment: .center, spacing: 5)
+        .listRowSeparator(.hidden)
+        .padding()
     }
-    
+
     private var statsContent: some View {
         Group {
             stats
@@ -141,11 +146,11 @@ struct StatsView: View {
             }
         }
     }
-        
+
     init(viewModel: StatsViewModel) {
-        self._viewModel = .init(wrappedValue: viewModel)
+        _viewModel = .init(wrappedValue: viewModel)
     }
-    
+
     var body: some View {
         ZStack {
             if appState.powerSavingMode {
@@ -155,7 +160,7 @@ struct StatsView: View {
                 Color(.defaultBackground)
                     .ignoresSafeArea()
             }
-            
+
             List {
                 statsContent
             }
@@ -179,7 +184,7 @@ struct StatsView: View {
                             Text("Loading")
                         }
                     }
-                    
+
                     if let imageToShare = viewModel.graph {
                         ShareLink(item: imageToShare, preview: SharePreview("Graf", image: imageToShare)) {
                             Label("Podijeli graf", systemImage: "photo")
@@ -196,7 +201,7 @@ struct StatsView: View {
                         ShareLink(items: [sharingStats, sharingGraph]) {
                             SharePreview("Statistika i graf", image: $0)
                         }
-                    label: {
+                        label: {
                             Label("Podijeli oboje", systemImage: "doc.richtext")
                         }
                     } else {
@@ -272,7 +277,7 @@ struct StatsView: View {
                     caller: .we,
                     weBaseScore: 20,
                     youBaseScore: 142
-                ),
+                )
             ]
         )
     )

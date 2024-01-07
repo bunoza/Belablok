@@ -3,11 +3,11 @@ import SwiftUI
 struct DealerView: View {
     @StateObject private var appState = AppState.shared
     @Binding private var dealer: Dealer
-    
+
     init(dealer: Binding<Dealer>) {
-        self._dealer = dealer
+        _dealer = dealer
     }
-    
+
     var body: some View {
         ZStack {
             if appState.powerSavingMode {
@@ -17,17 +17,17 @@ struct DealerView: View {
                 Color(.defaultBackground)
                     .ignoresSafeArea()
             }
-            
+
             GeometryReader { geo in
                 VStack {
                     HStack {
                         Spacer()
                         Text("Dijeli: \(dealer.description)")
-                            .font(.system(size: geo.size.height/17))
+                            .font(.system(size: geo.size.height / 17))
                             .padding(.horizontal)
                         Spacer()
                     }
-                    
+
                     Group {
                         HStack {
                             Button {
@@ -36,11 +36,11 @@ struct DealerView: View {
                                 Image(systemName: dealer == .partner ? "person.fill" : "person")
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: geo.size.width/7)
+                                    .frame(width: geo.size.width / 7)
                                     .padding()
                             }
                         }
-                        
+
                         HStack {
                             Button {
                                 dealer = .leftOpponent
@@ -48,22 +48,22 @@ struct DealerView: View {
                                 Image(systemName: dealer == .leftOpponent ? "person.fill" : "person")
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: geo.size.width/7)
+                                    .frame(width: geo.size.width / 7)
                                     .padding()
                             }
 
                             RoundedRectangle(cornerSize: CGSize(width: 8, height: 8))
-                                .frame(width: geo.size.width/4, height: geo.size.width/4, alignment: .center)
+                                .frame(width: geo.size.width / 4, height: geo.size.width / 4, alignment: .center)
                                 .foregroundStyle(Color.accentColor.opacity(0.8))
                                 .padding(4)
-                            
+
                             Button {
                                 dealer = .rightOpponent
                             } label: {
                                 Image(systemName: dealer == .rightOpponent ? "person.fill" : "person")
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: geo.size.width/7)
+                                    .frame(width: geo.size.width / 7)
                                     .padding()
                             }
                         }
@@ -75,7 +75,7 @@ struct DealerView: View {
                                 Image(systemName: dealer == .me ? "person.fill" : "person")
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: geo.size.width/7)
+                                    .frame(width: geo.size.width / 7)
                                     .padding()
                             }
                         }

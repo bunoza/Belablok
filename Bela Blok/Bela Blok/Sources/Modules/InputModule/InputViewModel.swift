@@ -7,7 +7,7 @@ class InputViewModel: ObservableObject {
     @Binding var currentGame: Game?
     @Published var currentGameEdit: Game = .init()
     var isEditing: Bool
-    
+
     init(editGame: Binding<Game?> = .constant(.init()), isEditing: Bool = false) {
         _currentGame = editGame
         self.isEditing = isEditing
@@ -17,7 +17,7 @@ class InputViewModel: ObservableObject {
             currentGameEdit = .init()
         }
     }
-    
+
     private func transferCalls(to: Caller) {
         switch to {
         case .we:
@@ -25,7 +25,7 @@ class InputViewModel: ObservableObject {
             currentGameEdit.weCall50 += currentGameEdit.youCall50
             currentGameEdit.weCall100 += currentGameEdit.youCall100
             currentGameEdit.weCallBelot += currentGameEdit.youCallBelot
-            
+
             currentGameEdit.youCall20 = 0
             currentGameEdit.youCall50 = 0
             currentGameEdit.youCall100 = 0
@@ -35,14 +35,14 @@ class InputViewModel: ObservableObject {
             currentGameEdit.youCall50 += currentGameEdit.weCall50
             currentGameEdit.youCall100 += currentGameEdit.weCall100
             currentGameEdit.youCallBelot += currentGameEdit.weCallBelot
-            
+
             currentGameEdit.weCall20 = 0
             currentGameEdit.weCall50 = 0
             currentGameEdit.weCall100 = 0
             currentGameEdit.weCallBelot = 0
         }
     }
-    
+
     private func handleFall() {
         switch currentGameEdit.caller {
         case .we:
@@ -84,7 +84,7 @@ class InputViewModel: ObservableObject {
             }
         }
     }
-    
+
     func handleYouCallUpdate(amount: Int) {
         if currentGameEdit.youCallsSum < appState.gameEndScore.amount {
             switch amount {
@@ -105,12 +105,12 @@ class InputViewModel: ObservableObject {
     func saveCurrentGame() {
         handleFall()
         if isEditing {
-            self.currentGame = currentGameEdit
+            currentGame = currentGameEdit
         } else {
             AppState.shared.currentGame.append(currentGameEdit)
         }
     }
-    
+
     func resetCalls() {
         currentGameEdit.weCall20 = 0
         currentGameEdit.weCall50 = 0

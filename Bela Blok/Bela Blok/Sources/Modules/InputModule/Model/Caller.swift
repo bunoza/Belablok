@@ -3,7 +3,7 @@ import Foundation
 enum Caller: CaseIterable, Codable {
     case we
     case you
-    
+
     var description: String {
         switch self {
         case .we:

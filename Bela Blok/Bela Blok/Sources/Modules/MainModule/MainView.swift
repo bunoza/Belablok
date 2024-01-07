@@ -8,7 +8,7 @@ struct MainView: View {
     @State private var showGameFinishedAlert: Bool
     @State private var showSettingsSheet: Bool
     @State private var showBottomBar: Bool
-    
+
     init() {
         _viewModel = .init(wrappedValue: MainViewModel())
         showInputSheet = false
@@ -17,7 +17,7 @@ struct MainView: View {
         showGameFinishedAlert = false
         showBottomBar = false
     }
-    
+
     var body: some View {
         NavigationView {
             ZStack {
@@ -28,7 +28,7 @@ struct MainView: View {
                     Color(.defaultBackground)
                         .ignoresSafeArea()
                 }
-                
+
                 if !viewModel.currentSession.isEmpty {
                     VStack {
                         ResultRow(weLabel: "MI", youLabel: "VI")
@@ -37,7 +37,7 @@ struct MainView: View {
                             .padding(.horizontal)
                             .padding(.horizontal)
                             .padding(.horizontal)
-                        
+
                         ScrollViewReader { scrollReader in
                             List {
                                 ForEach(viewModel.currentSession) { game in
@@ -63,25 +63,25 @@ struct MainView: View {
                                         }
                                     }
                                 }
-                                
+
                                 Rectangle()
                                     .frame(height: 2, alignment: .center)
                                     .listRowBackground(Color.clear)
                                     .listRowSeparator(.hidden)
-                                    .id(Constants.BOTTOM_SCROLL_ID)
+                                    .id(Constants.bottomScrollID)
                             }
                             .onChange(of: viewModel.currentSession) { [oldValue = viewModel.currentSession] newValue in
                                 if newValue.count >= oldValue.count {
-                                    scrollReader.scrollTo(Constants.BOTTOM_SCROLL_ID, anchor: .bottom)
+                                    scrollReader.scrollTo(Constants.bottomScrollID, anchor: .bottom)
                                 }
                             }
                             .onAppear {
-                                scrollReader.scrollTo(Constants.BOTTOM_SCROLL_ID, anchor: .bottom)
+                                scrollReader.scrollTo(Constants.bottomScrollID, anchor: .bottom)
                             }
                         }
                         .animation(.easeInOut, value: viewModel.currentSession)
                         .scrollContentBackground(.hidden)
-                        
+
                         ResultRow(
                             weScore: viewModel.currentSession.weTotalAccumulated,
                             youScore: viewModel.currentSession.youTotalAccumulated
@@ -93,8 +93,7 @@ struct MainView: View {
                         .padding(.horizontal)
                         .bold()
                     }
-                    
-                    
+
                     if viewModel.shouldStartNewGame {
                         LottieView(name: "confetti-animation")
                             .allowsHitTesting(false)
@@ -121,7 +120,7 @@ struct MainView: View {
                                 Text("za početak")
                                     .font(.footnote)
                             }
-                            
+
                             Spacer()
                         }
                     }
@@ -184,7 +183,7 @@ struct MainView: View {
                             .animation(.easeInOut, value: showSettingsSheet)
                     }
                 }
-                
+
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink {
                         HistoryView(viewModel: HistoryViewModel())
@@ -193,7 +192,7 @@ struct MainView: View {
                     }
                     .disabled(AppState.shared.finishedGames.isEmpty)
                 }
-                
+
                 ToolbarItem(placement: .bottomBar) {
                     if showBottomBar {
                         HStack {
@@ -225,7 +224,7 @@ struct MainView: View {
                 } label: {
                     Text("Nastavi")
                 }
-                
+
                 Button(role: .destructive) {
                     showGameFinishedAlert = false
                 } label: {

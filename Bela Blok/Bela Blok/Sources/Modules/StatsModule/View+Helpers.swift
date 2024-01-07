@@ -8,7 +8,7 @@ extension View {
         renderer.scale = 3.0
         return Image(uiImage: renderer.uiImage ?? UIImage())
     }
-    
+
 //    func setGreenBackground() -> some View {
 //        ZStack {
 //            Color.green.opacity(0.7).ignoresSafeArea(.all)

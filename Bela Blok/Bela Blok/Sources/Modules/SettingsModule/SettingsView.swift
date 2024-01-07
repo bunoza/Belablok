@@ -5,8 +5,8 @@ struct SettingsView: View {
     @Environment(\.colorScheme) private var colorScheme
 
     @StateObject private var appState = AppState.shared
-    @State private var showSingleDestructiveAlert: Bool =  false
-    @State private var showDestructiveAlert: Bool =  false
+    @State private var showSingleDestructiveAlert: Bool = false
+    @State private var showDestructiveAlert: Bool = false
 
     var body: some View {
         NavigationView {
@@ -18,7 +18,7 @@ struct SettingsView: View {
                 } footer: {
                     Text("Može dovesti do povećanja potrošnje baterije.")
                 }
-                
+
                 Section {
                     Toggle(isOn: $appState.powerSavingMode) {
                         Text("Način uštede baterije")
@@ -27,7 +27,7 @@ struct SettingsView: View {
                 } footer: {
                     Text("Štedi bateriju kod OLED zaslona dok je tamni način rada uključen. Coming soon.")
                 }
-                
+
                 HStack {
                     Text("Igra se do: ")
                     Picker("", selection: $appState.gameEndScore) {
@@ -44,7 +44,7 @@ struct SettingsView: View {
                     } label: {
                         Text("Obriši trenutnu partiju")
                     }
-                    
+
                     Button(role: .destructive) {
                         showDestructiveAlert = true
                     } label: {
@@ -57,8 +57,7 @@ struct SettingsView: View {
             .navigationBarTitleDisplayMode(.large)
             .navigationBarBackButtonHidden()
             .alert("Jeste li sigurni?", isPresented: $showSingleDestructiveAlert, actions: {
-                Button(role: .cancel) {
-                } label: {
+                Button(role: .cancel) {} label: {
                     Text("Odustani")
                 }
 
@@ -71,8 +70,7 @@ struct SettingsView: View {
                 Text("Ova radnja se ne može poništiti.")
             })
             .alert("Jeste li sigurni?", isPresented: $showDestructiveAlert, actions: {
-                Button(role: .cancel) {
-                } label: {
+                Button(role: .cancel) {} label: {
                     Text("Odustani")
                 }
 

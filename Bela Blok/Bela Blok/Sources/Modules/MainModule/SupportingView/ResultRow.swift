@@ -4,18 +4,18 @@ struct ResultRow: View {
     private var numberOfGame: Int?
     private let weScore: String
     private let youScore: String
-    
-    init(numberOfGame: Int? = nil, weScore: Int,youScore: Int) {
+
+    init(numberOfGame: Int? = nil, weScore: Int, youScore: Int) {
         self.numberOfGame = numberOfGame
         self.weScore = String(weScore)
         self.youScore = String(youScore)
     }
-    
+
     init(weLabel: String, youLabel: String) {
         weScore = weLabel
         youScore = youLabel
     }
-    
+
     var body: some View {
         ZStack {
             if let numberOfGame {
@@ -26,7 +26,7 @@ struct ResultRow: View {
                     Spacer()
                 }
             }
-            
+
             HStack {
                 VStack(alignment: .center) {
                     Text(weScore)
@@ -34,7 +34,7 @@ struct ResultRow: View {
                         .frame(alignment: .center)
                 }
                 .frame(maxWidth: .infinity)
-                
+
                 VStack(alignment: .center) {
                     Text(youScore)
                         .font(.largeTitle)
@@ -49,7 +49,7 @@ struct ResultRow: View {
         .listRowBackground(Color.clear)
         .listRowSeparator(.hidden)
     }
-    
+
     func showChevron() -> some View {
         ZStack {
             self

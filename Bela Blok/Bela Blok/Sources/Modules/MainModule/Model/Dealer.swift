@@ -5,7 +5,7 @@ enum Dealer: CaseIterable, Codable {
     case rightOpponent
     case partner
     case leftOpponent
-    
+
     var description: String {
         switch self {
         case .me:
@@ -18,7 +18,7 @@ enum Dealer: CaseIterable, Codable {
             return "Lijevi protivnik"
         }
     }
-    
+
     var nextDealer: Dealer {
         switch self {
         case .me:

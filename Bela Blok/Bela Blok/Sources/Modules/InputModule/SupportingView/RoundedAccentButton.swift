@@ -3,12 +3,12 @@ import SwiftUI
 struct RoundedAccentButton: ViewModifier {
     private let width: CGFloat
     private let height: CGFloat
-    
+
     init(width: CGFloat, height: CGFloat) {
         self.width = width
         self.height = height
     }
-    
+
     func body(content: Content) -> some View {
         content
             .font(.title)

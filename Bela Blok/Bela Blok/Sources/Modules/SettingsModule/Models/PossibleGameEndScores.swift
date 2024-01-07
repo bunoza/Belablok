@@ -4,7 +4,7 @@ enum PossibleGameEndScores: CaseIterable, Codable {
     case small
     case medium
     case large
-    
+
     var amount: Int {
         switch self {
         case .small:

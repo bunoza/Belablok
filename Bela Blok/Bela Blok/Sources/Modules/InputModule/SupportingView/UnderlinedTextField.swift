@@ -3,14 +3,14 @@ import SwiftUI
 
 struct UnderlinedTextField: View {
     @Binding private var score: Int
-    
+
     @State private var text: String
-    
+
     init(score: Binding<Int>) {
-        self._score = score
+        _score = score
         text = score.wrappedValue == -1 ? "" : String(score.wrappedValue)
     }
-    
+
     var body: some View {
         TextField("0", text: $text)
             .onChange(of: text) { [text] newState in
@@ -19,11 +19,11 @@ struct UnderlinedTextField: View {
                     self.score = 0
                     return
                 }
-                
-                let filteredString = newState.filter { 
-                    Constants.ACCEPTABLE_CHARS_FOR_INPUT.contains($0)
+
+                let filteredString = newState.filter {
+                    Constants.acceptableCharactersForInput.contains($0)
                 }
-                
+
                 if let validInt = Int(filteredString),
                    validInt >= 0,
                    validInt <= 162 {

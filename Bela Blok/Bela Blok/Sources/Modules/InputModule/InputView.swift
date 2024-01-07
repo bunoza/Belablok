@@ -3,15 +3,15 @@ import SwiftUI
 
 struct InputView: View {
     @Environment(\.dismiss) private var dismiss
-    
+
     @StateObject private var appState: AppState = .shared
     @StateObject private var viewModel: InputViewModel
     @State private var ignoreFlag: Bool = false
 
     init(viewModel: InputViewModel) {
-        self._viewModel = StateObject(wrappedValue: viewModel)
+        _viewModel = StateObject(wrappedValue: viewModel)
     }
-    
+
     var body: some View {
         NavigationView {
             ZStack {
@@ -22,12 +22,12 @@ struct InputView: View {
                     Color(.defaultBackground)
                         .ignoresSafeArea()
                 }
-                
+
                 List {
                     HStack {
                         Spacer()
                         UnderlinedTextField(score: $viewModel.currentGameEdit.weBaseScore)
-                            .onChange(of: viewModel.currentGameEdit.weBaseScore) { newValue in
+                            .onChange(of: viewModel.currentGameEdit.weBaseScore) { _ in
                                 if !ignoreFlag {
                                     ignoreFlag = true
                                     viewModel.onChangeOfWeScore()
@@ -36,7 +36,7 @@ struct InputView: View {
                             }
                         Spacer()
                         UnderlinedTextField(score: $viewModel.currentGameEdit.youBaseScore)
-                            .onChange(of: viewModel.currentGameEdit.youBaseScore) { newValue in
+                            .onChange(of: viewModel.currentGameEdit.youBaseScore) { _ in
                                 if !ignoreFlag {
                                     ignoreFlag = true
                                     viewModel.onChangeOfYouScore()
@@ -48,7 +48,7 @@ struct InputView: View {
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
                     .padding()
-                    
+
                     HStack {
                         Spacer()
                         VStack {
@@ -58,7 +58,7 @@ struct InputView: View {
                                 .font(.subheadline)
                         }
                         Spacer()
-                        
+
                         Button {
                             viewModel.resetCalls()
                         } label: {
@@ -67,10 +67,10 @@ struct InputView: View {
                         }
                         .roundedAccentButton(width: 110, height: 35)
                         .buttonStyle(.plain)
-                        
+
                         .padding(.horizontal)
                         Spacer()
-                        
+
                         VStack {
                             Text("Zvanje")
                                 .font(.subheadline)
@@ -82,7 +82,7 @@ struct InputView: View {
                     .listRowBackground(Color.clear)
                     .listRowSeparator(.hidden)
                     .padding()
-                    
+
                     Picker("", selection: $viewModel.currentGameEdit.caller) {
                         ForEach(Caller.allCases, id: \.self) { caller in
                             Text(caller.description)
@@ -92,26 +92,26 @@ struct InputView: View {
                     .pickerStyle(.segmented)
                     .padding(.horizontal)
                     .padding()
-                    
+
                     Group {
                         renderCallButtonRow(
                             weCall: $viewModel.currentGameEdit.weCall20,
                             youCall: $viewModel.currentGameEdit.youCall20,
                             amount: 20
                         )
-                        
+
                         renderCallButtonRow(
                             weCall: $viewModel.currentGameEdit.weCall50,
                             youCall: $viewModel.currentGameEdit.youCall50,
                             amount: 50
                         )
-                        
+
                         renderCallButtonRow(
                             weCall: $viewModel.currentGameEdit.weCall100,
                             youCall: $viewModel.currentGameEdit.youCall100,
                             amount: 100
                         )
-                        
+
                         renderCallButtonRow(
                             weCall: $viewModel.currentGameEdit.weCallBelot,
                             youCall: $viewModel.currentGameEdit.youCallBelot,
@@ -135,7 +135,7 @@ struct InputView: View {
                     } label: {
                         Text("Spremi")
                     }
-                    .disabled(viewModel.currentGameEdit.weBaseScore + viewModel.currentGameEdit.youBaseScore  != 162)
+                    .disabled(viewModel.currentGameEdit.weBaseScore + viewModel.currentGameEdit.youBaseScore != 162)
                 }
                 ToolbarItem(placement: .cancellationAction) {
                     Button {
@@ -147,7 +147,7 @@ struct InputView: View {
             }
         }
     }
-    
+
     private func renderCallButtonRow(weCall: Binding<Int>, youCall: Binding<Int>, amount: Int) -> some View {
         HStack {
             VStack {
@@ -159,8 +159,8 @@ struct InputView: View {
                     Spacer()
                 }
             }
-            
-            VStack{
+
+            VStack {
                 HStack {
                     Spacer()
                     renderCallButton(caller: .you, amount: amount)
@@ -173,7 +173,7 @@ struct InputView: View {
         .frame(maxWidth: .infinity)
         .padding(.vertical)
     }
-    
+
     private func minusButton(bindedInt: Binding<Int>) -> some View {
         Button {
             bindedInt.wrappedValue -= 1
@@ -188,12 +188,12 @@ struct InputView: View {
         .opacity(bindedInt.wrappedValue > 0 ? 1 : 0)
         .animation(.bouncy, value: bindedInt.wrappedValue)
     }
-    
+
     private func counter(bindedInt: Binding<Int>) -> some View {
         Text("x\(bindedInt.wrappedValue)")
             .opacity(bindedInt.wrappedValue == 0 ? 0 : 1)
     }
-    
+
     private func renderCallButton(caller: Caller, amount: Int) -> some View {
         Button {
             if caller == .we {
@@ -215,4 +215,3 @@ struct InputView_Previews: PreviewProvider {
         InputView(viewModel: InputViewModel())
     }
 }
-
