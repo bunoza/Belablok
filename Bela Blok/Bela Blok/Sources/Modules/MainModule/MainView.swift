@@ -72,11 +72,15 @@ struct MainView: View {
                             }
                             .onChange(of: viewModel.currentSession) { [oldValue = viewModel.currentSession] newValue in
                                 if newValue.count >= oldValue.count {
-                                    scrollReader.scrollTo(Constants.bottomScrollID, anchor: .bottom)
+                                    withAnimation {
+                                        scrollReader.scrollTo(Constants.bottomScrollID, anchor: .bottom)
+                                    }
                                 }
                             }
                             .onAppear {
-                                scrollReader.scrollTo(Constants.bottomScrollID, anchor: .bottom)
+                                withAnimation {
+                                    scrollReader.scrollTo(Constants.bottomScrollID, anchor: .bottom)
+                                }
                             }
                         }
                         .animation(.easeInOut, value: viewModel.currentSession)
@@ -113,7 +117,7 @@ struct MainView: View {
                             }
 
                             HStack {
-                                Text("Pristini na ")
+                                Text("Pritisni na ")
                                     .font(.footnote)
                                 Image(systemName: "square.and.pencil")
                                     .imageScale(.medium)

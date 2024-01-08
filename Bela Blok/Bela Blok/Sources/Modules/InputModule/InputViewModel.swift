@@ -60,6 +60,25 @@ class InputViewModel: ObservableObject {
         }
     }
 
+    private func resetWeCalls() {
+        currentGameEdit.weCall20 = 0
+        currentGameEdit.weCall50 = 0
+        currentGameEdit.weCall100 = 0
+        currentGameEdit.weCallBelot = 0
+    }
+    
+    private func resetYouCalls() {
+        currentGameEdit.youCall20 = 0
+        currentGameEdit.youCall50 = 0
+        currentGameEdit.youCall100 = 0
+        currentGameEdit.youCallBelot = 0
+    }
+    
+    func resetCalls() {
+        resetWeCalls()
+        resetYouCalls()
+    }
+
     func onChangeOfWeScore() {
         currentGameEdit.youBaseScore = 162 - currentGameEdit.weBaseScore
     }
@@ -78,7 +97,10 @@ class InputViewModel: ObservableObject {
             case 100:
                 if currentGameEdit.weCall100 < 5 { currentGameEdit.weCall100 += 1 }
             case 1001:
-                if currentGameEdit.weCallBelot == 0 { currentGameEdit.weCallBelot += 1 }
+                if currentGameEdit.weCallBelot == 0 {
+                    resetWeCalls()
+                    currentGameEdit.weCallBelot += 1
+                }
             default:
                 break
             }
@@ -95,7 +117,10 @@ class InputViewModel: ObservableObject {
             case 100:
                 if currentGameEdit.youCall100 < 5 { currentGameEdit.youCall100 += 1 }
             case 1001:
-                if currentGameEdit.youCallBelot == 0 { currentGameEdit.youCallBelot += 1 }
+                if currentGameEdit.youCallBelot == 0 {
+                    resetYouCalls()
+                    currentGameEdit.youCallBelot += 1
+                }
             default:
                 break
             }
@@ -107,18 +132,7 @@ class InputViewModel: ObservableObject {
         if isEditing {
             currentGame = currentGameEdit
         } else {
-            AppState.shared.currentGame.append(currentGameEdit)
+            appState.currentGame.append(currentGameEdit)
         }
-    }
-
-    func resetCalls() {
-        currentGameEdit.weCall20 = 0
-        currentGameEdit.weCall50 = 0
-        currentGameEdit.weCall100 = 0
-        currentGameEdit.weCallBelot = 0
-        currentGameEdit.youCall20 = 0
-        currentGameEdit.youCall50 = 0
-        currentGameEdit.youCall100 = 0
-        currentGameEdit.youCallBelot = 0
     }
 }
