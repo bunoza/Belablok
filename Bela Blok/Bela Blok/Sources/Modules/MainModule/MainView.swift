@@ -37,51 +37,37 @@ struct MainView: View {
                             .padding(.horizontal)
                             .padding(.horizontal)
                             .padding(.horizontal)
+                        
+                        List {
+                            ForEach(viewModel.currentSession) { game in
+                                ResultRow(
+                                    numberOfGame: viewModel.getOrderedNumberOfGame(game),
+                                    weScore: game.weTotal,
+                                    youScore: game.youTotal
+                                )
+                                .padding(.bottom, 2)
+                                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                                    Button(role: .cancel) {
+                                        viewModel.editingGame = game
+                                        showInputSheet = true
+                                    } label: {
+                                        Image(systemName: "rectangle.and.pencil.and.ellipsis")
+                                    }
+                                }
+                                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                                    Button(role: .destructive) {
+                                        viewModel.delete(game)
+                                    } label: {
+                                        Image(systemName: "trash")
+                                            .resizable()
+                                    }
+                                }
+                            }
 
-                        ScrollViewReader { scrollReader in
-                            List {
-                                ForEach(viewModel.currentSession) { game in
-                                    ResultRow(
-                                        numberOfGame: viewModel.getOrderedNumberOfGame(game),
-                                        weScore: game.weTotal,
-                                        youScore: game.youTotal
-                                    )
-                                    .padding(.bottom, 2)
-                                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                                        Button(role: .cancel) {
-                                            viewModel.editingGame = game
-                                            showInputSheet = true
-                                        } label: {
-                                            Image(systemName: "rectangle.and.pencil.and.ellipsis")
-                                        }
-                                    }
-                                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                                        Button(role: .destructive) {
-                                            viewModel.delete(game)
-                                        } label: {
-                                            Image(systemName: "trash")
-                                        }
-                                    }
-                                }
-
-                                Rectangle()
-                                    .frame(height: 2, alignment: .center)
-                                    .listRowBackground(Color.clear)
-                                    .listRowSeparator(.hidden)
-                                    .id(Constants.bottomScrollID)
-                            }
-                            .onChange(of: viewModel.currentSession) { [oldValue = viewModel.currentSession] newValue in
-                                if newValue.count >= oldValue.count {
-                                    withAnimation {
-                                        scrollReader.scrollTo(Constants.bottomScrollID, anchor: .bottom)
-                                    }
-                                }
-                            }
-                            .onAppear {
-                                withAnimation {
-                                    scrollReader.scrollTo(Constants.bottomScrollID, anchor: .bottom)
-                                }
-                            }
+                            Rectangle()
+                                .frame(height: 2, alignment: .center)
+                                .listRowBackground(Color.clear)
+                                .listRowSeparator(.hidden)
                         }
                         .animation(.easeInOut, value: viewModel.currentSession)
                         .scrollContentBackground(.hidden)
@@ -131,16 +117,16 @@ struct MainView: View {
                 }
             }
             .animation(.easeInOut, value: viewModel.currentSession)
+            .onChange(of: viewModel.currentSession.count) { [oldValue = viewModel.currentSession.count] newValue in
+                if newValue > oldValue {
+                    if !viewModel.shouldStartNewGame { viewModel.updateDealer() }
+                }
+            }
             .onAppear {
                 showBottomBar = true
             }
             .onDisappear {
                 showBottomBar = false
-            }
-            .onChange(of: viewModel.currentSession.count) { [count = viewModel.currentSession.count] newCount in
-                if newCount > count {
-                    if !viewModel.shouldStartNewGame { viewModel.updateDealer() }
-                }
             }
             .sheet(
                 isPresented: $showSettingsSheet,

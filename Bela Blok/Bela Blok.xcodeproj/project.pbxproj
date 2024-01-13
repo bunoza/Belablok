@@ -34,13 +34,15 @@
 		C5305F082AC9A9A1007F1914 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5305F072AC9A9A1007F1914 /* Constants.swift */; };
 		C5305F0B2ACA2691007F1914 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5305F0A2ACA2691007F1914 /* StatsView.swift */; };
 		C5305F0D2ACA26BB007F1914 /* StatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5305F0C2ACA26BB007F1914 /* StatsViewModel.swift */; };
-		C548AF022B49A8E500B49C45 /* PossibleGameEndScores.swift in Sources */ = {isa = PBXBuildFile; fileRef = C548AF012B49A8E500B49C45 /* PossibleGameEndScores.swift */; };
+		C548AF022B49A8E500B49C45 /* PossibleGameEndScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C548AF012B49A8E500B49C45 /* PossibleGameEndScore.swift */; };
 		C57675A72AA384CE009CC959 /* BelaBlokApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57675A62AA384CE009CC959 /* BelaBlokApp.swift */; };
 		C57675A92AA384CE009CC959 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57675A82AA384CE009CC959 /* MainView.swift */; };
 		C57675AB2AA384D1009CC959 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C57675AA2AA384D1009CC959 /* Assets.xcassets */; };
 		C57675AE2AA384D1009CC959 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C57675AD2AA384D1009CC959 /* Preview Assets.xcassets */; };
 		C57675B52AA387D0009CC959 /* ResultRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57675B42AA387D0009CC959 /* ResultRow.swift */; };
+		C57919AB2B4F394B00A73302 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57919AA2B4F394B00A73302 /* AppDelegate.swift */; };
 		C58B41FF2B4AF2D900561FB3 /* cards-animation.json in Resources */ = {isa = PBXBuildFile; fileRef = C58B41FE2B4AF2D900561FB3 /* cards-animation.json */; };
+		C58C149D2B52F7A200A9496A /* StigljaValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58C149C2B52F7A200A9496A /* StigljaValue.swift */; };
 		C599C4F42AB762590011CA2B /* DealerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C599C4F32AB762590011CA2B /* DealerView.swift */; };
 		C599C4F72AB77FE70011CA2B /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C599C4F62AB77FE70011CA2B /* HistoryView.swift */; };
 		C599C4F92AB77FF80011CA2B /* HistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C599C4F82AB77FF80011CA2B /* HistoryViewModel.swift */; };
@@ -52,9 +54,6 @@
 		C5B2EE522ADB22BE00CA476D /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = C5B2EE512ADB22BE00CA476D /* Lottie */; };
 		C5B2EE542ADB22F600CA476D /* confetti-animation.json in Resources */ = {isa = PBXBuildFile; fileRef = C5B2EE532ADB22F600CA476D /* confetti-animation.json */; };
 		C5CA55B82B17BCAE007B23C0 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CA55B72B17BCAE007B23C0 /* SettingsView.swift */; };
-		C5CE41022B4B7AE700F5E1AA /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = C5CE41012B4B7AE700F5E1AA /* SwiftUIIntrospect */; };
-		C5CE41042B4B7AE700F5E1AA /* SwiftUIIntrospect-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = C5CE41032B4B7AE700F5E1AA /* SwiftUIIntrospect-Dynamic */; };
-		C5CE41062B4B7AE700F5E1AA /* SwiftUIIntrospect-Static in Frameworks */ = {isa = PBXBuildFile; productRef = C5CE41052B4B7AE700F5E1AA /* SwiftUIIntrospect-Static */; };
 		C5DB888E2AA398E900D702E0 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB888D2AA398E900D702E0 /* InputView.swift */; };
 		C5DB88912AA39EC800D702E0 /* UnderlinedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB88902AA39EC800D702E0 /* UnderlinedTextField.swift */; };
 		C5DB88942AA3A42A00D702E0 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB88932AA3A42A00D702E0 /* Game.swift */; };
@@ -82,14 +81,17 @@
 		C5305F072AC9A9A1007F1914 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C5305F0A2ACA2691007F1914 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
 		C5305F0C2ACA26BB007F1914 /* StatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewModel.swift; sourceTree = "<group>"; };
-		C548AF012B49A8E500B49C45 /* PossibleGameEndScores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PossibleGameEndScores.swift; sourceTree = "<group>"; };
+		C548AF012B49A8E500B49C45 /* PossibleGameEndScore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PossibleGameEndScore.swift; sourceTree = "<group>"; };
 		C57675A32AA384CE009CC959 /* Bela Blok.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bela Blok.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C57675A62AA384CE009CC959 /* BelaBlokApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BelaBlokApp.swift; sourceTree = "<group>"; };
 		C57675A82AA384CE009CC959 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		C57675AA2AA384D1009CC959 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C57675AD2AA384D1009CC959 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C57675B42AA387D0009CC959 /* ResultRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultRow.swift; sourceTree = "<group>"; };
+		C57919A92B4F36A900A73302 /* Bela BlokDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Bela BlokDebug.entitlements"; sourceTree = "<group>"; };
+		C57919AA2B4F394B00A73302 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C58B41FE2B4AF2D900561FB3 /* cards-animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cards-animation.json"; sourceTree = "<group>"; };
+		C58C149C2B52F7A200A9496A /* StigljaValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StigljaValue.swift; sourceTree = "<group>"; };
 		C599C4F32AB762590011CA2B /* DealerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealerView.swift; sourceTree = "<group>"; };
 		C599C4F62AB77FE70011CA2B /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		C599C4F82AB77FF80011CA2B /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
@@ -118,13 +120,10 @@
 				C512C0D12ADBF04100E0A15A /* FirebaseAuthCombine-Community in Frameworks */,
 				C512C0DD2ADBF04100E0A15A /* FirebaseFirestoreCombine-Community in Frameworks */,
 				C512C0C72ADBF04000E0A15A /* FirebaseAnalyticsSwift in Frameworks */,
-				C5CE41022B4B7AE700F5E1AA /* SwiftUIIntrospect in Frameworks */,
 				C512C0C92ADBF04000E0A15A /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				C512C0C32ADBF04000E0A15A /* FirebaseAnalytics in Frameworks */,
 				C512C0C52ADBF04000E0A15A /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
-				C5CE41042B4B7AE700F5E1AA /* SwiftUIIntrospect-Dynamic in Frameworks */,
 				C512C0CB2ADBF04100E0A15A /* FirebaseAppCheck in Frameworks */,
-				C5CE41062B4B7AE700F5E1AA /* SwiftUIIntrospect-Static in Frameworks */,
 				C512C0EF2ADBF04100E0A15A /* FirebasePerformance in Frameworks */,
 				C512C0E32ADBF04100E0A15A /* FirebaseFunctionsCombine-Community in Frameworks */,
 				C512C0D32ADBF04100E0A15A /* FirebaseCrashlytics in Frameworks */,
@@ -178,6 +177,7 @@
 				C54739C42AA396520097BAFD /* Modules */,
 				C57675A62AA384CE009CC959 /* BelaBlokApp.swift */,
 				C5A3E2082AA4AA700016EC3C /* AppState.swift */,
+				C57919AA2B4F394B00A73302 /* AppDelegate.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -219,7 +219,8 @@
 		C548AF002B49A8C900B49C45 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C548AF012B49A8E500B49C45 /* PossibleGameEndScores.swift */,
+				C548AF012B49A8E500B49C45 /* PossibleGameEndScore.swift */,
+				C58C149C2B52F7A200A9496A /* StigljaValue.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -244,6 +245,7 @@
 		C57675A52AA384CE009CC959 /* Bela Blok */ = {
 			isa = PBXGroup;
 			children = (
+				C57919A92B4F36A900A73302 /* Bela BlokDebug.entitlements */,
 				C512C0C02ADBEF2A00E0A15A /* GoogleService-Info.plist */,
 				C54739C32AA396380097BAFD /* Sources */,
 				C54739C22AA3961F0097BAFD /* Resources */,
@@ -380,9 +382,6 @@
 				C512C0F22ADBF04100E0A15A /* FirebaseRemoteConfigSwift */,
 				C512C0F42ADBF04100E0A15A /* FirebaseStorage */,
 				C512C0F62ADBF04100E0A15A /* FirebaseStorageCombine-Community */,
-				C5CE41012B4B7AE700F5E1AA /* SwiftUIIntrospect */,
-				C5CE41032B4B7AE700F5E1AA /* SwiftUIIntrospect-Dynamic */,
-				C5CE41052B4B7AE700F5E1AA /* SwiftUIIntrospect-Static */,
 			);
 			productName = "Bela Blok";
 			productReference = C57675A32AA384CE009CC959 /* Bela Blok.app */;
@@ -415,7 +414,6 @@
 			packageReferences = (
 				C5B2EE502ADB22BE00CA476D /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				C512C0C12ADBF04000E0A15A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				C5CE41002B4B7AE700F5E1AA /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 			);
 			productRefGroup = C57675A42AA384CE009CC959 /* Products */;
 			projectDirPath = "";
@@ -471,16 +469,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C57919AB2B4F394B00A73302 /* AppDelegate.swift in Sources */,
 				C5DB88912AA39EC800D702E0 /* UnderlinedTextField.swift in Sources */,
 				C57675A92AA384CE009CC959 /* MainView.swift in Sources */,
 				C5DB88962AA3A74800D702E0 /* RoundedAccentButton.swift in Sources */,
 				C59C1BDD2AB5FDB400E34056 /* Caller.swift in Sources */,
 				C599C4F42AB762590011CA2B /* DealerView.swift in Sources */,
 				C5A3E2092AA4AA700016EC3C /* AppState.swift in Sources */,
+				C58C149D2B52F7A200A9496A /* StigljaValue.swift in Sources */,
 				C5DB888E2AA398E900D702E0 /* InputView.swift in Sources */,
 				C599C4F72AB77FE70011CA2B /* HistoryView.swift in Sources */,
 				C5305F0B2ACA2691007F1914 /* StatsView.swift in Sources */,
-				C548AF022B49A8E500B49C45 /* PossibleGameEndScores.swift in Sources */,
+				C548AF022B49A8E500B49C45 /* PossibleGameEndScore.swift in Sources */,
 				C5035CD12AA4ADC100B3F3C3 /* MainViewModel.swift in Sources */,
 				C57675A72AA384CE009CC959 /* BelaBlokApp.swift in Sources */,
 				C5B2EE4F2ADB20A800CA476D /* LottieView.swift in Sources */,
@@ -621,6 +621,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Bela Blok/Bela BlokDebug.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -633,7 +634,9 @@
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait,UIInterfaceOrientationPortraitUpsideDown,UIInterfaceOrientationLandscapeLeft,UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait,UIInterfaceOrientationPortraitUpsideDown,UIInterfaceOrientationLandscapeLeft,UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -666,7 +669,9 @@
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait,UIInterfaceOrientationPortraitUpsideDown,UIInterfaceOrientationLandscapeLeft,UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait,UIInterfaceOrientationPortraitUpsideDown,UIInterfaceOrientationLandscapeLeft,UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -721,14 +726,6 @@
 			requirement = {
 				kind = exactVersion;
 				version = 4.3.3;
-			};
-		};
-		C5CE41002B4B7AE700F5E1AA /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
-			requirement = {
-				kind = exactVersion;
-				version = 1.1.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -838,21 +835,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C5B2EE502ADB22BE00CA476D /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
-		};
-		C5CE41012B4B7AE700F5E1AA /* SwiftUIIntrospect */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C5CE41002B4B7AE700F5E1AA /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
-			productName = SwiftUIIntrospect;
-		};
-		C5CE41032B4B7AE700F5E1AA /* SwiftUIIntrospect-Dynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C5CE41002B4B7AE700F5E1AA /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
-			productName = "SwiftUIIntrospect-Dynamic";
-		};
-		C5CE41052B4B7AE700F5E1AA /* SwiftUIIntrospect-Static */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C5CE41002B4B7AE700F5E1AA /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
-			productName = "SwiftUIIntrospect-Static";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

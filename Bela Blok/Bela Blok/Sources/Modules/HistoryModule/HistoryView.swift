@@ -47,12 +47,8 @@ struct HistoryView: View {
                             .frame(height: 2, alignment: .center)
                             .listRowBackground(Color.clear)
                             .listRowSeparator(.hidden)
-                            .id(Constants.bottomScrollID)
                     }
                     .scrollContentBackground(.hidden)
-                    .onAppear {
-                        scrollReader.scrollTo(Constants.bottomScrollID, anchor: .bottom)
-                    }
                 }
 
                 ResultRow(

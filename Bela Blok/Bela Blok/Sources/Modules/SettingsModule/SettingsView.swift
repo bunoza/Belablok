@@ -31,7 +31,7 @@ struct SettingsView: View {
                 HStack {
                     Text("Igra se do: ")
                     Picker("", selection: $appState.gameEndScore) {
-                        ForEach(PossibleGameEndScores.allCases, id: \.self) { score in
+                        ForEach(PossibleGameEndScore.allCases, id: \.self) { score in
                             Text("\(score.amount)")
                         }
                     }

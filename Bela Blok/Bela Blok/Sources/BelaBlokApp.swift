@@ -6,6 +6,7 @@ import SwiftUI
 struct BelaBlokApp: App {
     @Environment(\.scenePhase) var scenePhase
     @Environment(\.colorScheme) private var colorScheme
+    @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
     private var appState: AppState = .shared
 

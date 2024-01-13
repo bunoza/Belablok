@@ -16,8 +16,11 @@ class AppState: ObservableObject {
     @CustomUserDefaultsObject("should_keep_screen_on", defaultValue: UIApplication.shared.isIdleTimerDisabled)
     var isIdleTimerDisabled: Bool
 
-    @CustomUserDefaultsObject("game_end_score", defaultValue: PossibleGameEndScores.large)
-    var gameEndScore: PossibleGameEndScores
+    @CustomUserDefaultsObject("game_end_score", defaultValue: PossibleGameEndScore.large)
+    var gameEndScore: PossibleGameEndScore
+    
+    @CustomUserDefaultsObject("stiglja_value", defaultValue: StigljaValue.ninety)
+    var stigljaValue: StigljaValue
 
     @CustomUserDefaultsObject("power_saving_mode", defaultValue: false)
     var powerSavingMode: Bool

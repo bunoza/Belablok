@@ -1,6 +1,6 @@
 import Foundation
 
-enum PossibleGameEndScores: CaseIterable, Codable {
+enum PossibleGameEndScore: CaseIterable, Codable {
     case small
     case medium
     case large
