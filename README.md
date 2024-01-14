@@ -27,3 +27,6 @@ Ikona (foreground i background):
 <img src="/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png" width="250" height="250"> <img src="/app/src/main/res/mipmap-xxxhdpi/ic_launcher_background.png" width="250" height="250">    
 
 Screenshotovi dostupni na Google Play Store
+
+### Kontakt
+Email: domagoj.bunoza@gmail.com
