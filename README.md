@@ -29,4 +29,4 @@ Ikona (foreground i background):
 Screenshotovi dostupni na Google Play Store
 
 ### Kontakt
-Email: domagoj.bunoza@gmail.com
+Email: devbunoza@gmail.com
