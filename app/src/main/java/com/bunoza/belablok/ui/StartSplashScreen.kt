@@ -12,7 +12,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.bunoza.belablok.R
@@ -36,18 +35,15 @@ fun StartSplashScreen(navigator: DestinationsNavigator) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         AnimatedPreloader()
-        LaunchedEffect(true){
+        LaunchedEffect(true) {
             delay(5000)
-            navigator.navigate(ScoreScreenDestination){
-                popUpTo(StartSplashScreenDestination){
-                    inclusive=true
+            navigator.navigate(ScoreScreenDestination) {
+                popUpTo(StartSplashScreenDestination) {
+                    inclusive = true
                 }
-
             }
-
         }
     }
-
 }
 
 @Composable
@@ -63,7 +59,6 @@ fun AnimatedPreloader(modifier: Modifier = Modifier) {
         iterations = 1,
         isPlaying = true
     )
-
 
     LottieAnimation(
         composition = preloaderLottieComposition,

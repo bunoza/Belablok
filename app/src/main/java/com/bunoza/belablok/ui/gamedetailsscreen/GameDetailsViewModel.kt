@@ -54,4 +54,10 @@ class GameDetailsViewModel(private val databaseRepository: DatabaseRepository, p
         }
         return tempList
     }
+
+    fun deleteGame(game: Game) {
+        viewModelScope.launch {
+            databaseRepository.deleteGame(game = game)
+        }
+    }
 }

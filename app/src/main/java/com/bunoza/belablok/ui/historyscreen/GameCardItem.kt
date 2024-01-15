@@ -13,7 +13,6 @@ import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -42,8 +41,7 @@ fun GameItem(firstPlayerText: String, secondPlayerText: String, onCardClick: () 
                 fontWeight = FontWeight.Bold,
                 fontSize = 32.sp,
                 modifier = Modifier.width(100.dp),
-                textAlign = TextAlign.Center,
-                fontFamily = FontFamily.Cursive
+                textAlign = TextAlign.Center
             )
             Text(
                 text = "-",
@@ -59,8 +57,7 @@ fun GameItem(firstPlayerText: String, secondPlayerText: String, onCardClick: () 
                 fontWeight = FontWeight.Bold,
                 fontSize = 32.sp,
                 modifier = Modifier.width(100.dp),
-                textAlign = TextAlign.Center,
-                fontFamily = FontFamily.Cursive
+                textAlign = TextAlign.Center
             )
         }
     }

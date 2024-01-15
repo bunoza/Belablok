@@ -40,7 +40,7 @@ fun LabelHeader(firstPlayerText: String, secondPlayerText: String, modifier: Mod
             fontSize = 32.sp,
             modifier = Modifier.width(80.dp),
             textAlign = TextAlign.End
-            
+
         )
     }
 }

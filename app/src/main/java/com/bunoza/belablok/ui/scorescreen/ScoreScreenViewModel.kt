@@ -26,7 +26,6 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
     var whoWon = mutableStateOf("")
     var isAlertDialogOpened = mutableStateOf(false)
     var shouldNavigate = mutableStateOf(true)
-    var showAnimation = mutableStateOf(false)
     private var gameList = listOf<SingleGame>()
 
     init {
@@ -36,18 +35,16 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
 
     fun getAllSingleGames() {
         viewModelScope.launch {
-
             try {
                 databaseRepository.getAllSingleGames().distinctUntilChanged().collect {
                     if (it.isEmpty()) {
                         _uiState.value = UIState.EmptyListState
                         _totalWeScore.value = 0
                         _totalThemScore.value = 0
-                    }
-                    else {
+                    } else {
                         _uiState.value = UIState.Success(it)
                         gameList = it
-                        _totalWeScore.value=getTotalScoreWe(it)
+                        _totalWeScore.value = getTotalScoreWe(it)
                         _totalThemScore.value = getTotalScoreThem(it)
                     }
                 }
@@ -57,18 +54,18 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
         }
     }
 
-    private fun getTotalScoreWe(list: List<SingleGame>):Int{
-        var sum=0
+    private fun getTotalScoreWe(list: List<SingleGame>): Int {
+        var sum = 0
         list.forEach {
-            sum+=it.scoreWe
+            sum += it.scoreWe
         }
         return sum
     }
 
-    private fun getTotalScoreThem(list: List<SingleGame>):Int{
-        var sum=0
+    private fun getTotalScoreThem(list: List<SingleGame>): Int {
+        var sum = 0
         list.forEach {
-            sum+=it.scoreThem
+            sum += it.scoreThem
         }
         return sum
     }
@@ -96,62 +93,29 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
             setCounter(selectedOption)
         }
     }
-    fun resetAnimationState(){
-        showAnimation.value=false
-    }
-
-    fun checkForAnimation(){
-        if(totalWeScore.value > 1000 || totalThemScore.value>1000){
-            showAnimation.value=true
-        }
-    }
 
     fun checkNewGame() {
         viewModelScope.launch {
-            if(totalWeScore.value > 1000 && totalThemScore.value > 1000){
-                if(totalWeScore.value>totalThemScore.value){
-                    whoWon.value="MI"
-                    when (counter.value) {
-                        0 -> counter.value = 0
-                        1 -> counter.value = 2
-                        2 -> counter.value = 2
-                        3 -> counter.value = 0
-                    }
-                }else{
-                    whoWon.value="VI"
-                    when (counter.value) {
-                        0 -> counter.value = 1
-                        1 -> counter.value = 1
-                        2 -> counter.value = 3
-                        3 -> counter.value = 3
-                    }
+            if (totalWeScore.value > 1000 && totalThemScore.value > 1000) {
+                if (totalWeScore.value > totalThemScore.value) {
+                    whoWon.value = "MI"
+                    updateCounterWeWin()
+                } else {
+                    whoWon.value = "VI"
+                    updateCounterTheyWin()
                 }
                 shouldNavigate.value = false
-                showAnimation.value = true
                 isAlertDialogOpened.value = true
-            }
-            else if (totalWeScore.value > 1000) {
+            } else if (totalWeScore.value > 1000) {
                 whoWon.value = "MI"
                 shouldNavigate.value = false
-                showAnimation.value = true
                 isAlertDialogOpened.value = true
-                when (counter.value) {
-                    0 -> counter.value = 0
-                    1 -> counter.value = 2
-                    2 -> counter.value = 2
-                    3 -> counter.value = 0
-                }
+                updateCounterWeWin()
             } else if (totalThemScore.value > 1000) {
                 whoWon.value = "VI"
                 shouldNavigate.value = false
-                showAnimation.value = true
                 isAlertDialogOpened.value = true
-                when (counter.value) {
-                    0 -> counter.value = 1
-                    1 -> counter.value = 1
-                    2 -> counter.value = 3
-                    3 -> counter.value = 3
-                }
+                updateCounterTheyWin()
             } else {
                 if (counter.value == 3) {
                     counter.value = 0
@@ -184,6 +148,22 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
             dealerPossibilities[1] -> counter.value = 1
             dealerPossibilities[2] -> counter.value = 2
             dealerPossibilities[3] -> counter.value = 3
+        }
+    }
+    private fun updateCounterWeWin() {
+        when (counter.value) {
+            0 -> counter.value = 0
+            1 -> counter.value = 2
+            2 -> counter.value = 2
+            3 -> counter.value = 0
+        }
+    }
+    private fun updateCounterTheyWin() {
+        when (counter.value) {
+            0 -> counter.value = 1
+            1 -> counter.value = 1
+            2 -> counter.value = 3
+            3 -> counter.value = 3
         }
     }
 }

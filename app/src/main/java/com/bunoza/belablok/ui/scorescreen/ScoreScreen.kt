@@ -43,7 +43,6 @@ import com.bunoza.belablok.ui.destinations.InputScoreScreenDestination
 import com.bunoza.belablok.ui.errorscreen.ErrorScreen
 import com.bunoza.belablok.ui.loadingscreen.LoadingScreen
 import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
@@ -105,8 +104,7 @@ fun ScoreScreen(navigator: DestinationsNavigator) {
                 },
                 whoWon = scoreScreenViewModel.whoWon.value,
                 onHistoryButtonClick = { navigator.navigate(HistoryScreenDestination) },
-                onSingleGameClick = { navigator.navigate(InputScoreScreenDestination(dealer, it)) },
-                shouldShowAnimation = scoreScreenViewModel.showAnimation.value
+                onSingleGameClick = { navigator.navigate(InputScoreScreenDestination(dealer, it)) }
             )
 
             is UIState.Success<*> -> ScoreScreenContent(
@@ -132,7 +130,6 @@ fun ScoreScreen(navigator: DestinationsNavigator) {
                 shouldNavigate = scoreScreenViewModel.shouldNavigate,
                 onAlertDialogConfirmClick = {
                     scoreScreenViewModel.deleteAllGames()
-                    scoreScreenViewModel.resetAnimationState()
                     scoreScreenViewModel.resetNavigation()
                 },
                 whoWon = scoreScreenViewModel.whoWon.value,
@@ -144,11 +141,10 @@ fun ScoreScreen(navigator: DestinationsNavigator) {
                             it
                         )
                     )
-                },
-                shouldShowAnimation = scoreScreenViewModel.showAnimation.value
+                }
             )
         }
-        if (totalScoreWe.value>1000 || totalThemScore.value>1000) {
+        if (totalScoreWe.value > 1000 || totalThemScore.value > 1000) {
             WinAnimation()
         }
     }
@@ -169,8 +165,7 @@ fun ScoreScreenContent(
     whoWon: String,
     onAlertDialogConfirmClick: () -> Unit,
     onHistoryButtonClick: () -> Unit,
-    onSingleGameClick: (SingleGame) -> Unit,
-    shouldShowAnimation: Boolean
+    onSingleGameClick: (SingleGame) -> Unit
 ) {
     val lazyListState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
@@ -212,10 +207,10 @@ fun ScoreScreenContent(
                 )
                 Row(
                     modifier = Modifier.clickable {
-                    onDealerCounterClick.invoke()
-                },
+                        onDealerCounterClick.invoke()
+                    },
                     verticalAlignment = Alignment.CenterVertically
-                    ) {
+                ) {
                     Text(
                         text = "Dijeli: $dealer",
                         color = MaterialTheme.colorScheme.onPrimary,
@@ -228,7 +223,6 @@ fun ScoreScreenContent(
                         tint = MaterialTheme.colorScheme.onPrimary
                     )
                 }
-
             }
         },
         floatingActionButton = {
@@ -256,7 +250,7 @@ fun ScoreScreenContent(
                     end = 16.dp
                 ),
             verticalArrangement = Arrangement.spacedBy(8.dp),
-            state = lazyListState,
+            state = lazyListState
         ) {
             stickyHeader {
                 LabelHeader(
@@ -272,11 +266,10 @@ fun ScoreScreenContent(
                 )
             }
         }
-        LaunchedEffect(singleGameList.size){
-            if(singleGameList.isNotEmpty()){
-                lazyListState.animateScrollToItem(singleGameList.size-1)
+        LaunchedEffect(singleGameList.size) {
+            if (singleGameList.isNotEmpty()) {
+                lazyListState.animateScrollToItem(singleGameList.size - 1)
             }
         }
-
     }
 }

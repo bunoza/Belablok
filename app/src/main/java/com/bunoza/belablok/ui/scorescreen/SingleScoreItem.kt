@@ -16,10 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.HorizontalAlignmentLine
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -28,10 +25,11 @@ import com.bunoza.belablok.data.database.model.SingleGame
 
 @Composable
 fun SingleScoreItem(singleGame: SingleGame, onSingleGameClick: (SingleGame) -> Unit) {
-    Column(Modifier.clickable {
-        onSingleGameClick.invoke(singleGame)
-    }) {
-
+    Column(
+        Modifier.clickable {
+            onSingleGameClick.invoke(singleGame)
+        }
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -44,12 +42,12 @@ fun SingleScoreItem(singleGame: SingleGame, onSingleGameClick: (SingleGame) -> U
                 color = MaterialTheme.colorScheme.onPrimary,
                 fontSize = 32.sp,
                 modifier = Modifier.width(100.dp),
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Center
             )
             Icon(
                 painter = painterResource(id = R.drawable.outline_edit_24),
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.onPrimary,
+                tint = MaterialTheme.colorScheme.onPrimary
             )
 
             Text(
@@ -57,11 +55,9 @@ fun SingleScoreItem(singleGame: SingleGame, onSingleGameClick: (SingleGame) -> U
                 color = MaterialTheme.colorScheme.onPrimary,
                 fontSize = 32.sp,
                 modifier = Modifier.width(100.dp),
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Center
             )
-
         }
         Divider(Modifier.padding(8.dp))
     }
-
 }

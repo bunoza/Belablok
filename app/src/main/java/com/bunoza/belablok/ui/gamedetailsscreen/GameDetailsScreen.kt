@@ -43,9 +43,11 @@ fun GameDetailsScreen(navigator: DestinationsNavigator, id: Int) {
     val uiState by gameDetailsViewModel.uiState.collectAsState()
     val wePointsList by gameDetailsViewModel.wePointsList.collectAsState()
     val themPointsList by gameDetailsViewModel.themPointsList.collectAsState()
+    val showDeleteGameDialog = remember {
+        mutableStateOf(false)
+    }
     val context = LocalContext.current
     val view = LocalView.current
-
 
     Scaffold(
         topBar = {
@@ -67,6 +69,9 @@ fun GameDetailsScreen(navigator: DestinationsNavigator, id: Int) {
                     }
                     val shareIntent = Intent.createChooser(sendIntent, null)
                     context.startActivity(shareIntent)
+                },
+                onDeleteClick = {
+                    showDeleteGameDialog.value = true
                 }
             )
         }
@@ -81,7 +86,12 @@ fun GameDetailsScreen(navigator: DestinationsNavigator, id: Int) {
             }
             is UIState.Success<*> -> {
                 GameDetailsContent(game = (uiState as UIState.Success<*>).data as Game, it, wePointsList, themPointsList)
-
+            }
+        }
+        if (showDeleteGameDialog.value) {
+            DeleteGameAlertDialog(onDismissClick = { showDeleteGameDialog.value = false }) {
+                gameDetailsViewModel.deleteGame(game = (uiState as UIState.Success<*>).data as Game)
+                navigator.navigateUp()
             }
         }
     }

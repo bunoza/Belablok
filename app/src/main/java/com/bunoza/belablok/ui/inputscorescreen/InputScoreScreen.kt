@@ -23,11 +23,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bunoza.belablok.data.database.model.SingleGame
-import com.bunoza.belablok.ui.destinations.InputScoreScreenDestination
-import com.bunoza.belablok.ui.destinations.ScoreScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.ramcosta.composedestinations.navigation.popUpTo
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -160,7 +157,7 @@ fun InputScoreScreen(navigator: DestinationsNavigator, dealer: String, singleGam
                             inclusive = true
                         }
                     }*/
-                          },
+                },
                 colors = ButtonDefaults.buttonColors(contentColor = MaterialTheme.colorScheme.background)
             ) {
                 Text(text = "Odustani")

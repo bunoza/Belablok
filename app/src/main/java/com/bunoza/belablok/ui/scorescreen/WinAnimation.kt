@@ -23,7 +23,6 @@ fun WinAnimation(modifier: Modifier = Modifier) {
         isPlaying = true
     )
 
-
     LottieAnimation(
         composition = preloaderLottieComposition,
         progress = preloaderProgress,

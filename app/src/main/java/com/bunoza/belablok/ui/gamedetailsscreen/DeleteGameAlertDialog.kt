@@ -14,7 +14,7 @@ fun DeleteGameAlertDialog(onDismissClick: () -> Unit, onConfirmClick: () -> Unit
         onDismissRequest = onDismissClick,
         confirmButton = {
             Button(onClick = onConfirmClick, colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error, contentColor = MaterialTheme.colorScheme.onError)) {
-                Text(text = "Obriši", color = MaterialTheme.colorScheme.error)
+                Text(text = "Obriši")
             }
         },
         dismissButton = {

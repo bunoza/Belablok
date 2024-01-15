@@ -1,6 +1,7 @@
 package com.bunoza.belablok.data.database
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.bunoza.belablok.data.database.model.Game
@@ -17,4 +18,7 @@ interface GameDao {
 
     @Query("SELECT * from game where id=:id")
     fun getGameById(id: Int): Flow<Game>
+
+    @Delete
+    suspend fun deleteGame(game: Game)
 }
