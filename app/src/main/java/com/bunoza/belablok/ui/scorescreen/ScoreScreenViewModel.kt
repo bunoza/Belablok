@@ -10,19 +10,23 @@ import com.bunoza.belablok.data.repositories.PreferenceRepository
 import com.bunoza.belablok.ui.UIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
 class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, private val preferenceRepository: PreferenceRepository) : ViewModel() {
     private var _uiState = MutableStateFlow<UIState>(UIState.Loading)
     val uiState = _uiState.asStateFlow()
-    var totalWeScore = mutableStateOf(0)
-    var totalThemScore = mutableStateOf(0)
+    private val _totalWeScore = MutableStateFlow(0)
+    private val _totalThemScore = MutableStateFlow(0)
+    val totalWeScore = _totalWeScore.asStateFlow()
+    val totalThemScore = _totalThemScore.asStateFlow()
     private val counter = MutableStateFlow(0)
     val dealerPossibilities = listOf("Ja", "Desni protivnik", "Partner", "Lijevi protivnik")
     var dealer = MutableStateFlow(dealerPossibilities[counter.value])
     var whoWon = mutableStateOf("")
     var isAlertDialogOpened = mutableStateOf(false)
     var shouldNavigate = mutableStateOf(true)
+    var showAnimation = mutableStateOf(false)
     private var gameList = listOf<SingleGame>()
 
     init {
@@ -32,25 +36,41 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
 
     fun getAllSingleGames() {
         viewModelScope.launch {
+
             try {
-                databaseRepository.getAllSingleGames().collect {
+                databaseRepository.getAllSingleGames().distinctUntilChanged().collect {
                     if (it.isEmpty()) {
                         _uiState.value = UIState.EmptyListState
-                        totalWeScore.value = 0
-                        totalThemScore.value = 0
-                    } else {
+                        _totalWeScore.value = 0
+                        _totalThemScore.value = 0
+                    }
+                    else {
                         _uiState.value = UIState.Success(it)
                         gameList = it
-                        it.forEach { singleGame ->
-                            totalWeScore.value += singleGame.scoreWe
-                            totalThemScore.value += singleGame.scoreThem
-                        }
+                        _totalWeScore.value=getTotalScoreWe(it)
+                        _totalThemScore.value = getTotalScoreThem(it)
                     }
                 }
             } catch (e: Exception) {
                 _uiState.value = UIState.Error
             }
         }
+    }
+
+    private fun getTotalScoreWe(list: List<SingleGame>):Int{
+        var sum=0
+        list.forEach {
+            sum+=it.scoreWe
+        }
+        return sum
+    }
+
+    private fun getTotalScoreThem(list: List<SingleGame>):Int{
+        var sum=0
+        list.forEach {
+            sum+=it.scoreThem
+        }
+        return sum
     }
 
     fun getDealer() {
@@ -76,12 +96,16 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
             setCounter(selectedOption)
         }
     }
+    fun resetAnimationState(){
+        showAnimation.value=false
+    }
 
     fun checkNewGame() {
         viewModelScope.launch {
             if (totalWeScore.value > 1000) {
                 whoWon.value = "MI"
                 shouldNavigate.value = false
+                showAnimation.value = true
                 isAlertDialogOpened.value = true
                 when (counter.value) {
                     0 -> counter.value = 0
@@ -92,6 +116,7 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
             } else if (totalThemScore.value > 1000) {
                 whoWon.value = "VI"
                 shouldNavigate.value = false
+                showAnimation.value = true
                 isAlertDialogOpened.value = true
                 when (counter.value) {
                     0 -> counter.value = 1

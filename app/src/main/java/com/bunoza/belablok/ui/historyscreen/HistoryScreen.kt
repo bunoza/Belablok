@@ -32,7 +32,7 @@ fun HistoryScreen(navigator: DestinationsNavigator) {
     Scaffold(topBar = {
         HistoryTopBar {
             navigator.navigateUp()
-        } 
+        }
     }) { paddingValues ->
         when (uiState) {
             UIState.Loading -> LoadingScreen()

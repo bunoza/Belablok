@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
@@ -28,7 +27,7 @@ fun GameItem(firstPlayerText: String, secondPlayerText: String, onCardClick: () 
     OutlinedCard(
         modifier = Modifier.fillMaxWidth(),
         onClick = onCardClick,
-        border = BorderStroke(2.dp,MaterialTheme.colorScheme.onPrimary)
+        border = BorderStroke(2.dp, MaterialTheme.colorScheme.onPrimary)
     ) {
         Row(
             modifier = Modifier

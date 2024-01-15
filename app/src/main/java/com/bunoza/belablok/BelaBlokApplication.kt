@@ -9,7 +9,6 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.GlobalContext.startKoin
 
 class BelaBlokApplication : Application() {
-    // private lateinit var firebaseAnalytics: FirebaseAnalytics
     override fun onCreate() {
         super.onCreate()
         startKoin {
@@ -17,6 +16,5 @@ class BelaBlokApplication : Application() {
             androidContext(this@BelaBlokApplication)
             modules(listOf(viewModelModules, repositoryModule, databaseModule))
         }
-        // firebaseAnalytics = Firebase.analytics
     }
 }

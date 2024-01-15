@@ -28,16 +28,17 @@ fun LabelHeader(firstPlayerText: String, secondPlayerText: String, modifier: Mod
             color = MaterialTheme.colorScheme.onPrimary,
             fontWeight = FontWeight.Bold,
             fontSize = 32.sp,
-            modifier = Modifier.width(100.dp),
-            textAlign = TextAlign.Center
+            modifier = Modifier.width(80.dp),
+            textAlign = TextAlign.Start
         )
         Text(
             text = secondPlayerText,
             color = MaterialTheme.colorScheme.onPrimary,
             fontWeight = FontWeight.Bold,
             fontSize = 32.sp,
-            modifier = Modifier.width(100.dp),
-            textAlign = TextAlign.Center
+            modifier = Modifier.width(80.dp),
+            textAlign = TextAlign.End
+            
         )
     }
 }

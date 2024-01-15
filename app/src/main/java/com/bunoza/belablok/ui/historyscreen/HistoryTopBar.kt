@@ -9,7 +9,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
 import com.bunoza.belablok.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -20,7 +19,7 @@ fun HistoryTopBar(onBackClick: () -> Unit) {
         navigationIcon = {
             IconButton(onClick = onBackClick) {
                 Icon(painter = painterResource(id = R.drawable.baseline_arrow_back_24), contentDescription = null, tint = MaterialTheme.colorScheme.onPrimary)
-            } 
+            }
         },
         colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primary)
     )

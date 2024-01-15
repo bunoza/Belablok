@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,6 +28,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -46,11 +48,12 @@ import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-@RootNavGraph(start = true)
 @Destination
 fun ScoreScreen(navigator: DestinationsNavigator) {
     val scoreScreenViewModel = koinViewModel<ScoreScreenViewModel>()
     val uiState by scoreScreenViewModel.uiState.collectAsState()
+    val totalScoreWe = scoreScreenViewModel.totalWeScore.collectAsState()
+    val totalThemScore = scoreScreenViewModel.totalThemScore.collectAsState()
     val dealer by scoreScreenViewModel.dealer.collectAsState()
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = SheetState(
@@ -83,8 +86,8 @@ fun ScoreScreen(navigator: DestinationsNavigator) {
                     )
                 },
                 singleGameList = emptyList(),
-                totalScoreWe = scoreScreenViewModel.totalWeScore.value,
-                totalScoreThem = scoreScreenViewModel.totalThemScore.value,
+                totalScoreWe = totalScoreWe.value,
+                totalScoreThem = totalThemScore.value,
                 dealer = dealer,
                 onDealerCounterClick = {
                     coroutineScope.launch {
@@ -100,7 +103,8 @@ fun ScoreScreen(navigator: DestinationsNavigator) {
                 },
                 whoWon = scoreScreenViewModel.whoWon.value,
                 onHistoryButtonClick = { navigator.navigate(HistoryScreenDestination) },
-                onSingleGameClick = { navigator.navigate(InputScoreScreenDestination(dealer, it)) }
+                onSingleGameClick = { navigator.navigate(InputScoreScreenDestination(dealer, it)) },
+                shouldShowAnimation = scoreScreenViewModel.showAnimation.value
             )
 
             is UIState.Success<*> -> ScoreScreenContent(
@@ -113,8 +117,8 @@ fun ScoreScreen(navigator: DestinationsNavigator) {
                     )
                 },
                 singleGameList = (uiState as UIState.Success<List<SingleGame>>).data,
-                totalScoreWe = scoreScreenViewModel.totalWeScore.value,
-                totalScoreThem = scoreScreenViewModel.totalThemScore.value,
+                totalScoreWe = totalScoreWe.value,
+                totalScoreThem = totalThemScore.value,
                 dealer = dealer,
                 onDealerCounterClick = {
                     coroutineScope.launch {
@@ -126,6 +130,7 @@ fun ScoreScreen(navigator: DestinationsNavigator) {
                 shouldNavigate = scoreScreenViewModel.shouldNavigate,
                 onAlertDialogConfirmClick = {
                     scoreScreenViewModel.deleteAllGames()
+                    scoreScreenViewModel.resetAnimationState()
                     scoreScreenViewModel.resetNavigation()
                 },
                 whoWon = scoreScreenViewModel.whoWon.value,
@@ -137,8 +142,12 @@ fun ScoreScreen(navigator: DestinationsNavigator) {
                             it
                         )
                     )
-                }
+                },
+                shouldShowAnimation = scoreScreenViewModel.showAnimation.value
             )
+        }
+        if (scoreScreenViewModel.showAnimation.value) {
+            WinAnimation()
         }
     }
 }
@@ -158,7 +167,8 @@ fun ScoreScreenContent(
     whoWon: String,
     onAlertDialogConfirmClick: () -> Unit,
     onHistoryButtonClick: () -> Unit,
-    onSingleGameClick: (SingleGame) -> Unit
+    onSingleGameClick: (SingleGame) -> Unit,
+    shouldShowAnimation: Boolean
 ) {
     if (isAlertDialogOpened) {
         NewGameAlertDialog(
@@ -194,15 +204,25 @@ fun ScoreScreenContent(
                     firstPlayerText = totalScoreWe.toString(),
                     secondPlayerText = totalScoreThem.toString()
                 )
-                Text(
-                    text = "Dijeli: $dealer",
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    modifier = Modifier
-                        .padding(12.dp)
-                        .clickable {
-                            onDealerCounterClick.invoke()
-                        }
-                )
+                Row(
+                    modifier = Modifier.clickable {
+                    onDealerCounterClick.invoke()
+                },
+                    verticalAlignment = Alignment.CenterVertically
+                    ) {
+                    Text(
+                        text = "Dijeli: $dealer",
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        modifier = Modifier
+                            .padding(12.dp)
+                    )
+                    Icon(
+                        painter = painterResource(id = R.drawable.outline_edit_24),
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
+
             }
         },
         floatingActionButton = {

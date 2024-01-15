@@ -153,7 +153,14 @@ fun InputScoreScreen(navigator: DestinationsNavigator, dealer: String, singleGam
         Spacer(modifier = Modifier.weight(1F))
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
             TextButton(
-                onClick = { navigator.navigateUp() },
+                onClick = {
+                    navigator.navigateUp()
+                    /*navigator.navigate(ScoreScreenDestination) {
+                        popUpTo(InputScoreScreenDestination) {
+                            inclusive = true
+                        }
+                    }*/
+                          },
                 colors = ButtonDefaults.buttonColors(contentColor = MaterialTheme.colorScheme.background)
             ) {
                 Text(text = "Odustani")
@@ -161,12 +168,12 @@ fun InputScoreScreen(navigator: DestinationsNavigator, dealer: String, singleGam
             Button(
                 onClick = {
                     inputScoreViewModel.onSaveGameClick()
-                    navigator.navigate(ScoreScreenDestination) {
+                    /*navigator.navigate(ScoreScreenDestination) {
                         popUpTo(InputScoreScreenDestination) {
                             inclusive = true
                         }
-                    }
-                    // navigator.navigateUp()
+                    }*/
+                    navigator.navigateUp()
                 },
                 enabled = collectedSaveButton.value,
                 colors = ButtonDefaults.buttonColors(

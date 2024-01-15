@@ -50,7 +50,7 @@ fun ChartDetailsComposable(wePointsData: List<Point>, themPointsData: List<Point
             lines = listOf(
                 Line(
                     dataPoints = wePointsData,
-                    LineStyle(LineType.SmoothCurve(isDotted = false), color = Color.Blue),
+                    LineStyle(LineType.Straight(isDotted = false), color = Color.Blue),
                     IntersectionPoint(),
                     SelectionHighlightPoint(),
                     ShadowUnderLine(Color.Transparent),
@@ -58,7 +58,7 @@ fun ChartDetailsComposable(wePointsData: List<Point>, themPointsData: List<Point
                 ),
                 Line(
                     dataPoints = themPointsData,
-                    LineStyle(LineType.SmoothCurve(isDotted = false), color = Color.Red),
+                    LineStyle(LineType.Straight(isDotted = false), color = Color.Red),
                     IntersectionPoint(),
                     SelectionHighlightPoint(),
                     ShadowUnderLine(Color.Transparent),
