@@ -100,9 +100,37 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
         showAnimation.value=false
     }
 
+    fun checkForAnimation(){
+        if(totalWeScore.value > 1000 || totalThemScore.value>1000){
+            showAnimation.value=true
+        }
+    }
+
     fun checkNewGame() {
         viewModelScope.launch {
-            if (totalWeScore.value > 1000) {
+            if(totalWeScore.value > 1000 && totalThemScore.value > 1000){
+                if(totalWeScore.value>totalThemScore.value){
+                    whoWon.value="MI"
+                    when (counter.value) {
+                        0 -> counter.value = 0
+                        1 -> counter.value = 2
+                        2 -> counter.value = 2
+                        3 -> counter.value = 0
+                    }
+                }else{
+                    whoWon.value="VI"
+                    when (counter.value) {
+                        0 -> counter.value = 1
+                        1 -> counter.value = 1
+                        2 -> counter.value = 3
+                        3 -> counter.value = 3
+                    }
+                }
+                shouldNavigate.value = false
+                showAnimation.value = true
+                isAlertDialogOpened.value = true
+            }
+            else if (totalWeScore.value > 1000) {
                 whoWon.value = "MI"
                 shouldNavigate.value = false
                 showAnimation.value = true

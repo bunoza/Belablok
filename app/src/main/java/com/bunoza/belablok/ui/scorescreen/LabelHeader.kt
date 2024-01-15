@@ -1,5 +1,6 @@
 package com.bunoza.belablok.ui.scorescreen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,6 +20,7 @@ fun LabelHeader(firstPlayerText: String, secondPlayerText: String, modifier: Mod
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.primary)
             .padding(vertical = 8.dp)
             .then(modifier),
         horizontalArrangement = Arrangement.SpaceEvenly

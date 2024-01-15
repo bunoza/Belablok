@@ -42,11 +42,9 @@ fun SingleScoreItem(singleGame: SingleGame, onSingleGameClick: (SingleGame) -> U
             Text(
                 text = singleGame.scoreWe.toString(),
                 color = MaterialTheme.colorScheme.onPrimary,
-                fontWeight = FontWeight.Bold,
                 fontSize = 32.sp,
                 modifier = Modifier.width(100.dp),
                 textAlign = TextAlign.Center,
-                fontFamily = FontFamily.Cursive
             )
             Icon(
                 painter = painterResource(id = R.drawable.outline_edit_24),
@@ -57,11 +55,9 @@ fun SingleScoreItem(singleGame: SingleGame, onSingleGameClick: (SingleGame) -> U
             Text(
                 text = singleGame.scoreThem.toString(),
                 color = MaterialTheme.colorScheme.onPrimary,
-                fontWeight = FontWeight.Bold,
                 fontSize = 32.sp,
                 modifier = Modifier.width(100.dp),
                 textAlign = TextAlign.Center,
-                fontFamily = FontFamily.Cursive
             )
 
         }

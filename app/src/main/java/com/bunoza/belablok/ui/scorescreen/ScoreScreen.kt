@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -24,6 +25,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -146,7 +148,7 @@ fun ScoreScreen(navigator: DestinationsNavigator) {
                 shouldShowAnimation = scoreScreenViewModel.showAnimation.value
             )
         }
-        if (scoreScreenViewModel.showAnimation.value) {
+        if (totalScoreWe.value>1000 || totalThemScore.value>1000) {
             WinAnimation()
         }
     }
@@ -170,18 +172,22 @@ fun ScoreScreenContent(
     onSingleGameClick: (SingleGame) -> Unit,
     shouldShowAnimation: Boolean
 ) {
+    val lazyListState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()
+
     if (isAlertDialogOpened) {
         NewGameAlertDialog(
             onConfirmClick = onAlertDialogConfirmClick,
             whoWon = whoWon
         )
     }
+
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     Text(
-                        text = "Bela blok",
+                        text = "Bela Blok",
                         color = MaterialTheme.colorScheme.onPrimary,
                         fontWeight = FontWeight.Bold
                     )
@@ -249,7 +255,8 @@ fun ScoreScreenContent(
                     start = 16.dp,
                     end = 16.dp
                 ),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            state = lazyListState,
         ) {
             stickyHeader {
                 LabelHeader(
@@ -265,5 +272,11 @@ fun ScoreScreenContent(
                 )
             }
         }
+        LaunchedEffect(singleGameList.size){
+            if(singleGameList.isNotEmpty()){
+                lazyListState.animateScrollToItem(singleGameList.size-1)
+            }
+        }
+
     }
 }
