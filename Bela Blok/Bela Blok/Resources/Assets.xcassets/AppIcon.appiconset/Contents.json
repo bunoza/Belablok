@@ -1,0 +1,14 @@
+{
+  "images" : [
+    {
+      "filename" : "domagojbu_app_icon_green_leaf_with_three_points_on_top_304227ff-7740-44a7-9a6e-15651d8200f7.png",
+      "idiom" : "universal",
+      "platform" : "ios",
+      "size" : "1024x1024"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
