@@ -1,6 +1,6 @@
 # Bela blok
-  <a href="https://play.google.com/store/apps/details?id=com.bunoza.belablok">
-<img src="/app/src/main/res/drawable-anydpi/bela_blok_infographic.png" alt="Get it on Google Play">
+  <a href="https://apps.apple.com/hr/app/bela-blok/id6475651480">
+<img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Skinite na AppStore">
 </a>
 
 ### Opis
