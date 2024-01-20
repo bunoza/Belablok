@@ -27,7 +27,6 @@ Korištenje i funkcionalnosti:
 ## Kontakt
 Email: devbunoza@gmail.com
 
-### Politika privatnosti
 ## Politika privatnosti
 Zadnje ažuriranje: 14. siječnja 2024
 
