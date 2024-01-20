@@ -5,7 +5,7 @@
 ## Build generated
 build/
 DerivedData/
-.idea/
+.idea
 .gradle/
 GoogleService-Info.plist
 
