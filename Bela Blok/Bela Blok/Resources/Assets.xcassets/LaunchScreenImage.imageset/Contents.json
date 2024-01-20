@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "domagojbu_app_icon_green_leaf_with_three_points_on_top_304227ff-7740-44a7-9a6e-15651d8200f7-modified.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "domagojbu_app_icon_green_leaf_with_three_points_on_top_304227ff-7740-44a7-9a6e-15651d8200f7-modified 1.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "domagojbu_app_icon_green_leaf_with_three_points_on_top_304227ff-7740-44a7-9a6e-15651d8200f7-modified 2.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
