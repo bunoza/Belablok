@@ -1,6 +1,6 @@
 # Bela Blok
 
-<img src="https://raw.githubusercontent.com/bunoza/Belablok/ios/Bela%20Blok/Bela%20Blok/Resources/Assets.xcassets/AppIcon.appiconset/domagojbu_app_icon_green_leaf_with_three_points_on_top_304227ff-7740-44a7-9a6e-15651d8200f7.png" alt="Skinite na AppStore" width=300>
+<img src="https://lh3.googleusercontent.com/u/0/drive-viewer/AEYmBYQf6dDVL7apVKOrneEBDTa1gNFiMyUNHd8Mx7K2x1buq9EFgvNcS79sef4kJqCD1FrcrKHJzSK9L3eQfahn5jASFR58bg=w1920-h934" alt="Skinite na AppStore" width=600>
 
 <a href="https://apps.apple.com/hr/app/bela-blok/id6475651480">
 <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Skinite na AppStore" width=250>
