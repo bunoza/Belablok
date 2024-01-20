@@ -14,6 +14,7 @@ struct Game: Codable, Hashable, Identifiable {
     var youCallBelot: Int = 0
 
     var caller: Caller = .we
+    var dealer: Dealer?
 
     var weBaseScore: Int = -1
     var youBaseScore: Int = -1

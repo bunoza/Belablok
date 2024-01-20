@@ -132,6 +132,7 @@ class InputViewModel: ObservableObject {
         if isEditing {
             currentGame = currentGameEdit
         } else {
+            currentGameEdit.dealer = appState.currentDealer
             appState.currentGame.append(currentGameEdit)
         }
     }

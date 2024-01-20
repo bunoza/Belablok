@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct MainView: View {
+    @Environment(\.presentations) private var presentations
     @StateObject private var appState: AppState = .shared
     @StateObject private var viewModel: MainViewModel
     @State private var showInputSheet: Bool
@@ -19,7 +20,7 @@ struct MainView: View {
     }
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 if appState.powerSavingMode {
                     Color.black
@@ -131,7 +132,10 @@ struct MainView: View {
             .sheet(
                 isPresented: $showSettingsSheet,
                 onDismiss: { viewModel.updateState() },
-                content: { SettingsView() }
+                content: {
+                    SettingsView()
+                        .environment(\.presentations, presentations + [$showSettingsSheet])
+                }
             )
             .sheet(
                 isPresented: $showDealerSheet,

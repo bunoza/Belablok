@@ -2,10 +2,12 @@ import SwiftUI
 
 struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.presentations) private var presentations
     @Environment(\.colorScheme) private var colorScheme
 
     @StateObject private var appState = AppState.shared
     @State private var showSingleDestructiveAlert: Bool = false
+    @State private var showContinueOnNewDevice: Bool = false
     @State private var showDestructiveAlert: Bool = false
 
     var body: some View {
@@ -39,6 +41,14 @@ struct SettingsView: View {
                 }
 
                 Section {
+                    Button {
+                        showContinueOnNewDevice = true
+                    } label: {
+                        Text("Nastavi na drugom uređaju")
+                    }
+                }
+                
+                Section {
                     Button(role: .destructive) {
                         showSingleDestructiveAlert = true
                     } label: {
@@ -56,6 +66,11 @@ struct SettingsView: View {
             .navigationTitle("Postavke")
             .navigationBarTitleDisplayMode(.large)
             .navigationBarBackButtonHidden()
+            .sheet(isPresented: $showContinueOnNewDevice) {
+                ContinueGameView()
+                    .environment(\.presentations, presentations + [$showContinueOnNewDevice])
+//                    .presentationDetents([.medium])
+            }
             .alert("Jeste li sigurni?", isPresented: $showSingleDestructiveAlert, actions: {
                 Button(role: .cancel) {} label: {
                     Text("Odustani")
