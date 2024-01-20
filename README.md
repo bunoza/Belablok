@@ -10,6 +10,7 @@
 <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Skinite na AppStore" width=250>
 </a>
 
+
 Kod je open source i nalazi se na branchu za odgovarajući OS.
 
 ### Opis
