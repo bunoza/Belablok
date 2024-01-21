@@ -197,7 +197,8 @@ struct StatsView: View {
                     }
 
                     if let sharingStats = viewModel.stats,
-                       let sharingGraph = viewModel.graph {
+                       let sharingGraph = viewModel.graph
+                    {
                         ShareLink(items: [sharingStats, sharingGraph]) {
                             SharePreview("Statistika i graf", image: $0)
                         }
@@ -277,7 +278,7 @@ struct StatsView: View {
                     caller: .we,
                     weBaseScore: 20,
                     youBaseScore: 142
-                )
+                ),
             ]
         )
     )

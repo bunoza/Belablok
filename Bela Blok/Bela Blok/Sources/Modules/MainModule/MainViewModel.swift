@@ -23,7 +23,8 @@ class MainViewModel: ObservableObject {
     private func updateDealerOnGameFinished() {
         dealer = dealer.nextDealer
         if currentSession.weTotalAccumulated >= appState.gameEndScore.amount,
-           currentSession.youTotalAccumulated >= appState.gameEndScore.amount {
+           currentSession.youTotalAccumulated >= appState.gameEndScore.amount
+        {
             if currentSession.weTotalAccumulated > currentSession.youTotalAccumulated {
                 if ![.me, .partner].contains(dealer) {
                     dealer = dealer.nextDealer
@@ -71,7 +72,8 @@ class MainViewModel: ObservableObject {
         let updateFlag = shouldStartNewGame
         let appState = AppState.shared
         if let editingGame = editingGame,
-           let index = currentSession.map(\.id).firstIndex(of: editingGame.id) {
+           let index = currentSession.map(\.id).firstIndex(of: editingGame.id)
+        {
             currentSession[index] = editingGame
         }
         appState.currentGame = currentSession

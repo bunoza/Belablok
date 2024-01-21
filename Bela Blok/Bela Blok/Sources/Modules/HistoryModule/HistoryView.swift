@@ -21,7 +21,7 @@ struct HistoryView: View {
             }
 
             VStack {
-                ScrollViewReader { scrollReader in
+                ScrollViewReader { _ in
                     List {
                         ForEach(viewModel.history, id: \.id) { games in
                             ResultRow(

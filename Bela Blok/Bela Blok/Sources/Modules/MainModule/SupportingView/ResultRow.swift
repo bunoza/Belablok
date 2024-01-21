@@ -30,11 +30,12 @@ struct ResultRow: View {
                     Text("\(numberOfGame).")
                         .font(.title3)
                         .frame(alignment: .leading)
-                    
+
                     Spacer()
-                    
+
                     if let shouldShow = showFallIcon,
-                       shouldShow == true {
+                       shouldShow == true
+                    {
                         Image(systemName: "figure.fall.circle")
                             .font(.title2)
                             .foregroundStyle(Color.red)

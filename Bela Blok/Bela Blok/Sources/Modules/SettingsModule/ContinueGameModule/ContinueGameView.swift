@@ -5,12 +5,12 @@ import SwiftUI
 struct ContinueGameView: View {
     @Environment(\.presentations) private var presentations
     @Environment(\.dismiss) private var dismiss
-    
+
     @StateObject private var viewModel: ContinueGameViewModel = .init()
     @State private var selection: ContinueGameOption = .show
     @State private var isShowingCamera: Bool = false
     @State private var isCameraError: ScanError? = nil
-    
+
     var body: some View {
         NavigationView {
             VStack {
@@ -24,7 +24,7 @@ struct ContinueGameView: View {
                 }
                 .pickerStyle(.segmented)
                 .padding()
-                
+
                 if selection == .show {
                     renderQRCode()
                 } else if selection == .scan {
@@ -42,7 +42,7 @@ struct ContinueGameView: View {
             }
         }
     }
-    
+
     func renderQRCode() -> some View {
         VStack {
             if let qrCode = viewModel.qrCode {
@@ -73,7 +73,7 @@ struct ContinueGameView: View {
             await viewModel.setQRCode()
         }
     }
-    
+
     func renderCodeScanner() -> some View {
         VStack {
             if isCameraError == nil {
@@ -85,13 +85,13 @@ struct ContinueGameView: View {
                     isTorchOn: false
                 ) { result in
                     switch result {
-                    case .success(let success):
+                    case let .success(success):
                         viewModel.handleQRCodeRead(scanResult: success) {
                             presentations.forEach {
                                 $0.wrappedValue = false
                             }
                         }
-                    case .failure(let error):
+                    case let .failure(error):
                         self.isCameraError = error
                     }
                 }

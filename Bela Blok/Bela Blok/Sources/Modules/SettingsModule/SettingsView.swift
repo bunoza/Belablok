@@ -47,7 +47,7 @@ struct SettingsView: View {
                         Text("Nastavi na drugom uređaju")
                     }
                 }
-                
+
                 Section {
                     Button(role: .destructive) {
                         showSingleDestructiveAlert = true

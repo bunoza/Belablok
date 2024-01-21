@@ -4,7 +4,7 @@ import UserNotifications
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(
         _ application: UIApplication,
-        didFinishLaunchingWithOptions launchOptions: [
+        didFinishLaunchingWithOptions _: [
             UIApplication.LaunchOptionsKey: Any
         ]?
     ) -> Bool {
@@ -12,7 +12,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             let center = UNUserNotificationCenter.current()
             let authorizationStatus = await center
                 .notificationSettings().authorizationStatus
-            
+
             if authorizationStatus == .authorized {
                 await MainActor.run {
                     application.registerForRemoteNotifications()
@@ -21,14 +21,14 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         }
         return true
     }
-    
+
     func application(
-        _ application: UIApplication,
+        _: UIApplication,
         didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
     ) {
         let token = deviceToken.reduce("") { $0 + String(format: "%02x", $1) }
         print("device token: \(token)")
-        
+
         // send the token to your server
     }
 }

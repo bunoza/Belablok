@@ -8,7 +8,7 @@ extension View {
         renderer.scale = 3.0
         return Image(uiImage: renderer.uiImage ?? UIImage())
     }
-    
+
     func hiddenNavigationLink<DestinationView: View>(
         isLinkActive: Binding<Bool>,
         destination: DestinationView
@@ -17,8 +17,8 @@ extension View {
             NavigationLink(destination: destination, isActive: isLinkActive) {
                 EmptyView()
             }
-                .isDetailLink(false)
-                .hidden()
+            .isDetailLink(false)
+            .hidden()
         )
     }
 

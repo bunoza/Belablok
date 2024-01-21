@@ -68,14 +68,14 @@ class InputViewModel: ObservableObject {
         currentGameEdit.weCall100 = 0
         currentGameEdit.weCallBelot = 0
     }
-    
+
     private func resetYouCalls() {
         currentGameEdit.youCall20 = 0
         currentGameEdit.youCall50 = 0
         currentGameEdit.youCall100 = 0
         currentGameEdit.youCallBelot = 0
     }
-    
+
     func resetCalls() {
         resetWeCalls()
         resetYouCalls()

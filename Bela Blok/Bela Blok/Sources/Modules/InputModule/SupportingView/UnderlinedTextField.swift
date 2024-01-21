@@ -26,7 +26,8 @@ struct UnderlinedTextField: View {
 
                 if let validInt = Int(filteredString),
                    validInt >= 0,
-                   validInt <= 162 {
+                   validInt <= 162
+                {
                     self.text = String(validInt)
                     self.score = validInt
                 } else {

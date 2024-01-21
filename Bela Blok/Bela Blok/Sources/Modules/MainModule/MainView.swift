@@ -38,7 +38,7 @@ struct MainView: View {
                             .padding(.horizontal)
                             .padding(.horizontal)
                             .padding(.horizontal)
-                        
+
                         List {
                             ForEach(viewModel.currentSession) { game in
                                 ResultRow(

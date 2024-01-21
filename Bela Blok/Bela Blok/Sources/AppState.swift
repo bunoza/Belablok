@@ -18,7 +18,7 @@ class AppState: ObservableObject {
 
     @CustomUserDefaultsObject("game_end_score", defaultValue: PossibleGameEndScore.large)
     var gameEndScore: PossibleGameEndScore
-    
+
     @CustomUserDefaultsObject("stiglja_value", defaultValue: StigljaValue.ninety)
     var stigljaValue: StigljaValue
 
