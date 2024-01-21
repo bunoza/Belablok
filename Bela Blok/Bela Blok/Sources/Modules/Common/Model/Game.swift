@@ -18,6 +18,8 @@ struct Game: Codable, Hashable, Identifiable {
 
     var weBaseScore: Int = -1
     var youBaseScore: Int = -1
+    
+    var didFallIndicator: Bool = false
 
     public var weCallsSum: Int {
         weCall20 * 20 + weCall50 * 50 + weCall100 * 100 + weCallBelot * 1001

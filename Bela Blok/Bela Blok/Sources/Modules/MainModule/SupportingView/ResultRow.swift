@@ -4,11 +4,18 @@ struct ResultRow: View {
     private var numberOfGame: Int?
     private let weScore: String
     private let youScore: String
+    private var showFallIcon: Bool?
 
-    init(numberOfGame: Int? = nil, weScore: Int, youScore: Int) {
+    init(
+        numberOfGame: Int? = nil,
+        weScore: Int,
+        youScore: Int,
+        showFallIcon: Bool = false
+    ) {
         self.numberOfGame = numberOfGame
         self.weScore = String(weScore)
         self.youScore = String(youScore)
+        self.showFallIcon = showFallIcon
     }
 
     init(weLabel: String, youLabel: String) {
@@ -23,7 +30,15 @@ struct ResultRow: View {
                     Text("\(numberOfGame).")
                         .font(.title3)
                         .frame(alignment: .leading)
+                    
                     Spacer()
+                    
+                    if let shouldShow = showFallIcon,
+                       shouldShow == true {
+                        Image(systemName: "figure.fall.circle")
+                            .font(.title2)
+                            .foregroundStyle(Color.red)
+                    }
                 }
             }
 

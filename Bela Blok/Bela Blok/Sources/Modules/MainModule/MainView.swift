@@ -44,7 +44,8 @@ struct MainView: View {
                                 ResultRow(
                                     numberOfGame: viewModel.getOrderedNumberOfGame(game),
                                     weScore: game.weTotal,
-                                    youScore: game.youTotal
+                                    youScore: game.youTotal,
+                                    showFallIcon: game.didFallIndicator
                                 )
                                 .padding(.bottom, 2)
                                 .swipeActions(edge: .trailing, allowsFullSwipe: false) {

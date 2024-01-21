@@ -50,12 +50,14 @@ class InputViewModel: ObservableObject {
                 currentGameEdit.youBaseScore = 162
                 currentGameEdit.weBaseScore = 0
                 transferCalls(to: .you)
+                currentGameEdit.didFallIndicator = true
             }
         case .you:
             if currentGameEdit.youTotal <= currentGameEdit.weTotal {
                 currentGameEdit.weBaseScore = 162
                 currentGameEdit.youBaseScore = 0
                 transferCalls(to: .we)
+                currentGameEdit.didFallIndicator = true
             }
         }
     }
