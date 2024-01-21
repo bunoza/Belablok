@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct HistoryView: View {
+    @Environment(\.dismiss) private var dismiss
+
     @StateObject private var appState: AppState = .shared
     @StateObject private var viewModel: HistoryViewModel
 
@@ -31,6 +33,9 @@ struct HistoryView: View {
                             .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                                 Button(role: .destructive) {
                                     viewModel.delete(games)
+                                    if viewModel.history.isEmpty {
+                                        dismiss()
+                                    }
                                 } label: {
                                     Image(systemName: "trash")
                                 }
