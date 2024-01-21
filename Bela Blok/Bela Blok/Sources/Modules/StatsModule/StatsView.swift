@@ -69,6 +69,23 @@ struct StatsView: View {
             }
             .padding(.vertical)
 
+            // MARK: Broj padova
+
+            HStack {
+                Spacer()
+                VStack {
+                    Text("Broj padova:")
+                    Text("\(viewModel.game.weFallCount)")
+                }
+                Spacer()
+                VStack {
+                    Text("Broj padova:")
+                    Text("\(viewModel.game.youFallCount)")
+                }
+                Spacer()
+            }
+            .padding(.vertical)
+
             // MARK: Bodovi iz igre
 
             HStack {

@@ -66,4 +66,16 @@ extension [Game] {
     var youCallsSum: Int {
         self.map(\.youCallsSum).reduce(0, +)
     }
+
+    var weFallCount: Int {
+        self.filter { $0.caller == .we }
+            .filter { $0.didFallIndicator == true }
+            .count
+    }
+
+    var youFallCount: Int {
+        self.filter { $0.caller == .you }
+            .filter { $0.didFallIndicator == true }
+            .count
+    }
 }
