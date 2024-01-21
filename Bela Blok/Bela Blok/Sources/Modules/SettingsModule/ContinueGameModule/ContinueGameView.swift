@@ -97,7 +97,7 @@ struct ContinueGameView: View {
                 }
             } else {
                 Spacer()
-                Text("Došlo je do greške pri povezivanju s kamerom.")
+                Text("Došlo je do greške pri povezivanju s kamerom. Moguće je da trebate dozvoliti pristup kameri.")
                     .font(.footnote)
                     .padding(.horizontal)
                 Spacer()
