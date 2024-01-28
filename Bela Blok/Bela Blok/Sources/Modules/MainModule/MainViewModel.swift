@@ -61,6 +61,11 @@ class MainViewModel: ObservableObject {
         dealer = dealer.nextDealer
         setDealer()
     }
+    
+    func dealerStepBack() {
+        dealer = dealer.previousDealer
+        setDealer()
+    }
 
     func delete(_ game: Game) {
         let appState = AppState.shared

@@ -59,6 +59,7 @@ struct MainView: View {
                                 .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                                     Button(role: .destructive) {
                                         viewModel.delete(game)
+                                        viewModel.dealerStepBack()
                                     } label: {
                                         Image(systemName: "trash")
                                             .resizable()
