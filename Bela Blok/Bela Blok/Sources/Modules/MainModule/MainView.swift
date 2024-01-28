@@ -20,7 +20,7 @@ struct MainView: View {
     }
 
     var body: some View {
-        NavigationStack {
+        NavigationView {
             ZStack {
                 if appState.powerSavingMode {
                     Color.black
