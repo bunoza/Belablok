@@ -10,7 +10,6 @@ class ContinueGameViewModel: ObservableObject {
     @Published var errorGeneratingCode: Error?
     private var compressionAlgorithm: NSData.CompressionAlgorithm = .zlib
 
-    @MainActor
     private func generateQRCode(from string: String) async -> UIImage? {
         let context = CIContext()
         let filter = CIFilter.qrCodeGenerator()
