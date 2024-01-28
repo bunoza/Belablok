@@ -5,120 +5,40 @@ struct StatsView: View {
     @StateObject private var appState: AppState = .shared
     @StateObject private var viewModel: StatsViewModel
     @State private var showGraph: Bool = true
+    
+    private func statsRow(label: String, weValue: Int, youValue: Int) -> some View {
+        HStack {
+            Spacer()
+            VStack {
+                Text(label)
+                Text("\(weValue)")
+            }
+            Spacer()
+            VStack {
+                Text(label)
+                Text("\(youValue)")
+            }
+            Spacer()
+        }
+    }
 
     private var stats: some View {
-        VStack {
-            // MARK: MI - VI
-
+        VStack(spacing: 24) {
             ResultRow(weLabel: "MI", youLabel: "VI")
                 .bold()
                 .padding(.vertical)
 
-            // MARK: Ukupno bodova
-
-            HStack {
-                Spacer()
-                VStack {
-                    Text("Ukupno bodova:")
-                        .bold()
-                    Text("\(viewModel.weTotal)")
-                        .bold()
-                }
-                Spacer()
-                VStack {
-                    Text("Ukupno bodova:")
-                        .bold()
-                    Text("\(viewModel.youTotal)")
-                        .bold()
-                }
-                Spacer()
-            }
-            .padding(.vertical)
-
-            // MARK: Broj zvanja
-
-            HStack {
-                Spacer()
-                VStack {
-                    Text("Broj zvanja:")
-                    Text("\(viewModel.weNumberOfCalls)")
-                }
-                Spacer()
-                VStack {
-                    Text("Broj zvanja:")
-                    Text("\(viewModel.youNumberOfCalls)")
-                }
-                Spacer()
-            }
-            .padding(.vertical)
-
-            // MARK: Bodovi iz zvanja
-
-            HStack {
-                Spacer()
-                VStack {
-                    Text("Bodovi iz zvanja:")
-                    Text("\(viewModel.game.weCallsSum)")
-                }
-                Spacer()
-                VStack {
-                    Text("Bodovi iz zvanja:")
-                    Text("\(viewModel.game.youCallsSum)")
-                }
-                Spacer()
-            }
-            .padding(.vertical)
-
-            // MARK: Broj padova
-
-            HStack {
-                Spacer()
-                VStack {
-                    Text("Broj padova:")
-                    Text("\(viewModel.game.weFallCount)")
-                }
-                Spacer()
-                VStack {
-                    Text("Broj padova:")
-                    Text("\(viewModel.game.youFallCount)")
-                }
-                Spacer()
-            }
-            .padding(.vertical)
+            statsRow(label: "Ukupno bodova:", weValue: viewModel.weTotal, youValue: viewModel.youTotal).bold()
             
-            // MARK: Broj štiglji
+            statsRow(label: "Broj zvanja:", weValue: viewModel.weNumberOfCalls, youValue: viewModel.youNumberOfCalls)
 
-            HStack {
-                Spacer()
-                VStack {
-                    Text("Broj štiglji:")
-                    Text("\(viewModel.game.weStigljaCount)")
-                }
-                Spacer()
-                VStack {
-                    Text("Broj štiglji:")
-                    Text("\(viewModel.game.youStigljaCount)")
-                }
-                Spacer()
-            }
-            .padding(.vertical)
+            statsRow(label: "Bodovi iz zvanja:", weValue: viewModel.game.weCallsSum, youValue: viewModel.game.youCallsSum)
 
-            // MARK: Bodovi iz igre
+            statsRow(label: "Broj padova:", weValue: viewModel.game.weFallCount, youValue: viewModel.game.youFallCount)
+            
+            statsRow(label: "Broj štiglji:", weValue: viewModel.game.weStigljaCount, youValue: viewModel.game.youStigljaCount)
 
-            HStack {
-                Spacer()
-                VStack {
-                    Text("Bodovi iz igre:")
-                    Text("\(viewModel.game.weBaseGame)")
-                }
-                Spacer()
-                VStack {
-                    Text("Bodovi iz igre:")
-                    Text("\(viewModel.game.youBaseGame)")
-                }
-                Spacer()
-            }
-            .padding(.vertical)
+            statsRow(label: "Bodovi iz igre:", weValue: viewModel.game.weBaseGame, youValue: viewModel.game.youBaseGame)
         }
         .listRowBackground(Color.clear)
         .listRowInsets(EdgeInsets())
