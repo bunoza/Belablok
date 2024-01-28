@@ -16,6 +16,7 @@ class InputViewModel: ObservableObject {
         } else {
             currentGameEdit = .init()
         }
+        currentGameEdit.didFallIndicator = false
     }
 
     private func transferCalls(to: Caller) {
