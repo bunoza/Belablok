@@ -6,6 +6,7 @@ class HistoryViewModel: ObservableObject {
     init() {
         let appState = AppState.shared
         history = appState.finishedGames
+        history = history.map(\.forDisplay)
     }
 
     func delete(_ games: [Game]) {

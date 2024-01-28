@@ -43,9 +43,9 @@ struct MainView: View {
                             ForEach(viewModel.currentSession) { game in
                                 ResultRow(
                                     numberOfGame: viewModel.getOrderedNumberOfGame(game),
-                                    weScore: game.weTotal,
-                                    youScore: game.youTotal,
-                                    showFallIcon: game.didFallIndicator
+                                    weScore: game.handleFall.weTotal,
+                                    youScore: game.handleFall.youTotal,
+                                    showFallIcon: game.handleFall.didFallIndicator
                                 )
                                 .padding(.bottom, 2)
                                 .swipeActions(edge: .trailing, allowsFullSwipe: false) {
@@ -75,8 +75,8 @@ struct MainView: View {
                         .scrollContentBackground(.hidden)
 
                         ResultRow(
-                            weScore: viewModel.currentSession.weTotalAccumulated,
-                            youScore: viewModel.currentSession.youTotalAccumulated
+                            weScore: viewModel.currentSession.forDisplay.weTotalAccumulated,
+                            youScore: viewModel.currentSession.forDisplay.youTotalAccumulated
                         )
                         .animation(.easeInOut, value: viewModel.currentSession)
                         .padding(.bottom)

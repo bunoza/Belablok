@@ -20,6 +20,72 @@ struct Game: Codable, Hashable, Identifiable {
     var youBaseScore: Int = -1
 
     var didFallIndicator: Bool = false
+    
+    
+    mutating func resetWeCalls() {
+        weCall20 = 0
+        weCall50 = 0
+        weCall100 = 0
+        weCallBelot = 0
+    }
+
+    mutating func resetYouCalls() {
+        youCall20 = 0
+        youCall50 = 0
+        youCall100 = 0
+        youCallBelot = 0
+    }
+
+    mutating func resetCalls() {
+        resetWeCalls()
+        resetYouCalls()
+    }
+    
+    private mutating func transferCalls(to: Caller) {
+        switch to {
+        case .we:
+            weCall20 += youCall20
+            weCall50 += youCall50
+            weCall100 += youCall100
+            weCallBelot += youCallBelot
+            
+            youCall20 = 0
+            youCall50 = 0
+            youCall100 = 0
+            youCallBelot = 0
+        case .you:
+            youCall20 += weCall20
+            youCall50 += weCall50
+            youCall100 += weCall100
+            youCallBelot += weCallBelot
+            
+            weCall20 = 0
+            weCall50 = 0
+            weCall100 = 0
+            weCallBelot = 0
+        }
+    }
+    
+    var handleFall: Game {
+        var gameForDisplay = self
+        switch gameForDisplay.caller {
+        case .we:
+            if gameForDisplay.weTotal <= gameForDisplay.youTotal {
+                gameForDisplay.youBaseScore = 162
+                gameForDisplay.weBaseScore = 0
+                gameForDisplay.transferCalls(to: .you)
+                gameForDisplay.didFallIndicator = true
+            }
+        case .you:
+            if gameForDisplay.youTotal <= gameForDisplay.weTotal {
+                gameForDisplay.weBaseScore = 162
+                gameForDisplay.youBaseScore = 0
+                gameForDisplay.transferCalls(to: .we)
+                gameForDisplay.didFallIndicator = true
+            }
+        }
+        return gameForDisplay
+    }
 
     public var weCallsSum: Int {
         weCall20 * 20 + weCall50 * 50 + weCall100 * 100 + weCallBelot * 1001
@@ -77,5 +143,9 @@ extension [Game] {
         self.filter { $0.caller == .you }
             .filter { $0.didFallIndicator == true }
             .count
+    }
+    
+    var forDisplay: [Game] {
+        self.map(\.handleFall)
     }
 }

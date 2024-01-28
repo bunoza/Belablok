@@ -19,75 +19,16 @@ class InputViewModel: ObservableObject {
         currentGameEdit.didFallIndicator = false
     }
 
-    private func transferCalls(to: Caller) {
-        switch to {
-        case .we:
-            currentGameEdit.weCall20 += currentGameEdit.youCall20
-            currentGameEdit.weCall50 += currentGameEdit.youCall50
-            currentGameEdit.weCall100 += currentGameEdit.youCall100
-            currentGameEdit.weCallBelot += currentGameEdit.youCallBelot
-
-            currentGameEdit.youCall20 = 0
-            currentGameEdit.youCall50 = 0
-            currentGameEdit.youCall100 = 0
-            currentGameEdit.youCallBelot = 0
-        case .you:
-            currentGameEdit.youCall20 += currentGameEdit.weCall20
-            currentGameEdit.youCall50 += currentGameEdit.weCall50
-            currentGameEdit.youCall100 += currentGameEdit.weCall100
-            currentGameEdit.youCallBelot += currentGameEdit.weCallBelot
-
-            currentGameEdit.weCall20 = 0
-            currentGameEdit.weCall50 = 0
-            currentGameEdit.weCall100 = 0
-            currentGameEdit.weCallBelot = 0
-        }
-    }
-
-    private func handleFall() {
-        switch currentGameEdit.caller {
-        case .we:
-            if currentGameEdit.weTotal <= currentGameEdit.youTotal {
-                currentGameEdit.youBaseScore = 162
-                currentGameEdit.weBaseScore = 0
-                transferCalls(to: .you)
-                currentGameEdit.didFallIndicator = true
-            }
-        case .you:
-            if currentGameEdit.youTotal <= currentGameEdit.weTotal {
-                currentGameEdit.weBaseScore = 162
-                currentGameEdit.youBaseScore = 0
-                transferCalls(to: .we)
-                currentGameEdit.didFallIndicator = true
-            }
-        }
-    }
-
-    private func resetWeCalls() {
-        currentGameEdit.weCall20 = 0
-        currentGameEdit.weCall50 = 0
-        currentGameEdit.weCall100 = 0
-        currentGameEdit.weCallBelot = 0
-    }
-
-    private func resetYouCalls() {
-        currentGameEdit.youCall20 = 0
-        currentGameEdit.youCall50 = 0
-        currentGameEdit.youCall100 = 0
-        currentGameEdit.youCallBelot = 0
-    }
-
-    func resetCalls() {
-        resetWeCalls()
-        resetYouCalls()
-    }
-
     func onChangeOfWeScore() {
         currentGameEdit.youBaseScore = 162 - currentGameEdit.weBaseScore
     }
 
     func onChangeOfYouScore() {
         currentGameEdit.weBaseScore = 162 - currentGameEdit.youBaseScore
+    }
+    
+    func resetCalls() {
+        currentGameEdit.resetCalls()
     }
 
     func handleWeCallUpdate(amount: Int) {
@@ -101,7 +42,7 @@ class InputViewModel: ObservableObject {
                 if currentGameEdit.weCall100 < 5 { currentGameEdit.weCall100 += 1 }
             case 1001:
                 if currentGameEdit.weCallBelot == 0 {
-                    resetWeCalls()
+                    currentGameEdit.resetWeCalls()
                     currentGameEdit.weCallBelot += 1
                 }
             default:
@@ -121,7 +62,7 @@ class InputViewModel: ObservableObject {
                 if currentGameEdit.youCall100 < 5 { currentGameEdit.youCall100 += 1 }
             case 1001:
                 if currentGameEdit.youCallBelot == 0 {
-                    resetYouCalls()
+                    currentGameEdit.resetYouCalls()
                     currentGameEdit.youCallBelot += 1
                 }
             default:
@@ -131,7 +72,6 @@ class InputViewModel: ObservableObject {
     }
 
     func saveCurrentGame() {
-        handleFall()
         if isEditing {
             currentGame = currentGameEdit
         } else {

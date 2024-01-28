@@ -16,16 +16,16 @@ class MainViewModel: ObservableObject {
     }
 
     var shouldStartNewGame: Bool {
-        currentSession.weTotalAccumulated >= appState.gameEndScore.amount
-            || currentSession.youTotalAccumulated >= appState.gameEndScore.amount
+        currentSession.forDisplay.weTotalAccumulated >= appState.gameEndScore.amount
+        || currentSession.forDisplay.youTotalAccumulated >= appState.gameEndScore.amount
     }
 
     private func updateDealerOnGameFinished() {
         dealer = dealer.nextDealer
-        if currentSession.weTotalAccumulated >= appState.gameEndScore.amount,
-           currentSession.youTotalAccumulated >= appState.gameEndScore.amount
+        if currentSession.forDisplay.weTotalAccumulated >= appState.gameEndScore.amount,
+           currentSession.forDisplay.youTotalAccumulated >= appState.gameEndScore.amount
         {
-            if currentSession.weTotalAccumulated > currentSession.youTotalAccumulated {
+            if currentSession.forDisplay.weTotalAccumulated > currentSession.forDisplay.youTotalAccumulated {
                 if ![.me, .partner].contains(dealer) {
                     dealer = dealer.nextDealer
                     setDealer()
@@ -39,12 +39,12 @@ class MainViewModel: ObservableObject {
                 }
             }
         }
-        if currentSession.weTotalAccumulated >= appState.gameEndScore.amount {
+        if currentSession.forDisplay.weTotalAccumulated >= appState.gameEndScore.amount {
             if [.leftOpponent, .rightOpponent].contains(dealer) {
                 dealer = dealer.nextDealer
             }
         }
-        if currentSession.youTotalAccumulated >= appState.gameEndScore.amount {
+        if currentSession.forDisplay.youTotalAccumulated >= appState.gameEndScore.amount {
             if [.me, .partner].contains(dealer) {
                 dealer = dealer.nextDealer
             }
