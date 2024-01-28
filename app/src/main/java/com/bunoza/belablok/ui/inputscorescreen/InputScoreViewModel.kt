@@ -76,7 +76,7 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
         )
     val callBelotUsState = MutableStateFlow(
         CallState(
-            callValue = 1000,
+            callValue = 1001,
             timesCalled = 0,
             visibility = false,
             timesCalledVisibility = false
@@ -84,7 +84,7 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
     )
     val callBelotThemState = MutableStateFlow(
         CallState(
-            callValue = 1000,
+            callValue = 1001,
             timesCalled = 0,
             visibility = false,
             timesCalledVisibility = false
@@ -95,6 +95,7 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
             firstPlayerPoints.value = game?.baseGamePointsWe.toString()
             secondPlayerPoints.value = game?.baseGamePointsThem.toString()
             isButtonEnabled.value = true
+            selectedOption.value=game?.whoCalled.toString()
             timesCalledUs.value = game?.accumulatedCallsWe!!
             timesCalledThem.value = game!!.accumulatedCallsThem
             callTwentyUsState.value = callTwentyUsState.value.copy(
@@ -332,14 +333,14 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
                 callBelotUsState.value = callBelotUsState.value.copy(
                     timesCalled = callBelotUsState.value.timesCalled - 1
                 )
-                timesCalledUs.value = timesCalledUs.value - 1000
+                timesCalledUs.value = timesCalledUs.value - 1001
             } else if (callBelotUsState.value.timesCalled == 1) {
                 callBelotUsState.value = callBelotUsState.value.copy(
                     timesCalled = callBelotUsState.value.timesCalled - 1,
                     visibility = false,
                     timesCalledVisibility = false
                 )
-                timesCalledUs.value = timesCalledUs.value - 1000
+                timesCalledUs.value = timesCalledUs.value - 1001
             }
         }
     }
@@ -350,14 +351,14 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
                 callBelotThemState.value = callBelotThemState.value.copy(
                     timesCalled = callBelotThemState.value.timesCalled - 1
                 )
-                timesCalledThem.value = timesCalledThem.value - 1000
+                timesCalledThem.value = timesCalledThem.value - 1001
             } else if (callBelotThemState.value.timesCalled == 1) {
                 callBelotThemState.value = callBelotThemState.value.copy(
                     timesCalled = callBelotThemState.value.timesCalled - 1,
                     visibility = false,
                     timesCalledVisibility = false
                 )
-                timesCalledThem.value = timesCalledThem.value - 1000
+                timesCalledThem.value = timesCalledThem.value - 1001
             }
         }
     }
@@ -370,7 +371,7 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
                     visibility = true,
                     timesCalledVisibility = true
                 )
-                timesCalledUs.value = timesCalledUs.value + 1000
+                timesCalledUs.value = timesCalledUs.value + 1001
             }
         }
     }
@@ -383,7 +384,7 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
                     visibility = true,
                     timesCalledVisibility = true
                 )
-                timesCalledThem.value = timesCalledThem.value + 1000
+                timesCalledThem.value = timesCalledThem.value + 1001
             }
         }
     }
@@ -505,7 +506,8 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
                     scoreThem = totalScoreThem,
                     afterBasePointsWe = afterBasePointsWe,
                     afterBasePointsThem = afterBasePointsThem,
-                    dealer = dealer
+                    dealer = dealer,
+                    whoCalled = selectedOption.value
 
                 )
                 databaseRepository.updateSingleGame(
@@ -527,7 +529,8 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
                     scoreThem = totalScoreThem,
                     afterBasePointsWe = afterBasePointsWe,
                     afterBasePointsThem = afterBasePointsThem,
-                    dealer = dealer
+                    dealer = dealer,
+                    whoCalled = selectedOption.value
                 )
                 databaseRepository.insertSingleGame(
                     singleGame
@@ -543,7 +546,7 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
             var secondPlayerTotalPoints =
                 secondPlayerPoints.value.toInt() + callTwentyThemState.value.callValue * callTwentyThemState.value.timesCalled + callFiftyThemState.value.timesCalled * callFiftyThemState.value.callValue + callHundredThemState.value.callValue * callHundredThemState.value.timesCalled + callBelotThemState.value.timesCalled * callBelotThemState.value.callValue
             if (selectedOption.value == radioOptions[0]) {
-                if (secondPlayerTotalPoints > firstPlayerTotalPoints) {
+                if (secondPlayerTotalPoints >= firstPlayerTotalPoints) {
                     firstPlayerTotalPoints = 0
                     secondPlayerTotalPoints =
                         162 + callTwentyUsState.value.callValue * callTwentyUsState.value.timesCalled + callFiftyUsState.value.callValue * callFiftyUsState.value.timesCalled + callHundredUsState.value.callValue * callHundredUsState.value.timesCalled + callBelotUsState.value.callValue * callBelotUsState.value.timesCalled + callTwentyThemState.value.callValue * callTwentyThemState.value.timesCalled + callFiftyThemState.value.timesCalled * callFiftyThemState.value.callValue + callHundredThemState.value.callValue * callHundredThemState.value.timesCalled + callBelotThemState.value.timesCalled * callBelotThemState.value.callValue
@@ -554,7 +557,7 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
                     afterBasePointsThem.value = secondPlayerPoints.value.toInt()
                 }
             } else {
-                if (firstPlayerTotalPoints > secondPlayerTotalPoints) {
+                if (firstPlayerTotalPoints >= secondPlayerTotalPoints) {
                     secondPlayerTotalPoints = 0
                     firstPlayerTotalPoints =
                         162 + callTwentyThemState.value.callValue * callTwentyThemState.value.timesCalled + callFiftyThemState.value.timesCalled * callFiftyThemState.value.callValue + callHundredThemState.value.callValue * callHundredThemState.value.timesCalled + callBelotThemState.value.timesCalled * callBelotThemState.value.callValue + callTwentyUsState.value.callValue * callTwentyUsState.value.timesCalled + callFiftyUsState.value.callValue * callFiftyUsState.value.timesCalled + callHundredUsState.value.callValue * callHundredUsState.value.timesCalled + callBelotUsState.value.callValue * callBelotUsState.value.timesCalled

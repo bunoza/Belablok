@@ -12,6 +12,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.bunoza.belablok.data.database.model.Game
@@ -40,8 +41,8 @@ fun HistoryScreen(navigator: DestinationsNavigator) {
                 historyViewModel.getAllGames()
             }
 
-            UIState.EmptyListState -> EmptyGameScreen {
-                historyViewModel.getAllGames()
+            UIState.EmptyListState -> {
+                navigator.navigateUp()
             }
 
             is UIState.Success<*> -> HistoryScreenContent(gameList = (uiState as UIState.Success<*>).data as List<Game>, onCardClick = { navigator.navigate(GameDetailsScreenDestination(it.id)) }, paddingValues)

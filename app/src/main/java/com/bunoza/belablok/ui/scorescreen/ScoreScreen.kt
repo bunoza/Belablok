@@ -25,13 +25,19 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -56,6 +62,8 @@ fun ScoreScreen(navigator: DestinationsNavigator) {
     val totalScoreWe = scoreScreenViewModel.totalWeScore.collectAsState()
     val totalThemScore = scoreScreenViewModel.totalThemScore.collectAsState()
     val dealer by scoreScreenViewModel.dealer.collectAsState()
+    val historyButtonState by scoreScreenViewModel.historyButtonState.collectAsState()
+
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = SheetState(
             initialValue = SheetValue.Hidden,
@@ -63,6 +71,7 @@ fun ScoreScreen(navigator: DestinationsNavigator) {
         )
     )
     val coroutineScope = rememberCoroutineScope()
+
     BottomSheetScaffold(
         sheetContent = {
             TableComposable(
@@ -102,51 +111,85 @@ fun ScoreScreen(navigator: DestinationsNavigator) {
                     scoreScreenViewModel.deleteAllGames()
                     scoreScreenViewModel.resetNavigation()
                 },
-                whoWon = scoreScreenViewModel.whoWon.value,
                 onHistoryButtonClick = { navigator.navigate(HistoryScreenDestination) },
-                onSingleGameClick = { navigator.navigate(InputScoreScreenDestination(dealer, it)) }
-            )
-
-            is UIState.Success<*> -> ScoreScreenContent(
-                navigateToInputScoreScreen = {
-                    navigator.navigate(
-                        InputScoreScreenDestination(
-                            dealer,
-                            null
-                        )
-                    )
+                onSingleGameClick = { navigator.navigate(InputScoreScreenDestination(dealer, it)) },
+                isHistoryButtonEnabled = historyButtonState,
+                onDismissClick = {
+                    scoreScreenViewModel.isAlertDialogOpened.value = false
                 },
-                singleGameList = (uiState as UIState.Success<List<SingleGame>>).data,
-                totalScoreWe = totalScoreWe.value,
-                totalScoreThem = totalThemScore.value,
-                dealer = dealer,
-                onDealerCounterClick = {
-                    coroutineScope.launch {
-                        bottomSheetScaffoldState.bottomSheetState.expand()
-                    }
-                },
-                checkNewGame = { scoreScreenViewModel.checkNewGame() },
-                isAlertDialogOpened = scoreScreenViewModel.isAlertDialogOpened.value,
-                shouldNavigate = scoreScreenViewModel.shouldNavigate,
-                onAlertDialogConfirmClick = {
-                    scoreScreenViewModel.deleteAllGames()
-                    scoreScreenViewModel.resetNavigation()
-                },
-                whoWon = scoreScreenViewModel.whoWon.value,
-                onHistoryButtonClick = { navigator.navigate(HistoryScreenDestination) },
-                onSingleGameClick = {
-                    navigator.navigate(
-                        InputScoreScreenDestination(
-                            scoreScreenViewModel.dealer.value,
-                            it
-                        )
-                    )
+                onDealerChange = {
+                    scoreScreenViewModel.changeDealerAfterNewGame()
                 }
             )
+
+            is UIState.Success<*> -> {
+                val currentListSize = rememberSaveable {
+                    mutableStateOf((uiState as UIState.Success<List<SingleGame>>).data.size)
+                }
+                val previousListSize = rememberSaveable {
+                    mutableStateOf((uiState as UIState.Success<List<SingleGame>>).data.size)
+                }
+                currentListSize.value= (uiState as UIState.Success<List<SingleGame>>).data.size
+                if (currentListSize.value > previousListSize.value) {
+                    scoreScreenViewModel.changeDealerAfterNewGame()
+                    previousListSize.value =
+                        (uiState as UIState.Success<List<SingleGame>>).data.size
+
+                }
+                ScoreScreenContent(
+                    navigateToInputScoreScreen = {
+                        navigator.navigate(
+                            InputScoreScreenDestination(
+                                dealer,
+                                null
+                            )
+                        )
+                    },
+                    singleGameList = (uiState as UIState.Success<List<SingleGame>>).data,
+                    totalScoreWe = totalScoreWe.value,
+                    totalScoreThem = totalThemScore.value,
+                    dealer = dealer,
+                    onDealerCounterClick = {
+                        coroutineScope.launch {
+                            bottomSheetScaffoldState.bottomSheetState.expand()
+                        }
+                    },
+                    checkNewGame = { scoreScreenViewModel.checkNewGame() },
+                    isAlertDialogOpened = scoreScreenViewModel.isAlertDialogOpened.value,
+                    shouldNavigate = scoreScreenViewModel.shouldNavigate,
+                    onAlertDialogConfirmClick = {
+                        scoreScreenViewModel.deleteAllGames()
+                        scoreScreenViewModel.resetNavigation()
+                        previousListSize.value=0
+                    },
+                    onHistoryButtonClick = { navigator.navigate(HistoryScreenDestination) },
+                    onSingleGameClick = {
+                        navigator.navigate(
+                            InputScoreScreenDestination(
+                                scoreScreenViewModel.dealer.value,
+                                it
+                            )
+                        )
+                    },
+                    isHistoryButtonEnabled = historyButtonState,
+                    onDismissClick = {
+                        scoreScreenViewModel.isAlertDialogOpened.value = false
+                    },
+                    onDealerChange = {
+                        scoreScreenViewModel.changeDealerAfterNewGame()
+                    }
+                )
+
+
+
+
+            }
         }
-        if (totalScoreWe.value > 1000 || totalThemScore.value > 1000) {
-            WinAnimation()
-        }
+
+
+    }
+    if (totalScoreWe.value > 1000 || totalThemScore.value > 1000) {
+        WinAnimation()
     }
 }
 
@@ -162,18 +205,19 @@ fun ScoreScreenContent(
     checkNewGame: () -> Unit,
     isAlertDialogOpened: Boolean,
     shouldNavigate: MutableState<Boolean>,
-    whoWon: String,
     onAlertDialogConfirmClick: () -> Unit,
     onHistoryButtonClick: () -> Unit,
-    onSingleGameClick: (SingleGame) -> Unit
+    onSingleGameClick: (SingleGame) -> Unit,
+    isHistoryButtonEnabled: Boolean,
+    onDismissClick: () -> Unit,
+    onDealerChange: () -> Unit
 ) {
     val lazyListState = rememberLazyListState()
-    val coroutineScope = rememberCoroutineScope()
 
     if (isAlertDialogOpened) {
         NewGameAlertDialog(
             onConfirmClick = onAlertDialogConfirmClick,
-            whoWon = whoWon
+            onDismissClick = onDismissClick
         )
     }
 
@@ -188,7 +232,7 @@ fun ScoreScreenContent(
                     )
                 },
                 actions = {
-                    IconButton(onClick = onHistoryButtonClick) {
+                    IconButton(onClick = onHistoryButtonClick, enabled = isHistoryButtonEnabled) {
                         Icon(
                             painter = painterResource(id = R.drawable.baseline_history_24),
                             contentDescription = null,
@@ -270,6 +314,7 @@ fun ScoreScreenContent(
             if (singleGameList.isNotEmpty()) {
                 lazyListState.animateScrollToItem(singleGameList.size - 1)
             }
+
         }
     }
 }

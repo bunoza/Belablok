@@ -1,9 +1,12 @@
 package com.bunoza.belablok.ui.inputscorescreen
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -20,25 +23,28 @@ fun CallsComposable(collectedTimesCalledUsState: Int, collectedTimesCalledThemSt
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 24.dp),
-        horizontalArrangement = Arrangement.SpaceEvenly,
+        horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "Zvanja:$collectedTimesCalledUsState",
+            text = "Zvanja: $collectedTimesCalledUsState",
             color = MaterialTheme.colorScheme.background,
             fontSize = 14.sp
         )
         Button(
             onClick = onDeleteClick,
             colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.background,
-                contentColor = MaterialTheme.colorScheme.primary
-            )
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary,
+            ),
+            shape = RoundedCornerShape(10.dp),
+            modifier = Modifier.border(1.dp, color = MaterialTheme.colorScheme.onPrimary, shape = RoundedCornerShape(10.dp)),
+
         ) {
             Text(text = "Obriši zvanja")
         }
         Text(
-            text = "Zvanja:$collectedTimesCalledThemState",
+            text = "Zvanja: $collectedTimesCalledThemState",
             color = MaterialTheme.colorScheme.background,
             fontSize = 14.sp
         )

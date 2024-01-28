@@ -26,11 +26,14 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
     var whoWon = mutableStateOf("")
     var isAlertDialogOpened = mutableStateOf(false)
     var shouldNavigate = mutableStateOf(true)
+    private var _historyButtonState = MutableStateFlow(false)
+    val historyButtonState = _historyButtonState.asStateFlow()
     private var gameList = listOf<SingleGame>()
 
     init {
         getAllSingleGames()
         getDealer()
+        getAllGames()
     }
 
     fun getAllSingleGames() {
@@ -50,6 +53,14 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
                 }
             } catch (e: Exception) {
                 _uiState.value = UIState.Error
+            }
+        }
+    }
+
+    private fun getAllGames(){
+        viewModelScope.launch {
+            databaseRepository.getAllGames().collect{
+                _historyButtonState.value = it.isNotEmpty()
             }
         }
     }
@@ -81,7 +92,7 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
         }
     }
 
-    fun updateDealer(dealer: String) {
+    private fun updateDealer() {
         viewModelScope.launch {
             preferenceRepository.updateDealer(dealerPossibilities[counter.value])
         }
@@ -116,15 +127,17 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
                 shouldNavigate.value = false
                 isAlertDialogOpened.value = true
                 updateCounterTheyWin()
-            } else {
-                if (counter.value == 3) {
-                    counter.value = 0
-                } else {
-                    counter.value++
-                }
-                updateDealer(dealer.value)
             }
         }
+    }
+
+    fun changeDealerAfterNewGame(){
+        if (counter.value == 3) {
+            counter.value = 0
+        } else {
+            counter.value++
+        }
+        updateDealer()
     }
 
     fun deleteAllGames() {
@@ -152,18 +165,18 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
     }
     private fun updateCounterWeWin() {
         when (counter.value) {
-            0 -> counter.value = 0
-            1 -> counter.value = 2
-            2 -> counter.value = 2
-            3 -> counter.value = 0
+            0 -> counter.value = 3
+            1 -> counter.value = 1
+            2 -> counter.value = 1
+            3 -> counter.value = 2
         }
     }
     private fun updateCounterTheyWin() {
         when (counter.value) {
-            0 -> counter.value = 1
-            1 -> counter.value = 1
-            2 -> counter.value = 3
-            3 -> counter.value = 3
+            0 -> counter.value = 0
+            1 -> counter.value = 0
+            2 -> counter.value = 2
+            3 -> counter.value = 2
         }
     }
 }

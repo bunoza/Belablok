@@ -84,11 +84,11 @@ fun BelaBlokTheme(
 ) {
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            if (darkTheme) DarkColors else LightColors
+            if (darkTheme) LightColors else DarkColors
         }
 
-        darkTheme -> DarkColors
-        else -> LightColors
+        darkTheme -> LightColors
+        else -> DarkColors
     }
     val view = LocalView.current
     if (!view.isInEditMode) {

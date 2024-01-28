@@ -23,12 +23,13 @@ data class SingleGame(
     val scoreThem: Int,
     val afterBasePointsWe: Int,
     val afterBasePointsThem: Int,
-    val dealer: String
+    val dealer: String,
+    val whoCalled:String
 ) {
     val accumulatedCallsWe: Int get() {
-        return callTwentyWe * 20 + callFiftyWe * 50 + callHundredWe * 100 + callBelotWe * 1000
+        return callTwentyWe * 20 + callFiftyWe * 50 + callHundredWe * 100 + callBelotWe * 1001
     }
     val accumulatedCallsThem: Int get() {
-        return callTwentyThem * 20 + callFiftyThem * 50 + callHundredThem * 100 + callBelotThem * 1000
+        return callTwentyThem * 20 + callFiftyThem * 50 + callHundredThem * 100 + callBelotThem * 1001
     }
 }

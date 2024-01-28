@@ -175,7 +175,8 @@ fun InputScoreScreen(navigator: DestinationsNavigator, dealer: String, singleGam
                 enabled = collectedSaveButton.value,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.background,
-                    contentColor = MaterialTheme.colorScheme.primary
+                    contentColor = MaterialTheme.colorScheme.primary,
+                    disabledContentColor = MaterialTheme.colorScheme.outline
                 )
             ) {
                 Text(text = "Spremi")
