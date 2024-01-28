@@ -85,6 +85,23 @@ struct StatsView: View {
                 Spacer()
             }
             .padding(.vertical)
+            
+            // MARK: Broj štiglji
+
+            HStack {
+                Spacer()
+                VStack {
+                    Text("Broj štiglji:")
+                    Text("\(viewModel.game.weStigljaCount)")
+                }
+                Spacer()
+                VStack {
+                    Text("Broj štiglji:")
+                    Text("\(viewModel.game.youStigljaCount)")
+                }
+                Spacer()
+            }
+            .padding(.vertical)
 
             // MARK: Bodovi iz igre
 

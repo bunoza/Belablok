@@ -161,6 +161,16 @@ extension [Game] {
             .count
     }
     
+    var weStigljaCount: Int {
+        self.filter { $0.weStiglja == 1 }
+            .count
+    }
+    
+    var youStigljaCount: Int {
+        self.filter { $0.youStiglja == 1 }
+            .count
+    }
+
     var forDisplay: [Game] {
         self.map(\.handleSpecialCases)
     }
