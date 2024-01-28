@@ -5,7 +5,7 @@ struct StatsView: View {
     @StateObject private var appState: AppState = .shared
     @StateObject private var viewModel: StatsViewModel
     @State private var showGraph: Bool = true
-    
+
     private func statsRow(label: String, weValue: Int, youValue: Int) -> some View {
         HStack {
             Spacer()
@@ -29,13 +29,13 @@ struct StatsView: View {
                 .padding(.vertical)
 
             statsRow(label: "Ukupno bodova:", weValue: viewModel.weTotal, youValue: viewModel.youTotal).bold()
-            
+
             statsRow(label: "Broj zvanja:", weValue: viewModel.weNumberOfCalls, youValue: viewModel.youNumberOfCalls)
 
             statsRow(label: "Bodovi iz zvanja:", weValue: viewModel.game.weCallsSum, youValue: viewModel.game.youCallsSum)
 
             statsRow(label: "Broj padova:", weValue: viewModel.game.weFallCount, youValue: viewModel.game.youFallCount)
-            
+
             statsRow(label: "Broj štiglji:", weValue: viewModel.game.weStigljaCount, youValue: viewModel.game.youStigljaCount)
 
             statsRow(label: "Bodovi iz igre:", weValue: viewModel.game.weBaseGame, youValue: viewModel.game.youBaseGame)

@@ -119,7 +119,7 @@ struct InputView: View {
                             youCall: $viewModel.currentGameEdit.youCallBelot,
                             amount: 1001
                         )
-                        
+
                         renderCallButtonRow(
                             weCall: $viewModel.currentGameEdit.weStiglja,
                             youCall: $viewModel.currentGameEdit.youStiglja,
@@ -202,7 +202,7 @@ struct InputView: View {
             .monospaced()
             .opacity(bindedInt.wrappedValue == 0 ? 0 : 1)
     }
-    
+
     private func renderCallButton(caller: Caller, amount: Int) -> some View {
         Button {
             if caller == .we {
@@ -217,7 +217,7 @@ struct InputView: View {
         .roundedAccentButton(width: 80, height: 44)
         .buttonStyle(.plain)
     }
-    
+
     private func handleButtonLabel(amount: Int) -> String {
         switch amount {
         case 1001:

@@ -47,11 +47,10 @@ class InputViewModel: ObservableObject {
     func onChangeOfYouScore() {
         currentGameEdit.weBaseScore = 162 - currentGameEdit.youBaseScore
     }
-    
+
     func resetCalls() {
         currentGameEdit.resetCalls()
     }
-    
 
     func handleWeCallUpdate(amount: Int) {
         if currentGameEdit.weCallsSum < appState.gameEndScore.amount {

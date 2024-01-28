@@ -18,12 +18,12 @@ struct Game: Codable, Hashable, Identifiable {
 
     var weBaseScore: Int = -1
     var youBaseScore: Int = -1
-    
+
     var weStiglja: Int = 0
     var youStiglja: Int = 0
 
     var didFallIndicator: Bool = false
-        
+
     var isStigljaActive: Bool {
         weStiglja + youStiglja == 1
     }
@@ -48,7 +48,7 @@ struct Game: Codable, Hashable, Identifiable {
         resetWeCalls()
         resetYouCalls()
     }
-    
+
     private mutating func transferCalls(to: Caller) {
         switch to {
         case .we:
@@ -56,34 +56,34 @@ struct Game: Codable, Hashable, Identifiable {
             weCall50 += youCall50
             weCall100 += youCall100
             weCallBelot += youCallBelot
-            
+
             resetYouCalls()
         case .you:
             youCall20 += weCall20
             youCall50 += weCall50
             youCall100 += weCall100
             youCallBelot += weCallBelot
-            
+
             resetWeCalls()
         }
     }
-    
-    ///Special cases: štiglja, pad
+
+    /// Special cases: štiglja, pad
     var handleSpecialCases: Game {
         var gameForDisplay = self
-        
+
         if gameForDisplay.weStiglja == 1 {
             gameForDisplay.weBaseScore = 162
             gameForDisplay.youBaseScore = 0
             gameForDisplay.transferCalls(to: .we)
         }
-        
+
         if gameForDisplay.youStiglja == 1 {
             gameForDisplay.youBaseScore = 162
             gameForDisplay.weBaseScore = 0
             gameForDisplay.transferCalls(to: .you)
         }
-        
+
         switch gameForDisplay.caller {
         case .we:
             if gameForDisplay.weTotal <= gameForDisplay.youTotal {
@@ -160,12 +160,12 @@ extension [Game] {
             .filter { $0.didFallIndicator == true }
             .count
     }
-    
+
     var weStigljaCount: Int {
         self.filter { $0.weStiglja == 1 }
             .count
     }
-    
+
     var youStigljaCount: Int {
         self.filter { $0.youStiglja == 1 }
             .count

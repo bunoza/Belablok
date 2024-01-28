@@ -3,7 +3,7 @@ import SwiftUI
 struct ResultRow: View {
     @State private var showPadTooltip: Bool = false
     @State private var showStigljaTooltip: Bool = false
-    
+
     private var numberOfGame: Int?
     private let weScore: String
     private let youScore: String

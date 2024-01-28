@@ -17,7 +17,7 @@ class MainViewModel: ObservableObject {
 
     var shouldStartNewGame: Bool {
         currentSession.forDisplay.weTotalAccumulated >= appState.gameEndScore.amount
-        || currentSession.forDisplay.youTotalAccumulated >= appState.gameEndScore.amount
+            || currentSession.forDisplay.youTotalAccumulated >= appState.gameEndScore.amount
     }
 
     private func updateDealerOnGameFinished() {
@@ -61,7 +61,7 @@ class MainViewModel: ObservableObject {
         dealer = dealer.nextDealer
         setDealer()
     }
-    
+
     func dealerStepBack() {
         dealer = dealer.previousDealer
         setDealer()

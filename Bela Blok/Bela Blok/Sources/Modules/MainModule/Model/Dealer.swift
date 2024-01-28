@@ -31,7 +31,7 @@ enum Dealer: CaseIterable, Codable {
             return .me
         }
     }
-    
+
     var previousDealer: Dealer {
         switch self {
         case .me:
