@@ -18,15 +18,22 @@ struct Game: Codable, Hashable, Identifiable {
 
     var weBaseScore: Int = -1
     var youBaseScore: Int = -1
+    
+    var weStiglja: Int = 0
+    var youStiglja: Int = 0
 
     var didFallIndicator: Bool = false
-    
-    
+        
+    var isStigljaActive: Bool {
+        weStiglja + youStiglja == 1
+    }
+
     mutating func resetWeCalls() {
         weCall20 = 0
         weCall50 = 0
         weCall100 = 0
         weCallBelot = 0
+        weStiglja = 0
     }
 
     mutating func resetYouCalls() {
@@ -34,6 +41,7 @@ struct Game: Codable, Hashable, Identifiable {
         youCall50 = 0
         youCall100 = 0
         youCallBelot = 0
+        youStiglja = 0
     }
 
     mutating func resetCalls() {
@@ -49,25 +57,33 @@ struct Game: Codable, Hashable, Identifiable {
             weCall100 += youCall100
             weCallBelot += youCallBelot
             
-            youCall20 = 0
-            youCall50 = 0
-            youCall100 = 0
-            youCallBelot = 0
+            resetYouCalls()
         case .you:
             youCall20 += weCall20
             youCall50 += weCall50
             youCall100 += weCall100
             youCallBelot += weCallBelot
             
-            weCall20 = 0
-            weCall50 = 0
-            weCall100 = 0
-            weCallBelot = 0
+            resetWeCalls()
         }
     }
     
-    var handleFall: Game {
+    ///Special cases: štiglja, pad
+    var handleSpecialCases: Game {
         var gameForDisplay = self
+        
+        if gameForDisplay.weStiglja == 1 {
+            gameForDisplay.weBaseScore = 162
+            gameForDisplay.youBaseScore = 0
+            gameForDisplay.transferCalls(to: .we)
+        }
+        
+        if gameForDisplay.youStiglja == 1 {
+            gameForDisplay.youBaseScore = 162
+            gameForDisplay.weBaseScore = 0
+            gameForDisplay.transferCalls(to: .you)
+        }
+        
         switch gameForDisplay.caller {
         case .we:
             if gameForDisplay.weTotal <= gameForDisplay.youTotal {
@@ -88,11 +104,11 @@ struct Game: Codable, Hashable, Identifiable {
     }
 
     public var weCallsSum: Int {
-        weCall20 * 20 + weCall50 * 50 + weCall100 * 100 + weCallBelot * 1001
+        weCall20 * 20 + weCall50 * 50 + weCall100 * 100 + weCallBelot * 1001 + weStiglja * 90
     }
 
     public var youCallsSum: Int {
-        youCall20 * 20 + youCall50 * 50 + youCall100 * 100 + youCallBelot * 1001
+        youCall20 * 20 + youCall50 * 50 + youCall100 * 100 + youCallBelot * 1001 + youStiglja * 90
     }
 
     public var weTotal: Int {
@@ -146,6 +162,6 @@ extension [Game] {
     }
     
     var forDisplay: [Game] {
-        self.map(\.handleFall)
+        self.map(\.handleSpecialCases)
     }
 }

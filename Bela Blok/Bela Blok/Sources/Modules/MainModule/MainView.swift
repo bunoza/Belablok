@@ -43,9 +43,10 @@ struct MainView: View {
                             ForEach(viewModel.currentSession) { game in
                                 ResultRow(
                                     numberOfGame: viewModel.getOrderedNumberOfGame(game),
-                                    weScore: game.handleFall.weTotal,
-                                    youScore: game.handleFall.youTotal,
-                                    showFallIcon: game.handleFall.didFallIndicator
+                                    weScore: game.handleSpecialCases.weTotal,
+                                    youScore: game.handleSpecialCases.youTotal,
+                                    showFallIcon: game.handleSpecialCases.didFallIndicator,
+                                    showStigljaIcon: game.handleSpecialCases.isStigljaActive
                                 )
                                 .padding(.bottom, 2)
                                 .swipeActions(edge: .trailing, allowsFullSwipe: false) {

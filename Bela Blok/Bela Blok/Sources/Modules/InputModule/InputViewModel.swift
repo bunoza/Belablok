@@ -19,6 +19,27 @@ class InputViewModel: ObservableObject {
         currentGameEdit.didFallIndicator = false
     }
 
+    private func stigljaPressed(for caller: Caller) {
+        switch caller {
+        case .we:
+            if currentGameEdit.weStiglja == 0 {
+                currentGameEdit.weStiglja = 1
+                currentGameEdit.youStiglja = 0
+            } else {
+                currentGameEdit.weStiglja = 0
+            }
+            currentGameEdit.weBaseScore = 162
+        case .you:
+            if currentGameEdit.youStiglja == 0 {
+                currentGameEdit.youStiglja = 1
+                currentGameEdit.weStiglja = 0
+            } else {
+                currentGameEdit.youStiglja = 0
+            }
+            currentGameEdit.youBaseScore = 162
+        }
+    }
+
     func onChangeOfWeScore() {
         currentGameEdit.youBaseScore = 162 - currentGameEdit.weBaseScore
     }
@@ -30,6 +51,7 @@ class InputViewModel: ObservableObject {
     func resetCalls() {
         currentGameEdit.resetCalls()
     }
+    
 
     func handleWeCallUpdate(amount: Int) {
         if currentGameEdit.weCallsSum < appState.gameEndScore.amount {
@@ -45,6 +67,8 @@ class InputViewModel: ObservableObject {
                     currentGameEdit.resetWeCalls()
                     currentGameEdit.weCallBelot += 1
                 }
+            case 90:
+                stigljaPressed(for: .we)
             default:
                 break
             }
@@ -65,6 +89,8 @@ class InputViewModel: ObservableObject {
                     currentGameEdit.resetYouCalls()
                     currentGameEdit.youCallBelot += 1
                 }
+            case 90:
+                stigljaPressed(for: .you)
             default:
                 break
             }

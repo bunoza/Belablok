@@ -47,6 +47,8 @@ struct InputView: View {
                     }
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
+                    .foregroundStyle(viewModel.currentGameEdit.isStigljaActive ? Color.gray : Color.primary)
+                    .disabled(viewModel.currentGameEdit.isStigljaActive)
                     .padding()
 
                     HStack {
@@ -116,6 +118,12 @@ struct InputView: View {
                             weCall: $viewModel.currentGameEdit.weCallBelot,
                             youCall: $viewModel.currentGameEdit.youCallBelot,
                             amount: 1001
+                        )
+                        
+                        renderCallButtonRow(
+                            weCall: $viewModel.currentGameEdit.weStiglja,
+                            youCall: $viewModel.currentGameEdit.youStiglja,
+                            amount: 90
                         )
                     }
                     .listRowInsets(EdgeInsets())
@@ -194,7 +202,7 @@ struct InputView: View {
             .monospaced()
             .opacity(bindedInt.wrappedValue == 0 ? 0 : 1)
     }
-
+    
     private func renderCallButton(caller: Caller, amount: Int) -> some View {
         Button {
             if caller == .we {
@@ -203,11 +211,22 @@ struct InputView: View {
                 viewModel.handleYouCallUpdate(amount: amount)
             }
         } label: {
-            Text(amount == 1001 ? "Belot" : String(amount))
+            Text(handleButtonLabel(amount: amount))
                 .font(.system(size: 24))
         }
         .roundedAccentButton(width: 80, height: 44)
         .buttonStyle(.plain)
+    }
+    
+    private func handleButtonLabel(amount: Int) -> String {
+        switch amount {
+        case 1001:
+            return "Belot"
+        case 90:
+            return "Štiglja"
+        default:
+            return String(amount)
+        }
     }
 }
 
