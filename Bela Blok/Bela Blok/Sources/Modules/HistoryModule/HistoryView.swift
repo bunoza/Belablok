@@ -12,13 +12,8 @@ struct HistoryView: View {
 
     var body: some View {
         ZStack {
-            if appState.powerSavingMode {
-                Color.black
-                    .ignoresSafeArea()
-            } else {
-                Color(.defaultBackground)
-                    .ignoresSafeArea()
-            }
+            Color(.defaultBackground)
+                .ignoresSafeArea()
 
             VStack {
                 ScrollViewReader { _ in

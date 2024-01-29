@@ -21,7 +21,4 @@ class AppState: ObservableObject {
 
     @CustomUserDefaultsObject("stiglja_value", defaultValue: StigljaValue.ninety)
     var stigljaValue: StigljaValue
-
-    @CustomUserDefaultsObject("power_saving_mode", defaultValue: false)
-    var powerSavingMode: Bool
 }

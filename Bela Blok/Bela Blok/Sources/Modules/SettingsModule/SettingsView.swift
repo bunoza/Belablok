@@ -3,7 +3,6 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.presentations) private var presentations
-    @Environment(\.colorScheme) private var colorScheme
 
     @StateObject private var appState = AppState.shared
     @State private var showSingleDestructiveAlert: Bool = false
@@ -19,15 +18,6 @@ struct SettingsView: View {
                     }
                 } footer: {
                     Text("Može dovesti do povećanja potrošnje baterije.")
-                }
-
-                Section {
-                    Toggle(isOn: $appState.powerSavingMode) {
-                        Text("Način uštede baterije")
-                    }
-                    .disabled(true)
-                } footer: {
-                    Text("Štedi bateriju kod OLED zaslona dok je tamni način rada uključen. Coming soon.")
                 }
 
                 HStack {

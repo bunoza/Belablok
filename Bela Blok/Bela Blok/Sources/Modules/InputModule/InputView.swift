@@ -15,13 +15,8 @@ struct InputView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                if appState.powerSavingMode {
-                    Color.black
-                        .ignoresSafeArea()
-                } else {
-                    Color(.defaultBackground)
-                        .ignoresSafeArea()
-                }
+                Color(.defaultBackground)
+                    .ignoresSafeArea()
 
                 List {
                     HStack {
