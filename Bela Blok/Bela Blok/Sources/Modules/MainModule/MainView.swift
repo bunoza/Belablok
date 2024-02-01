@@ -1,22 +1,21 @@
+import StoreKit
 import SwiftUI
 
 struct MainView: View {
     @Environment(\.presentations) private var presentations
+    @Environment(\.requestReview) private var requestReview
+    
     @StateObject private var appState: AppState = .shared
     @StateObject private var viewModel: MainViewModel
-    @State private var showInputSheet: Bool
-    @State private var showDealerSheet: Bool
-    @State private var showGameFinishedAlert: Bool
-    @State private var showSettingsSheet: Bool
-    @State private var showBottomBar: Bool
+    
+    @State private var showInputSheet: Bool = false
+    @State private var showDealerSheet: Bool = false
+    @State private var showGameFinishedAlert: Bool = false
+    @State private var showSettingsSheet: Bool = false
+    @State private var showBottomBar: Bool = false
 
     init() {
         _viewModel = .init(wrappedValue: MainViewModel())
-        showInputSheet = false
-        showDealerSheet = false
-        showSettingsSheet = false
-        showGameFinishedAlert = false
-        showBottomBar = false
     }
 
     var body: some View {
@@ -87,6 +86,15 @@ struct MainView: View {
                         LottieView(name: "confetti-animation")
                             .allowsHitTesting(false)
                             .ignoresSafeArea()
+                            .onAppear {
+                                if appState.reviewCounter == 15 {
+                                    appState.reviewCounter = 0
+                                }
+                                if appState.reviewCounter == 0 {
+                                    requestReview()
+                                }
+                                appState.reviewCounter += 1
+                            }
                     }
                 } else {
                     GeometryReader { geo in

@@ -21,4 +21,7 @@ class AppState: ObservableObject {
 
     @CustomUserDefaultsObject("stiglja_value", defaultValue: StigljaValue.ninety)
     var stigljaValue: StigljaValue
+    
+    @CustomUserDefaultsObject("ask_for_review_counter", defaultValue: 0)
+    var reviewCounter: Int
 }
