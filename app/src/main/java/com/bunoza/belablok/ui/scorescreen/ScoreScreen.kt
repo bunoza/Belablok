@@ -25,19 +25,15 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -58,11 +54,12 @@ import org.koin.androidx.compose.koinViewModel
 @Destination
 fun ScoreScreen(navigator: DestinationsNavigator) {
     val scoreScreenViewModel = koinViewModel<ScoreScreenViewModel>()
-    val uiState by scoreScreenViewModel.uiState.collectAsState()
+    val scoreScreenUIState by scoreScreenViewModel.scoreScreenUIState.collectAsState()
     val totalScoreWe = scoreScreenViewModel.totalWeScore.collectAsState()
     val totalThemScore = scoreScreenViewModel.totalThemScore.collectAsState()
     val dealer by scoreScreenViewModel.dealer.collectAsState()
     val historyButtonState by scoreScreenViewModel.historyButtonState.collectAsState()
+
 
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = SheetState(
@@ -83,59 +80,11 @@ fun ScoreScreen(navigator: DestinationsNavigator) {
         sheetPeekHeight = 0.dp,
         scaffoldState = bottomSheetScaffoldState
     ) {
-        when (uiState) {
-            UIState.Loading -> LoadingScreen()
-            UIState.Error -> ErrorScreen { scoreScreenViewModel.getAllSingleGames() }
-            UIState.EmptyListState -> ScoreScreenContent(
-                navigateToInputScoreScreen = {
-                    navigator.navigate(
-                        InputScoreScreenDestination(
-                            dealer,
-                            null
-                        )
-                    )
-                },
-                singleGameList = emptyList(),
-                totalScoreWe = totalScoreWe.value,
-                totalScoreThem = totalThemScore.value,
-                dealer = dealer,
-                onDealerCounterClick = {
-                    coroutineScope.launch {
-                        bottomSheetScaffoldState.bottomSheetState.expand()
-                    }
-                },
-                checkNewGame = { scoreScreenViewModel.checkNewGame() },
-                isAlertDialogOpened = scoreScreenViewModel.isAlertDialogOpened.value,
-                shouldNavigate = scoreScreenViewModel.shouldNavigate,
-                onAlertDialogConfirmClick = {
-                    scoreScreenViewModel.deleteAllGames()
-                    scoreScreenViewModel.resetNavigation()
-                },
-                onHistoryButtonClick = { navigator.navigate(HistoryScreenDestination) },
-                onSingleGameClick = { navigator.navigate(InputScoreScreenDestination(dealer, it)) },
-                isHistoryButtonEnabled = historyButtonState,
-                onDismissClick = {
-                    scoreScreenViewModel.isAlertDialogOpened.value = false
-                },
-                onDealerChange = {
-                    scoreScreenViewModel.changeDealerAfterNewGame()
-                }
-            )
-
-            is UIState.Success<*> -> {
-                val currentListSize = rememberSaveable {
-                    mutableStateOf((uiState as UIState.Success<List<SingleGame>>).data.size)
-                }
-                val previousListSize = rememberSaveable {
-                    mutableStateOf((uiState as UIState.Success<List<SingleGame>>).data.size)
-                }
-                currentListSize.value= (uiState as UIState.Success<List<SingleGame>>).data.size
-                if (currentListSize.value > previousListSize.value) {
-                    scoreScreenViewModel.changeDealerAfterNewGame()
-                    previousListSize.value =
-                        (uiState as UIState.Success<List<SingleGame>>).data.size
-
-                }
+        when (scoreScreenUIState) {
+            ScoreScreenUIState.Loading -> LoadingScreen()
+            ScoreScreenUIState.Error -> ErrorScreen { scoreScreenViewModel.getAllSingleGames() }
+            is ScoreScreenUIState.Success -> {
+                scoreScreenViewModel.dealerChangeCondition()
                 ScoreScreenContent(
                     navigateToInputScoreScreen = {
                         navigator.navigate(
@@ -145,7 +94,7 @@ fun ScoreScreen(navigator: DestinationsNavigator) {
                             )
                         )
                     },
-                    singleGameList = (uiState as UIState.Success<List<SingleGame>>).data,
+                    singleGameList = (scoreScreenUIState as ScoreScreenUIState.Success).data,
                     totalScoreWe = totalScoreWe.value,
                     totalScoreThem = totalThemScore.value,
                     dealer = dealer,
@@ -160,7 +109,8 @@ fun ScoreScreen(navigator: DestinationsNavigator) {
                     onAlertDialogConfirmClick = {
                         scoreScreenViewModel.deleteAllGames()
                         scoreScreenViewModel.resetNavigation()
-                        previousListSize.value=0
+                        scoreScreenViewModel.startNewGameDealerChange()
+                        scoreScreenViewModel.resetListSizes()
                     },
                     onHistoryButtonClick = { navigator.navigate(HistoryScreenDestination) },
                     onSingleGameClick = {
@@ -176,13 +126,9 @@ fun ScoreScreen(navigator: DestinationsNavigator) {
                         scoreScreenViewModel.isAlertDialogOpened.value = false
                     },
                     onDealerChange = {
-                        scoreScreenViewModel.changeDealerAfterNewGame()
+                        //scoreScreenViewModel.changeDealerAfterNewGame()
                     }
                 )
-
-
-
-
             }
         }
 

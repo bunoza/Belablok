@@ -10,12 +10,13 @@ import com.bunoza.belablok.data.repositories.PreferenceRepository
 import com.bunoza.belablok.ui.UIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
 class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, private val preferenceRepository: PreferenceRepository) : ViewModel() {
-    private var _uiState = MutableStateFlow<UIState>(UIState.Loading)
-    val uiState = _uiState.asStateFlow()
+    private val _scoreScreenUIState = MutableStateFlow<ScoreScreenUIState>(ScoreScreenUIState.Loading)
+    val scoreScreenUIState = _scoreScreenUIState.asStateFlow()
     private val _totalWeScore = MutableStateFlow(0)
     private val _totalThemScore = MutableStateFlow(0)
     val totalWeScore = _totalWeScore.asStateFlow()
@@ -23,12 +24,14 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
     private val counter = MutableStateFlow(0)
     val dealerPossibilities = listOf("Ja", "Desni protivnik", "Partner", "Lijevi protivnik")
     var dealer = MutableStateFlow(dealerPossibilities[counter.value])
-    var whoWon = mutableStateOf("")
+    private var whoWon = mutableStateOf("")
     var isAlertDialogOpened = mutableStateOf(false)
     var shouldNavigate = mutableStateOf(true)
     private var _historyButtonState = MutableStateFlow(false)
     val historyButtonState = _historyButtonState.asStateFlow()
     private var gameList = listOf<SingleGame>()
+    private val currentListSize = mutableStateOf(0)
+    private val previousListSize = mutableStateOf(0)
 
     init {
         getAllSingleGames()
@@ -40,21 +43,29 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
         viewModelScope.launch {
             try {
                 databaseRepository.getAllSingleGames().distinctUntilChanged().collect {
-                    if (it.isEmpty()) {
-                        _uiState.value = UIState.EmptyListState
-                        _totalWeScore.value = 0
-                        _totalThemScore.value = 0
-                    } else {
-                        _uiState.value = UIState.Success(it)
+                        _scoreScreenUIState.value = ScoreScreenUIState.Success(it)
                         gameList = it
+                        currentListSize.value = it.size
                         _totalWeScore.value = getTotalScoreWe(it)
                         _totalThemScore.value = getTotalScoreThem(it)
-                    }
+
                 }
             } catch (e: Exception) {
-                _uiState.value = UIState.Error
+                _scoreScreenUIState.value = ScoreScreenUIState.Error
             }
         }
+    }
+
+    fun dealerChangeCondition(){
+        if(currentListSize.value>previousListSize.value){
+            changeDealerAfterNewGame()
+            previousListSize.value=currentListSize.value
+        }
+    }
+
+    fun resetListSizes(){
+        currentListSize.value=0
+        previousListSize.value=0
     }
 
     private fun getAllGames(){
@@ -81,9 +92,9 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
         return sum
     }
 
-    fun getDealer() {
+    private fun getDealer() {
         viewModelScope.launch {
-            preferenceRepository.dealer.collect {
+            preferenceRepository.dealer.collectLatest {
                 if (it != null) {
                     setCounter(it)
                     dealer.value = dealerPossibilities[counter.value]
@@ -110,10 +121,10 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
             if (totalWeScore.value > 1000 && totalThemScore.value > 1000) {
                 if (totalWeScore.value > totalThemScore.value) {
                     whoWon.value = "MI"
-                    updateCounterWeWin()
+                    //updateCounterWeWin()
                 } else {
                     whoWon.value = "VI"
-                    updateCounterTheyWin()
+                    //updateCounterTheyWin()
                 }
                 shouldNavigate.value = false
                 isAlertDialogOpened.value = true
@@ -121,13 +132,21 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
                 whoWon.value = "MI"
                 shouldNavigate.value = false
                 isAlertDialogOpened.value = true
-                updateCounterWeWin()
+                //updateCounterWeWin()
             } else if (totalThemScore.value > 1000) {
                 whoWon.value = "VI"
                 shouldNavigate.value = false
                 isAlertDialogOpened.value = true
-                updateCounterTheyWin()
+                //updateCounterTheyWin()
             }
+        }
+    }
+
+    fun startNewGameDealerChange(){
+        if(whoWon.value=="MI"){
+            updateCounterWeWin()
+        }else if(whoWon.value=="VI"){
+            updateCounterTheyWin()
         }
     }
 
@@ -165,18 +184,20 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
     }
     private fun updateCounterWeWin() {
         when (counter.value) {
-            0 -> counter.value = 3
-            1 -> counter.value = 1
-            2 -> counter.value = 1
-            3 -> counter.value = 2
+            0 -> counter.value = 0
+            1 -> counter.value = 2
+            2 -> counter.value = 2
+            3 -> counter.value = 0
         }
+        updateDealer()
     }
     private fun updateCounterTheyWin() {
         when (counter.value) {
-            0 -> counter.value = 0
-            1 -> counter.value = 0
-            2 -> counter.value = 2
-            3 -> counter.value = 2
+            0 -> counter.value = 1
+            1 -> counter.value = 1
+            2 -> counter.value = 3
+            3 -> counter.value = 3
         }
+        updateDealer()
     }
 }
