@@ -87,13 +87,15 @@ struct MainView: View {
                             .allowsHitTesting(false)
                             .ignoresSafeArea()
                             .onAppear {
-                                if appState.reviewCounter == 15 {
+                                if appState.reviewCounter == 10 {
                                     appState.reviewCounter = 0
                                 }
                                 if appState.reviewCounter == 0 {
                                     requestReview()
                                 }
-                                appState.reviewCounter += 1
+                                if viewModel.currentSession.weTotalAccumulated > viewModel.currentSession.youTotalAccumulated {
+                                    appState.reviewCounter += 1
+                                }
                             }
                     }
                 } else {
