@@ -1,5 +1,18 @@
+import ActivityKit
 import StoreKit
 import SwiftUI
+
+struct BelaBlokWidgetAttributes: ActivityAttributes {
+    public struct ContentState: Codable, Hashable {
+        var wePoints: Int
+        var youPoints: Int
+        
+        init(wePoints: Int, youPoints: Int) {
+            self.wePoints = wePoints
+            self.youPoints = youPoints
+        }
+    }
+}
 
 struct MainView: View {
     @Environment(\.presentations) private var presentations
@@ -7,13 +20,14 @@ struct MainView: View {
     
     @StateObject private var appState: AppState = .shared
     @StateObject private var viewModel: MainViewModel
-    
+    @StateObject private var activityManager: ActivityManager = .shared
+
     @State private var showInputSheet: Bool = false
     @State private var showDealerSheet: Bool = false
     @State private var showGameFinishedAlert: Bool = false
     @State private var showSettingsSheet: Bool = false
     @State private var showBottomBar: Bool = false
-
+    
     init() {
         _viewModel = .init(wrappedValue: MainViewModel())
     }
@@ -125,10 +139,14 @@ struct MainView: View {
                     }
                 }
             }
+            .task { await updateActivity() }
             .animation(.easeInOut, value: viewModel.currentSession)
             .onChange(of: viewModel.currentSession.count) { [oldValue = viewModel.currentSession.count] newValue in
                 if newValue > oldValue {
                     if !viewModel.shouldStartNewGame { viewModel.updateDealer() }
+                }
+                Task {
+                    await updateActivity()
                 }
             }
             .onAppear {
@@ -139,7 +157,12 @@ struct MainView: View {
             }
             .sheet(
                 isPresented: $showSettingsSheet,
-                onDismiss: { viewModel.updateState() },
+                onDismiss: {
+                    viewModel.updateState()
+                    Task {
+                        await updateActivity()
+                    }
+                },
                 content: {
                     SettingsView()
                         .environment(\.presentations, presentations + [$showSettingsSheet])
@@ -147,7 +170,12 @@ struct MainView: View {
             )
             .sheet(
                 isPresented: $showDealerSheet,
-                onDismiss: { viewModel.setDealer() },
+                onDismiss: {
+                    viewModel.setDealer()
+                    Task {
+                        await updateActivity()
+                    }
+                },
                 content: {
                     DealerView(dealer: $viewModel.dealer)
                         .presentationDetents([.medium])
@@ -161,6 +189,9 @@ struct MainView: View {
                     }
                     viewModel.updateState()
                     viewModel.editingGame = nil
+                    Task {
+                        await updateActivity()
+                    }
                 },
                 content: {
                     if viewModel.editingGame != nil {
@@ -235,6 +266,20 @@ struct MainView: View {
             }
             .navigationTitle("Bela Blok")
             .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+    
+    private func updateActivity() async {
+        if activityManager.activityID?.isEmpty == false {
+            await activityManager.updateActivity(
+                wePoints: viewModel.currentSession.forDisplay.weTotalAccumulated,
+                youPoints: viewModel.currentSession.forDisplay.youTotalAccumulated
+            )
+        } else {
+            await activityManager.start(
+                wePoints: viewModel.currentSession.forDisplay.weTotalAccumulated,
+                youPoints: viewModel.currentSession.forDisplay.youTotalAccumulated
+            )
         }
     }
 }

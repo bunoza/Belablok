@@ -36,12 +36,21 @@
 		C5305F0B2ACA2691007F1914 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5305F0A2ACA2691007F1914 /* StatsView.swift */; };
 		C5305F0D2ACA26BB007F1914 /* StatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5305F0C2ACA26BB007F1914 /* StatsViewModel.swift */; };
 		C548AF022B49A8E500B49C45 /* PossibleGameEndScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C548AF012B49A8E500B49C45 /* PossibleGameEndScore.swift */; };
+		C574A7342B75743C00AA0A04 /* ActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C574A7332B75743C00AA0A04 /* ActivityManager.swift */; };
 		C57675A72AA384CE009CC959 /* BelaBlokApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57675A62AA384CE009CC959 /* BelaBlokApp.swift */; };
 		C57675A92AA384CE009CC959 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57675A82AA384CE009CC959 /* MainView.swift */; };
 		C57675AB2AA384D1009CC959 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C57675AA2AA384D1009CC959 /* Assets.xcassets */; };
 		C57675AE2AA384D1009CC959 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C57675AD2AA384D1009CC959 /* Preview Assets.xcassets */; };
 		C57675B52AA387D0009CC959 /* ResultRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57675B42AA387D0009CC959 /* ResultRow.swift */; };
 		C57919AB2B4F394B00A73302 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57919AA2B4F394B00A73302 /* AppDelegate.swift */; };
+		C58766722B73ED1F00DD8E32 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5FA50C02AD305BF00FC6F5E /* WidgetKit.framework */; };
+		C58766732B73ED1F00DD8E32 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5FA50C22AD305BF00FC6F5E /* SwiftUI.framework */; };
+		C58766762B73ED1F00DD8E32 /* BelaBlokWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58766752B73ED1F00DD8E32 /* BelaBlokWidgetBundle.swift */; };
+		C58766782B73ED1F00DD8E32 /* BelaBlokWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58766772B73ED1F00DD8E32 /* BelaBlokWidgetLiveActivity.swift */; };
+		C587667A2B73ED1F00DD8E32 /* BelaBlokWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58766792B73ED1F00DD8E32 /* BelaBlokWidget.swift */; };
+		C587667C2B73ED1F00DD8E32 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C587667B2B73ED1F00DD8E32 /* AppIntent.swift */; };
+		C587667E2B73ED2100DD8E32 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C587667D2B73ED2100DD8E32 /* Assets.xcassets */; };
+		C58766822B73ED2100DD8E32 /* BelaBlokWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C58766712B73ED1F00DD8E32 /* BelaBlokWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C58B41FF2B4AF2D900561FB3 /* cards-animation.json in Resources */ = {isa = PBXBuildFile; fileRef = C58B41FE2B4AF2D900561FB3 /* cards-animation.json */; };
 		C58C149D2B52F7A200A9496A /* StigljaValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58C149C2B52F7A200A9496A /* StigljaValue.swift */; };
 		C599C4F42AB762590011CA2B /* DealerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C599C4F32AB762590011CA2B /* DealerView.swift */; };
@@ -65,6 +74,16 @@
 		C5F02AF62B5B01EF007482F4 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = C5F02AF52B5B01EF007482F4 /* CodeScanner */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		C58766802B73ED2100DD8E32 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C576759B2AA384CE009CC959 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C58766702B73ED1F00DD8E32;
+			remoteInfo = BelaBlokWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		C5FA50D62AD305C000FC6F5E /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -72,6 +91,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				C58766822B73ED2100DD8E32 /* BelaBlokWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -88,6 +108,7 @@
 		C5305F0A2ACA2691007F1914 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
 		C5305F0C2ACA26BB007F1914 /* StatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewModel.swift; sourceTree = "<group>"; };
 		C548AF012B49A8E500B49C45 /* PossibleGameEndScore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PossibleGameEndScore.swift; sourceTree = "<group>"; };
+		C574A7332B75743C00AA0A04 /* ActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityManager.swift; sourceTree = "<group>"; };
 		C57675A32AA384CE009CC959 /* Bela Blok.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bela Blok.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C57675A62AA384CE009CC959 /* BelaBlokApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BelaBlokApp.swift; sourceTree = "<group>"; };
 		C57675A82AA384CE009CC959 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -96,6 +117,13 @@
 		C57675B42AA387D0009CC959 /* ResultRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultRow.swift; sourceTree = "<group>"; };
 		C57919A92B4F36A900A73302 /* Bela BlokDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Bela BlokDebug.entitlements"; sourceTree = "<group>"; };
 		C57919AA2B4F394B00A73302 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C58766712B73ED1F00DD8E32 /* BelaBlokWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BelaBlokWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		C58766752B73ED1F00DD8E32 /* BelaBlokWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BelaBlokWidgetBundle.swift; sourceTree = "<group>"; };
+		C58766772B73ED1F00DD8E32 /* BelaBlokWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BelaBlokWidgetLiveActivity.swift; sourceTree = "<group>"; };
+		C58766792B73ED1F00DD8E32 /* BelaBlokWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BelaBlokWidget.swift; sourceTree = "<group>"; };
+		C587667B2B73ED1F00DD8E32 /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
+		C587667D2B73ED2100DD8E32 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C587667F2B73ED2100DD8E32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C58B41FE2B4AF2D900561FB3 /* cards-animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cards-animation.json"; sourceTree = "<group>"; };
 		C58C149C2B52F7A200A9496A /* StigljaValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StigljaValue.swift; sourceTree = "<group>"; };
 		C599C4F32AB762590011CA2B /* DealerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealerView.swift; sourceTree = "<group>"; };
@@ -146,6 +174,15 @@
 				C512C0D92ADBF04100E0A15A /* FirebaseDynamicLinks in Frameworks */,
 				C512C0DB2ADBF04100E0A15A /* FirebaseFirestore in Frameworks */,
 				C512C0F32ADBF04100E0A15A /* FirebaseRemoteConfigSwift in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C587666E2B73ED1F00DD8E32 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C58766732B73ED1F00DD8E32 /* SwiftUI.framework in Frameworks */,
+				C58766722B73ED1F00DD8E32 /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,6 +253,7 @@
 		C54739C52AA396570097BAFD /* MainModule */ = {
 			isa = PBXGroup;
 			children = (
+				C574A7322B75742D00AA0A04 /* Activity */,
 				C59C1BD82AB5FC3800E34056 /* Model */,
 				C54739C62AA396620097BAFD /* SupportingView */,
 				C57675A82AA384CE009CC959 /* MainView.swift */,
@@ -243,10 +281,19 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		C574A7322B75742D00AA0A04 /* Activity */ = {
+			isa = PBXGroup;
+			children = (
+				C574A7332B75743C00AA0A04 /* ActivityManager.swift */,
+			);
+			path = Activity;
+			sourceTree = "<group>";
+		};
 		C576759A2AA384CE009CC959 = {
 			isa = PBXGroup;
 			children = (
 				C57675A52AA384CE009CC959 /* Bela Blok */,
+				C58766742B73ED1F00DD8E32 /* BelaBlokWidget */,
 				C5FA50BF2AD305BF00FC6F5E /* Frameworks */,
 				C57675A42AA384CE009CC959 /* Products */,
 			);
@@ -256,6 +303,7 @@
 			isa = PBXGroup;
 			children = (
 				C57675A32AA384CE009CC959 /* Bela Blok.app */,
+				C58766712B73ED1F00DD8E32 /* BelaBlokWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -277,6 +325,19 @@
 				C57675AD2AA384D1009CC959 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		C58766742B73ED1F00DD8E32 /* BelaBlokWidget */ = {
+			isa = PBXGroup;
+			children = (
+				C58766752B73ED1F00DD8E32 /* BelaBlokWidgetBundle.swift */,
+				C58766772B73ED1F00DD8E32 /* BelaBlokWidgetLiveActivity.swift */,
+				C58766792B73ED1F00DD8E32 /* BelaBlokWidget.swift */,
+				C587667B2B73ED1F00DD8E32 /* AppIntent.swift */,
+				C587667D2B73ED2100DD8E32 /* Assets.xcassets */,
+				C587667F2B73ED2100DD8E32 /* Info.plist */,
+			);
+			path = BelaBlokWidget;
 			sourceTree = "<group>";
 		};
 		C599C4F52AB77FD60011CA2B /* HistoryModule */ = {
@@ -396,6 +457,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				C58766812B73ED2100DD8E32 /* PBXTargetDependency */,
 			);
 			name = "Bela Blok";
 			packageProductDependencies = (
@@ -426,6 +488,23 @@
 			productReference = C57675A32AA384CE009CC959 /* Bela Blok.app */;
 			productType = "com.apple.product-type.application";
 		};
+		C58766702B73ED1F00DD8E32 /* BelaBlokWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C58766832B73ED2100DD8E32 /* Build configuration list for PBXNativeTarget "BelaBlokWidgetExtension" */;
+			buildPhases = (
+				C587666D2B73ED1F00DD8E32 /* Sources */,
+				C587666E2B73ED1F00DD8E32 /* Frameworks */,
+				C587666F2B73ED1F00DD8E32 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BelaBlokWidgetExtension;
+			productName = BelaBlokWidgetExtension;
+			productReference = C58766712B73ED1F00DD8E32 /* BelaBlokWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -438,6 +517,9 @@
 				TargetAttributes = {
 					C57675A22AA384CE009CC959 = {
 						CreatedOnToolsVersion = 14.3.1;
+					};
+					C58766702B73ED1F00DD8E32 = {
+						CreatedOnToolsVersion = 15.0.1;
 					};
 				};
 			};
@@ -460,6 +542,7 @@
 			projectRoot = "";
 			targets = (
 				C57675A22AA384CE009CC959 /* Bela Blok */,
+				C58766702B73ED1F00DD8E32 /* BelaBlokWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -474,6 +557,14 @@
 				C57675AB2AA384D1009CC959 /* Assets.xcassets in Resources */,
 				C5B2EE542ADB22F600CA476D /* confetti-animation.json in Resources */,
 				C58B41FF2B4AF2D900561FB3 /* cards-animation.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C587666F2B73ED1F00DD8E32 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C587667E2B73ED2100DD8E32 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,6 +620,7 @@
 				C5035CCF2AA4ABEC00B3F3C3 /* CustomUserDefaultsObject.swift in Sources */,
 				C5A9C3292AD2DB10003523B5 /* View+Helpers.swift in Sources */,
 				C5305F082AC9A9A1007F1914 /* Constants.swift in Sources */,
+				C574A7342B75743C00AA0A04 /* ActivityManager.swift in Sources */,
 				C59C1BDA2AB5FC4300E34056 /* Dealer.swift in Sources */,
 				C57675B52AA387D0009CC959 /* ResultRow.swift in Sources */,
 				C52B4E712B5B16680040E57B /* PresentationKey.swift in Sources */,
@@ -541,7 +633,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C587666D2B73ED1F00DD8E32 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C587667A2B73ED1F00DD8E32 /* BelaBlokWidget.swift in Sources */,
+				C587667C2B73ED1F00DD8E32 /* AppIntent.swift in Sources */,
+				C58766782B73ED1F00DD8E32 /* BelaBlokWidgetLiveActivity.swift in Sources */,
+				C58766762B73ED1F00DD8E32 /* BelaBlokWidgetBundle.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C58766812B73ED2100DD8E32 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C58766702B73ED1F00DD8E32 /* BelaBlokWidgetExtension */;
+			targetProxy = C58766802B73ED2100DD8E32 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		C57675AF2AA384D1009CC959 /* Debug */ = {
@@ -667,6 +778,7 @@
 		C57675B22AA384D1009CC959 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Bela Blok/Bela BlokDebug.entitlements";
@@ -708,6 +820,7 @@
 		C57675B32AA384D1009CC959 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -744,6 +857,69 @@
 			};
 			name = Release;
 		};
+		C58766842B73ED2100DD8E32 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8Y9TGD2PJD;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BelaBlokWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = BelaBlokWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "bunoza.Bela-Blok.BelaBlokWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C58766852B73ED2100DD8E32 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8Y9TGD2PJD;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BelaBlokWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = BelaBlokWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "bunoza.Bela-Blok.BelaBlokWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -761,6 +937,15 @@
 			buildConfigurations = (
 				C57675B22AA384D1009CC959 /* Debug */,
 				C57675B32AA384D1009CC959 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C58766832B73ED2100DD8E32 /* Build configuration list for PBXNativeTarget "BelaBlokWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C58766842B73ED2100DD8E32 /* Debug */,
+				C58766852B73ED2100DD8E32 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
