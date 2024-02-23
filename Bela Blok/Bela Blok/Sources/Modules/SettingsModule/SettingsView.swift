@@ -8,6 +8,9 @@ struct SettingsView: View {
     @State private var showSingleDestructiveAlert: Bool = false
     @State private var showContinueOnNewDevice: Bool = false
     @State private var showDestructiveAlert: Bool = false
+    
+    @State private var showSingleDestructiveCheckmark: Bool = false
+    @State private var showDestructiveCheckmark: Bool = false
 
     var body: some View {
         NavigationView {
@@ -39,22 +42,34 @@ struct SettingsView: View {
                 }
 
                 Section {
-                    Button(role: .destructive) {
-                        showSingleDestructiveAlert = true
-                    } label: {
-                        Text("Obriši trenutnu partiju")
+                    HStack {
+                        Button(role: .destructive) {
+                            showSingleDestructiveAlert = true
+                        } label: {
+                            Text("Obriši trenutnu partiju")
+                        }
+                        Spacer()
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundStyle(Color.blue)
+                            .opacity(showSingleDestructiveCheckmark ? 1 : 0)
+                            .animation(.bouncy, value: showSingleDestructiveCheckmark)
                     }
 
                     Button(role: .destructive) {
                         showDestructiveAlert = true
                     } label: {
-                        Text("Obriši povijest igre")
+                        HStack {
+                            Text("Obriši povijest igre")
+                            Spacer()
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundStyle(Color.blue)
+                                .opacity(showDestructiveCheckmark ? 1 : 0)
+                                .animation(.bouncy, value: showDestructiveCheckmark)
+                        }
                     }
                 }
             }
-            .padding(.top)
             .navigationTitle("Postavke")
-            .navigationBarTitleDisplayMode(.large)
             .navigationBarBackButtonHidden()
             .sheet(isPresented: $showContinueOnNewDevice) {
                 ContinueGameView()
@@ -68,6 +83,7 @@ struct SettingsView: View {
 
                 Button(role: .destructive) {
                     appState.currentGame = []
+                    showSingleDestructiveCheckmark = true
                 } label: {
                     Text("Obriši")
                 }
@@ -81,6 +97,7 @@ struct SettingsView: View {
 
                 Button(role: .destructive) {
                     appState.finishedGames = []
+                    showDestructiveCheckmark = true
                 } label: {
                     Text("Obriši")
                 }
