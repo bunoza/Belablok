@@ -9,7 +9,7 @@ final class ActivityManager: ObservableObject {
     static let shared = ActivityManager()
     
     func start(wePoints: Int, youPoints: Int) async {
-        await endActivity()
+        await cancelAllRunningActivities()
         await startNewLiveActivity(wePoints: wePoints, youPoints: youPoints)
     }
     
@@ -65,6 +65,7 @@ final class ActivityManager: ObservableObject {
             ActivityContent(state: initialContentState, staleDate: Date.distantFuture),
             dismissalPolicy: .immediate
         )
+        print("Activity ended!")
         
         await MainActor.run {
             self.activityID = nil
