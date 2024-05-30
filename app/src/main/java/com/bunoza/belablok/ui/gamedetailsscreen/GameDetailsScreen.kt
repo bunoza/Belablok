@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -103,13 +105,16 @@ fun GameDetailsContent(game: Game, paddingValues: PaddingValues, wePointsList: L
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.primary)
+            .verticalScroll(rememberScrollState())
             .padding(start = 16.dp, end = 16.dp, top = paddingValues.calculateTopPadding()),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         LabelHeader(firstPlayerText = "MI", secondPlayerText = "VI")
         SinglePointStatLineComposable(description = "Ukupni bodovi", firstvalue = game.totalPointsWe, secondValue = game.totalPointsThem)
         SinglePointStatLineComposable(description = "Bodovi iz igre", firstvalue = game.totalBasePointsWe, secondValue = game.totalBasePointsThem)
         SinglePointStatLineComposable(description = "Bodovi iz zvanja", firstvalue = game.calledPointsWe, secondValue = game.calledPointsThem)
+        SinglePointStatLineComposable(description = "Štigljili", firstvalue = game.shtigliaTakedownCounter.timesWeCalledShtiglia, secondValue = game.shtigliaTakedownCounter.timesTheyCalledShtiglia)
+        SinglePointStatLineComposable(description = "Pali", firstvalue = game.shtigliaTakedownCounter.timesWeFall, secondValue = game.shtigliaTakedownCounter.timesTheyFall)
         ChartDetailsComposable(wePointsData = wePointsList.toPointList(), themPointsData = themPointsList.toPointList())
     }
 }

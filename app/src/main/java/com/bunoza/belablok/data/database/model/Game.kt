@@ -51,27 +51,81 @@ data class Game(
         get() = totalPointsWe - totalBasePointsWe
     val calledPointsThem: Int
         get() = totalPointsThem - totalBasePointsThem
-    val wePointsList: List<Int>
+
+    val timesWeCalledShtiglia : Int
         get() {
-            var tempList: MutableList<Int> = mutableListOf()
-            var previousSum = 0
+            var sum = 0
             singleGameList.forEach {
-                tempList.add(previousSum.plus(it.scoreWe))
-                previousSum = it.scoreWe
+                if(it.shtigliaCalledWe){
+                    sum++
+                }
             }
-            return tempList
+            return sum
         }
-    val themPointsList: List<Int>
+    val timesThemCalledShtiglia : Int
         get() {
-            var tempList: MutableList<Int> = mutableListOf()
-            var previousSum = 0
+            var sum = 0
             singleGameList.forEach {
-                tempList.add(previousSum.plus(it.scoreThem))
-                previousSum = it.scoreThem
+                if(it.shtigliaCalledThem){
+                    sum++
+                }
             }
-            return tempList
+            return sum
+        }
+    val timesWeFall : Int
+        get() {
+            var counter = 0
+            singleGameList.forEach {
+                if(it.whoCalled=="MI"){
+                    if(it.scoreWe<=it.scoreThem){
+                        counter++
+                    }
+                }
+            }
+            return counter
+        }
+    val timesThemFall : Int
+        get() {
+            var counter = 0
+            singleGameList.forEach {
+                if(it.whoCalled=="VI"){
+                    if(it.scoreWe>=it.scoreThem){
+                        counter++
+                    }
+                }
+            }
+            return counter
+        }
+    val shtigliaTakedownCounter:ShtigliaTakedownCounter
+        get() {
+            var shtigliaTakedownCounter = ShtigliaTakedownCounter(0,0,0,0)
+            singleGameList.forEach {
+                if(it.shtigliaCalledWe){
+                    shtigliaTakedownCounter.timesWeCalledShtiglia++
+                }
+                if(it.shtigliaCalledThem){
+                    shtigliaTakedownCounter.timesTheyCalledShtiglia++
+                }
+                if(it.whoCalled=="MI"){
+                    if(it.scoreWe<=it.scoreThem){
+                        shtigliaTakedownCounter.timesWeFall++
+                    }
+                }
+                if(it.whoCalled=="VI"){
+                    if(it.scoreWe>=it.scoreThem){
+                        shtigliaTakedownCounter.timesTheyFall++
+                    }
+                }
+            }
+            return  shtigliaTakedownCounter
         }
 }
+data class ShtigliaTakedownCounter(
+    var timesWeCalledShtiglia:Int,
+    var timesTheyCalledShtiglia:Int,
+    var timesWeFall:Int,
+    var timesTheyFall:Int
+)
 
 fun List<Int>.toPairList(): List<Pair<Number, Number>> {
     var tempList = mutableListOf<Pair<Number, Number>>()

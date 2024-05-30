@@ -20,6 +20,9 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
     val timesCalledThem = MutableStateFlow(0)
     private val afterBasePointsWe = mutableStateOf(0)
     private val afterBasePointsThem = mutableStateOf(0)
+    val isInputFieldEnabled = mutableStateOf(true)
+    private val shtigliaCalledWe = mutableStateOf(false)
+    private val shtigliaCalledThem = mutableStateOf(false)
     val callTwentyUsState =
         MutableStateFlow(
             CallState(
@@ -90,6 +93,22 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
             timesCalledVisibility = false
         )
     )
+    val callShtigliaUsState = MutableStateFlow(
+        CallState(
+            callValue = 90,
+            timesCalled = 0,
+            visibility = false,
+            timesCalledVisibility = false
+        )
+    )
+    val callShtigliaThemState = MutableStateFlow(
+        CallState(
+            callValue = 90,
+            timesCalled = 0,
+            visibility = false,
+            timesCalledVisibility = false
+        )
+    )
     init {
         if (game.isNotNull()) {
             firstPlayerPoints.value = game?.baseGamePointsWe.toString()
@@ -138,6 +157,82 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
                 visibility = checkIfCallVisible(game!!.callBelotThem),
                 timesCalledVisibility = checkIfCallVisible(game!!.callBelotThem)
             )
+            callShtigliaUsState.value = callShtigliaUsState.value.copy(
+                timesCalled = checkIfShtigliaCalled(game!!.shtigliaCalledWe),
+                visibility = game!!.shtigliaCalledWe,
+                timesCalledVisibility = game!!.shtigliaCalledWe
+            )
+            callShtigliaThemState.value = callShtigliaThemState.value.copy(
+                timesCalled = checkIfShtigliaCalled(game!!.shtigliaCalledThem),
+                visibility = game!!.shtigliaCalledThem,
+                timesCalledVisibility = game!!.shtigliaCalledThem
+            )
+            shtigliaCalledWe.value=game!!.shtigliaCalledWe
+            shtigliaCalledThem.value = game!!.shtigliaCalledThem
+            if(game!!.shtigliaCalledWe || game!!.shtigliaCalledThem){
+                isInputFieldEnabled.value=false
+            }
+        }
+    }
+
+    fun onShtigliaCallUsClick(){
+        if(callShtigliaUsState.value.timesCalled==0 && callShtigliaThemState.value.timesCalled==0
+            && callBelotUsState.value.timesCalled==0 && callBelotThemState.value.timesCalled == 0
+            ){
+            callShtigliaUsState.value = callShtigliaUsState.value.copy(
+                timesCalled = callShtigliaUsState.value.timesCalled + 1,
+                visibility = true,
+                timesCalledVisibility = true
+            )
+            isInputFieldEnabled.value=false
+            isButtonEnabled.value=true
+            firstPlayerPoints.value = "162"
+            secondPlayerPoints.value = "0"
+            timesCalledUs.value = timesCalledUs.value + 90
+            shtigliaCalledWe.value = true
+        }
+    }
+
+    fun onShtigliaCallThemClick(){
+        if(callShtigliaUsState.value.timesCalled==0 && callShtigliaThemState.value.timesCalled==0
+            && callBelotUsState.value.timesCalled==0 && callBelotThemState.value.timesCalled == 0){
+            callShtigliaThemState.value = callShtigliaThemState.value.copy(
+                timesCalled = callShtigliaThemState.value.timesCalled + 1,
+                visibility = true,
+                timesCalledVisibility = true
+            )
+            isInputFieldEnabled.value=false
+            isButtonEnabled.value=true
+            firstPlayerPoints.value="0"
+            secondPlayerPoints.value = "162"
+            timesCalledThem.value = timesCalledThem.value + 90
+            shtigliaCalledThem.value=true
+        }
+    }
+
+    fun onShtigliaCallUsMinusClick(){
+        if(callShtigliaUsState.value.timesCalled==1){
+            callShtigliaUsState.value=callShtigliaUsState.value.copy(
+                timesCalled = callShtigliaUsState.value.timesCalled-1,
+                visibility = false,
+                timesCalledVisibility = false
+            )
+            isInputFieldEnabled.value=true
+            timesCalledUs.value = timesCalledUs.value - 90
+            shtigliaCalledWe.value=false
+        }
+    }
+
+    fun onShtigliaCallThemMinusClick(){
+        if(callShtigliaThemState.value.timesCalled==1){
+            callShtigliaThemState.value=callBelotThemState.value.copy(
+                timesCalled = callShtigliaThemState.value.timesCalled-1,
+                visibility = false,
+                timesCalledVisibility = false
+            )
+            isInputFieldEnabled.value=true
+            timesCalledThem.value = timesCalledThem.value - 90
+            shtigliaCalledThem.value=false
         }
     }
 
@@ -150,6 +245,8 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
                     timesCalledVisibility = true
                 )
                 timesCalledUs.value = timesCalledUs.value + 20
+                onShtigliaCallUsMinusClick()
+                onShtigliaCallThemMinusClick()
             }
         }
     }
@@ -181,6 +278,8 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
                     timesCalledVisibility = true
                 )
                 timesCalledThem.value = timesCalledThem.value + 20
+                onShtigliaCallUsMinusClick()
+                onShtigliaCallThemMinusClick()
             }
         }
     }
@@ -212,6 +311,8 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
                     timesCalledVisibility = true
                 )
                 timesCalledUs.value = timesCalledUs.value + 50
+                onShtigliaCallUsMinusClick()
+                onShtigliaCallThemMinusClick()
             }
         }
     }
@@ -243,6 +344,8 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
                     timesCalledVisibility = true
                 )
                 timesCalledThem.value = timesCalledThem.value + 50
+                onShtigliaCallUsMinusClick()
+                onShtigliaCallThemMinusClick()
             }
         }
     }
@@ -274,6 +377,8 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
                     timesCalledVisibility = true
                 )
                 timesCalledUs.value = timesCalledUs.value + 100
+                onShtigliaCallUsMinusClick()
+                onShtigliaCallThemMinusClick()
             }
         }
     }
@@ -305,6 +410,8 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
                     timesCalledVisibility = true
                 )
                 timesCalledThem.value = timesCalledThem.value + 100
+                onShtigliaCallUsMinusClick()
+                onShtigliaCallThemMinusClick()
             }
         }
     }
@@ -372,6 +479,8 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
                     timesCalledVisibility = true
                 )
                 timesCalledUs.value = timesCalledUs.value + 1001
+                onShtigliaCallUsMinusClick()
+                onShtigliaCallThemMinusClick()
             }
         }
     }
@@ -385,6 +494,8 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
                     timesCalledVisibility = true
                 )
                 timesCalledThem.value = timesCalledThem.value + 1001
+                onShtigliaCallUsMinusClick()
+                onShtigliaCallThemMinusClick()
             }
         }
     }
@@ -431,6 +542,16 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
                 visibility = false,
                 timesCalledVisibility = false
             )
+            callShtigliaUsState.value = callShtigliaUsState.value.copy(
+                timesCalled = 0,
+                visibility = false,
+                timesCalledVisibility = false
+            )
+            callShtigliaThemState.value = callShtigliaThemState.value.copy(
+                timesCalled = 0,
+                visibility = false,
+                timesCalledVisibility = false
+            )
             timesCalledUs.value = 0
             timesCalledThem.value = 0
         }
@@ -446,6 +567,7 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
             if (input.isNotBlank() && input.matches(Regex("^(0|[1-9][0-9]*)$"))) {
                 if (input.toInt() < 0 || input.toInt() > 162) {
                     firstPlayerPoints.value = input.dropLast(1)
+                    secondPlayerPoints.value = (162-input.dropLast(1).toInt()).toString()
                 } else {
                     secondPlayerPoints.value = (162 - input.toInt()).toString()
                     firstPlayerPoints.value = input
@@ -464,6 +586,7 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
             if (input.isNotBlank() && input.matches(Regex("^(0|[1-9][0-9]*)$"))) {
                 if (input.toInt() < 0 || input.toInt() > 162) {
                     secondPlayerPoints.value = input.dropLast(1)
+                    firstPlayerPoints.value = (162 - input.dropLast(1).toInt()).toString()
                 } else {
                     firstPlayerPoints.value = (162 - input.toInt()).toString()
                     secondPlayerPoints.value = input
@@ -487,7 +610,9 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
         totalScoreThem: Int,
         afterBasePointsWe: Int,
         afterBasePointsThem: Int,
-        dealer: String
+        dealer: String,
+        shtigliaCalledWe:Boolean,
+        shtigliaCalledThem:Boolean
     ) {
         viewModelScope.launch {
             if (game.isNotNull()) {
@@ -507,8 +632,9 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
                     afterBasePointsWe = afterBasePointsWe,
                     afterBasePointsThem = afterBasePointsThem,
                     dealer = dealer,
-                    whoCalled = selectedOption.value
-
+                    whoCalled = selectedOption.value,
+                    shtigliaCalledThem = shtigliaCalledThem,
+                    shtigliaCalledWe = shtigliaCalledWe
                 )
                 databaseRepository.updateSingleGame(
                     game!!
@@ -530,7 +656,9 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
                     afterBasePointsWe = afterBasePointsWe,
                     afterBasePointsThem = afterBasePointsThem,
                     dealer = dealer,
-                    whoCalled = selectedOption.value
+                    whoCalled = selectedOption.value,
+                    shtigliaCalledThem = shtigliaCalledThem,
+                    shtigliaCalledWe = shtigliaCalledWe
                 )
                 databaseRepository.insertSingleGame(
                     singleGame
@@ -541,15 +669,21 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
 
     fun onSaveGameClick() {
         viewModelScope.launch {
+            if(firstPlayerPoints.value.isBlank()){
+                firstPlayerPoints.value="0"
+            }
+            if(secondPlayerPoints.value.isBlank()){
+                secondPlayerPoints.value="0"
+            }
             var firstPlayerTotalPoints =
-                firstPlayerPoints.value.toInt() + callTwentyUsState.value.callValue * callTwentyUsState.value.timesCalled + callFiftyUsState.value.callValue * callFiftyUsState.value.timesCalled + callHundredUsState.value.callValue * callHundredUsState.value.timesCalled + callBelotUsState.value.callValue * callBelotUsState.value.timesCalled
+                firstPlayerPoints.value.toInt() + callTwentyUsState.value.callValue * callTwentyUsState.value.timesCalled + callFiftyUsState.value.callValue * callFiftyUsState.value.timesCalled + callHundredUsState.value.callValue * callHundredUsState.value.timesCalled + callBelotUsState.value.callValue * callBelotUsState.value.timesCalled + callShtigliaUsState.value.callValue * callShtigliaUsState.value.timesCalled
             var secondPlayerTotalPoints =
-                secondPlayerPoints.value.toInt() + callTwentyThemState.value.callValue * callTwentyThemState.value.timesCalled + callFiftyThemState.value.timesCalled * callFiftyThemState.value.callValue + callHundredThemState.value.callValue * callHundredThemState.value.timesCalled + callBelotThemState.value.timesCalled * callBelotThemState.value.callValue
+                secondPlayerPoints.value.toInt() + callTwentyThemState.value.callValue * callTwentyThemState.value.timesCalled + callFiftyThemState.value.timesCalled * callFiftyThemState.value.callValue + callHundredThemState.value.callValue * callHundredThemState.value.timesCalled + callBelotThemState.value.timesCalled * callBelotThemState.value.callValue + callShtigliaThemState.value.callValue * callShtigliaThemState.value.timesCalled
             if (selectedOption.value == radioOptions[0]) {
                 if (secondPlayerTotalPoints >= firstPlayerTotalPoints) {
                     firstPlayerTotalPoints = 0
                     secondPlayerTotalPoints =
-                        162 + callTwentyUsState.value.callValue * callTwentyUsState.value.timesCalled + callFiftyUsState.value.callValue * callFiftyUsState.value.timesCalled + callHundredUsState.value.callValue * callHundredUsState.value.timesCalled + callBelotUsState.value.callValue * callBelotUsState.value.timesCalled + callTwentyThemState.value.callValue * callTwentyThemState.value.timesCalled + callFiftyThemState.value.timesCalled * callFiftyThemState.value.callValue + callHundredThemState.value.callValue * callHundredThemState.value.timesCalled + callBelotThemState.value.timesCalled * callBelotThemState.value.callValue
+                        162 + callTwentyUsState.value.callValue * callTwentyUsState.value.timesCalled + callFiftyUsState.value.callValue * callFiftyUsState.value.timesCalled + callHundredUsState.value.callValue * callHundredUsState.value.timesCalled + callBelotUsState.value.callValue * callBelotUsState.value.timesCalled + callTwentyThemState.value.callValue * callTwentyThemState.value.timesCalled + callFiftyThemState.value.timesCalled * callFiftyThemState.value.callValue + callHundredThemState.value.callValue * callHundredThemState.value.timesCalled + callBelotThemState.value.timesCalled * callBelotThemState.value.callValue + callShtigliaUsState.value.callValue * callShtigliaUsState.value.timesCalled + callShtigliaThemState.value.callValue * callShtigliaThemState.value.timesCalled
                     afterBasePointsWe.value = 0
                     afterBasePointsThem.value = 162
                 } else {
@@ -560,7 +694,7 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
                 if (firstPlayerTotalPoints >= secondPlayerTotalPoints) {
                     secondPlayerTotalPoints = 0
                     firstPlayerTotalPoints =
-                        162 + callTwentyThemState.value.callValue * callTwentyThemState.value.timesCalled + callFiftyThemState.value.timesCalled * callFiftyThemState.value.callValue + callHundredThemState.value.callValue * callHundredThemState.value.timesCalled + callBelotThemState.value.timesCalled * callBelotThemState.value.callValue + callTwentyUsState.value.callValue * callTwentyUsState.value.timesCalled + callFiftyUsState.value.callValue * callFiftyUsState.value.timesCalled + callHundredUsState.value.callValue * callHundredUsState.value.timesCalled + callBelotUsState.value.callValue * callBelotUsState.value.timesCalled
+                        162 + callTwentyThemState.value.callValue * callTwentyThemState.value.timesCalled + callFiftyThemState.value.timesCalled * callFiftyThemState.value.callValue + callHundredThemState.value.callValue * callHundredThemState.value.timesCalled + callBelotThemState.value.timesCalled * callBelotThemState.value.callValue + callTwentyUsState.value.callValue * callTwentyUsState.value.timesCalled + callFiftyUsState.value.callValue * callFiftyUsState.value.timesCalled + callHundredUsState.value.callValue * callHundredUsState.value.timesCalled + callBelotUsState.value.callValue * callBelotUsState.value.timesCalled + callShtigliaUsState.value.callValue * callShtigliaUsState.value.timesCalled + callShtigliaThemState.value.callValue * callShtigliaThemState.value.timesCalled
                     afterBasePointsThem.value = 0
                     afterBasePointsWe.value = 162
                 } else {
@@ -583,7 +717,9 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
                 totalScoreThem = secondPlayerTotalPoints,
                 afterBasePointsWe = afterBasePointsWe.value,
                 afterBasePointsThem = afterBasePointsThem.value,
-                dealer = dealer.value
+                dealer = dealer.value,
+                shtigliaCalledWe = shtigliaCalledWe.value,
+                shtigliaCalledThem = shtigliaCalledThem.value
             )
         }
     }
@@ -599,4 +735,12 @@ class InputScoreViewModel(private val databaseRepository: DatabaseRepository, pr
     fun checkIfCallVisible(timesCalled: Int): Boolean {
         return timesCalled > 0
     }
+    private fun checkIfShtigliaCalled(shtiglia:Boolean):Int{
+        return if(shtiglia){
+            1
+        }else{
+            0
+        }
+    }
+
 }

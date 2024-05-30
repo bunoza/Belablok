@@ -6,6 +6,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -63,7 +64,7 @@ fun CallComposable(
         IconButton(
             onClick = onIconButtonClick,
             modifier = Modifier
-                .size(24.dp)
+                .size(16.dp)
                 .alpha(alphaIconVisibility)
         ) {
             Icon(
@@ -79,10 +80,11 @@ fun CallComposable(
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary
             ),
-            modifier = Modifier.width(100.dp).border(1.dp, color = MaterialTheme.colorScheme.onPrimary, shape = RoundedCornerShape(10.dp)),
-            shape = RoundedCornerShape(10.dp)
+            modifier = Modifier.width(80.dp).border(1.dp, color = MaterialTheme.colorScheme.onPrimary, shape = RoundedCornerShape(10.dp)),
+            shape = RoundedCornerShape(10.dp),
+            contentPadding = PaddingValues(horizontal = 8.dp,vertical = 8.dp)
         ) {
-            Text(text = callValue, fontSize = 20.sp)
+            Text(text = callValue, fontSize = 16.sp)
         }
 
         Text(
@@ -111,7 +113,7 @@ fun CallRowComposable(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 16.dp),
+            .padding(vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -138,7 +140,7 @@ fun CallRowComposable(
 @Composable
 private fun PreviewCallComposable() {
     BelaBlokTheme {
-        CallComposable("20", true, true, 4, {}, {})
+        CallComposable("1000", true, true, 4, {}, {})
     }
 }
 
@@ -146,6 +148,6 @@ private fun PreviewCallComposable() {
 @Composable
 private fun PreviewCallComposableDarkTheme() {
     BelaBlokTheme {
-        CallComposable("20", true, true, 4, {}, {})
+        CallComposable("ŠTIGLJA", true, true, 4, {}, {})
     }
 }

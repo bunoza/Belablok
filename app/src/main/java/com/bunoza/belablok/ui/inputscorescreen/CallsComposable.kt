@@ -22,7 +22,7 @@ fun CallsComposable(collectedTimesCalledUsState: Int, collectedTimesCalledThemSt
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 24.dp),
+            .padding(vertical = 16.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {

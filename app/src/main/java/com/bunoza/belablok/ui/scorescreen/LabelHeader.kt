@@ -21,7 +21,6 @@ fun LabelHeader(firstPlayerText: String, secondPlayerText: String, modifier: Mod
         modifier = Modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.primary)
-            .padding(vertical = 8.dp)
             .then(modifier),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {

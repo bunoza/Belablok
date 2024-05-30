@@ -39,12 +39,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.bunoza.belablok.R
 import com.bunoza.belablok.data.database.model.SingleGame
+import com.bunoza.belablok.ui.StartSplashScreen
 import com.bunoza.belablok.ui.UIState
 import com.bunoza.belablok.ui.destinations.HistoryScreenDestination
 import com.bunoza.belablok.ui.destinations.InputScoreScreenDestination
 import com.bunoza.belablok.ui.errorscreen.ErrorScreen
 import com.bunoza.belablok.ui.loadingscreen.LoadingScreen
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
@@ -52,6 +54,7 @@ import org.koin.androidx.compose.koinViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Destination
+@RootNavGraph(start = true)
 fun ScoreScreen(navigator: DestinationsNavigator) {
     val scoreScreenViewModel = koinViewModel<ScoreScreenViewModel>()
     val scoreScreenUIState by scoreScreenViewModel.scoreScreenUIState.collectAsState()
@@ -190,30 +193,33 @@ fun ScoreScreenContent(
             )
         },
         bottomBar = {
-            Column(modifier = Modifier.background(MaterialTheme.colorScheme.primary)) {
-                TotalScoreItem(
-                    firstPlayerText = totalScoreWe.toString(),
-                    secondPlayerText = totalScoreThem.toString()
-                )
-                Row(
-                    modifier = Modifier.clickable {
-                        onDealerCounterClick.invoke()
-                    },
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "Dijeli: $dealer",
-                        color = MaterialTheme.colorScheme.onPrimary,
-                        modifier = Modifier
-                            .padding(12.dp)
+            if(singleGameList.isNotEmpty()){
+                Column(modifier = Modifier.background(MaterialTheme.colorScheme.primary)) {
+                    TotalScoreItem(
+                        firstPlayerText = totalScoreWe.toString(),
+                        secondPlayerText = totalScoreThem.toString()
                     )
-                    Icon(
-                        painter = painterResource(id = R.drawable.outline_edit_24),
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onPrimary
-                    )
+                    Row(
+                        modifier = Modifier.clickable {
+                            onDealerCounterClick.invoke()
+                        },
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "Dijeli: $dealer",
+                            color = MaterialTheme.colorScheme.onPrimary,
+                            modifier = Modifier
+                                .padding(12.dp)
+                        )
+                        Icon(
+                            painter = painterResource(id = R.drawable.outline_edit_24),
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onPrimary
+                        )
+                    }
                 }
             }
+
         },
         floatingActionButton = {
             FloatingActionButton(onClick = {
@@ -229,38 +235,43 @@ fun ScoreScreenContent(
             }
         }
     ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.primary)
-                .padding(
-                    top = it.calculateTopPadding(),
-                    bottom = it.calculateBottomPadding(),
-                    start = 16.dp,
-                    end = 16.dp
-                ),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            state = lazyListState
-        ) {
-            stickyHeader {
-                LabelHeader(
-                    firstPlayerText = "MI",
-                    secondPlayerText = "VI",
-                    modifier = Modifier.background(MaterialTheme.colorScheme.primary)
-                )
+        if(singleGameList.isEmpty()){
+            StartSplashScreen()
+        }else{
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.primary)
+                    .padding(
+                        top = it.calculateTopPadding(),
+                        bottom = it.calculateBottomPadding(),
+                        start = 16.dp,
+                        end = 16.dp
+                    ),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                state = lazyListState
+            ) {
+                stickyHeader {
+                    LabelHeader(
+                        firstPlayerText = "MI",
+                        secondPlayerText = "VI",
+                        modifier = Modifier.background(MaterialTheme.colorScheme.primary)
+                    )
+                }
+                items(singleGameList) { singleGame ->
+                    SingleScoreItem(
+                        singleGame,
+                        onSingleGameClick
+                    )
+                }
             }
-            items(singleGameList) { singleGame ->
-                SingleScoreItem(
-                    singleGame,
-                    onSingleGameClick
-                )
-            }
-        }
-        LaunchedEffect(singleGameList.size) {
-            if (singleGameList.isNotEmpty()) {
-                lazyListState.animateScrollToItem(singleGameList.size - 1)
-            }
+            LaunchedEffect(singleGameList.size) {
+                if (singleGameList.isNotEmpty()) {
+                    lazyListState.animateScrollToItem(singleGameList.size - 1)
+                }
 
+            }
         }
+
     }
 }
