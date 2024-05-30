@@ -7,8 +7,7 @@ build/
 DerivedData/
 .idea
 .gradle/
-GoogleService-Info.plist
-Bela Blok/Bela Blok/GoogleService-Info.plist
+*.plist
 
 ## Various settings
 *.pbxuser

@@ -87,8 +87,8 @@ struct ContinueGameView: View {
                     switch result {
                     case let .success(success):
                         viewModel.handleQRCodeRead(scanResult: success) {
-                            presentations.forEach {
-                                $0.wrappedValue = false
+                            for presentation in presentations {
+                                presentation.wrappedValue = false
                             }
                         }
                     case let .failure(error):

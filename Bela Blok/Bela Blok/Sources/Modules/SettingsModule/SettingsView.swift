@@ -8,7 +8,7 @@ struct SettingsView: View {
     @State private var showSingleDestructiveAlert: Bool = false
     @State private var showContinueOnNewDevice: Bool = false
     @State private var showDestructiveAlert: Bool = false
-    
+
     @State private var showSingleDestructiveCheckmark: Bool = false
     @State private var showDestructiveCheckmark: Bool = false
 

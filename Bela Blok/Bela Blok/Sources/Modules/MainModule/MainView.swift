@@ -6,7 +6,7 @@ struct BelaBlokWidgetAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
         var wePoints: Int
         var youPoints: Int
-        
+
         init(wePoints: Int, youPoints: Int) {
             self.wePoints = wePoints
             self.youPoints = youPoints
@@ -17,7 +17,7 @@ struct BelaBlokWidgetAttributes: ActivityAttributes {
 struct MainView: View {
     @Environment(\.presentations) private var presentations
     @Environment(\.requestReview) private var requestReview
-    
+
     @StateObject private var appState: AppState = .shared
     @StateObject private var viewModel: MainViewModel
     @StateObject private var activityManager: ActivityManager = .shared
@@ -27,7 +27,7 @@ struct MainView: View {
     @State private var showGameFinishedAlert: Bool = false
     @State private var showSettingsSheet: Bool = false
     @State private var showBottomBar: Bool = false
-    
+
     init() {
         _viewModel = .init(wrappedValue: MainViewModel())
     }
@@ -43,7 +43,7 @@ struct MainView: View {
             }
         }
     }
-    
+
     @ViewBuilder
     private func createContent() -> some View {
         ZStack {
@@ -228,7 +228,7 @@ struct MainView: View {
                         .animation(.easeInOut, value: showSettingsSheet)
                 }
             }
-            
+
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink {
                     HistoryView(viewModel: HistoryViewModel())
@@ -237,7 +237,7 @@ struct MainView: View {
                 }
                 .disabled(AppState.shared.finishedGames.isEmpty)
             }
-            
+
             ToolbarItem(placement: .bottomBar) {
                 if showBottomBar {
                     HStack {
@@ -269,7 +269,7 @@ struct MainView: View {
             } label: {
                 Text("Nastavi")
             }
-            
+
             Button(role: .destructive) {
                 showGameFinishedAlert = false
             } label: {
@@ -278,9 +278,8 @@ struct MainView: View {
         }
         .navigationTitle("Bela Blok")
         .navigationBarTitleDisplayMode(.inline)
-
     }
-    
+
     private func updateActivity() async {
         if activityManager.activityID?.isEmpty == false {
             await activityManager.updateActivity(

@@ -64,7 +64,6 @@ struct InputView: View {
                         }
                         .roundedAccentButton(width: 110, height: 35)
                         .buttonStyle(.plain)
-
                         .padding(.horizontal)
                         Spacer()
 
