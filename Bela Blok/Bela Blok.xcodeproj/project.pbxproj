@@ -30,13 +30,13 @@
 		C512C0F32ADBF04100E0A15A /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C512C0F22ADBF04100E0A15A /* FirebaseRemoteConfigSwift */; };
 		C512C0F52ADBF04100E0A15A /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = C512C0F42ADBF04100E0A15A /* FirebaseStorage */; };
 		C512C0F72ADBF04100E0A15A /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = C512C0F62ADBF04100E0A15A /* FirebaseStorageCombine-Community */; };
-		C512C0F82ADBF32A00E0A15A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C512C0C02ADBEF2A00E0A15A /* GoogleService-Info.plist */; };
 		C52B4E712B5B16680040E57B /* PresentationKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52B4E702B5B16680040E57B /* PresentationKey.swift */; };
 		C52F34402B8E8DA000C61DD9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5FA50C22AD305BF00FC6F5E /* SwiftUI.framework */; };
 		C52F34432B8E8DA100C61DD9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5FA50C02AD305BF00FC6F5E /* WidgetKit.framework */; };
 		C5305F082AC9A9A1007F1914 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5305F072AC9A9A1007F1914 /* Constants.swift */; };
 		C5305F0B2ACA2691007F1914 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5305F0A2ACA2691007F1914 /* StatsView.swift */; };
 		C5305F0D2ACA26BB007F1914 /* StatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5305F0C2ACA26BB007F1914 /* StatsViewModel.swift */; };
+		C531959A2C08AFD50057BFF8 /* GoogleService-Info.plist in Sources */ = {isa = PBXBuildFile; fileRef = C53195992C08AED60057BFF8 /* GoogleService-Info.plist */; };
 		C548AF022B49A8E500B49C45 /* PossibleGameEndScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C548AF012B49A8E500B49C45 /* PossibleGameEndScore.swift */; };
 		C574A7342B75743C00AA0A04 /* ActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C574A7332B75743C00AA0A04 /* ActivityManager.swift */; };
 		C57675A72AA384CE009CC959 /* BelaBlokApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57675A62AA384CE009CC959 /* BelaBlokApp.swift */; };
@@ -102,12 +102,12 @@
 		C5035CCE2AA4ABEC00B3F3C3 /* CustomUserDefaultsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUserDefaultsObject.swift; sourceTree = "<group>"; };
 		C5035CD02AA4ADC100B3F3C3 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		C5035CD22AA4AF6300B3F3C3 /* InputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewModel.swift; sourceTree = "<group>"; };
-		C512C0C02ADBEF2A00E0A15A /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C51DBF762C079DAF005B3875 /* Entitlements.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		C52B4E702B5B16680040E57B /* PresentationKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationKey.swift; sourceTree = "<group>"; };
 		C5305F072AC9A9A1007F1914 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C5305F0A2ACA2691007F1914 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
 		C5305F0C2ACA26BB007F1914 /* StatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewModel.swift; sourceTree = "<group>"; };
+		C53195992C08AED60057BFF8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C545DAEB2B98CAB40003A7DA /* BelaBlokWidgetExtensionDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BelaBlokWidgetExtensionDebug.entitlements; sourceTree = "<group>"; };
 		C548AF012B49A8E500B49C45 /* PossibleGameEndScore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PossibleGameEndScore.swift; sourceTree = "<group>"; };
 		C574A7332B75743C00AA0A04 /* ActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityManager.swift; sourceTree = "<group>"; };
@@ -294,6 +294,7 @@
 		C576759A2AA384CE009CC959 = {
 			isa = PBXGroup;
 			children = (
+				C53195992C08AED60057BFF8 /* GoogleService-Info.plist */,
 				C51DBF762C079DAF005B3875 /* Entitlements.plist */,
 				C545DAEB2B98CAB40003A7DA /* BelaBlokWidgetExtensionDebug.entitlements */,
 				C57675A52AA384CE009CC959 /* Bela Blok */,
@@ -316,7 +317,6 @@
 			isa = PBXGroup;
 			children = (
 				C57919A92B4F36A900A73302 /* Bela BlokDebug.entitlements */,
-				C512C0C02ADBEF2A00E0A15A /* GoogleService-Info.plist */,
 				C54739C32AA396380097BAFD /* Sources */,
 				C54739C22AA3961F0097BAFD /* Resources */,
 			);
@@ -556,7 +556,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C512C0F82ADBF32A00E0A15A /* GoogleService-Info.plist in Resources */,
 				C57675AE2AA384D1009CC959 /* Preview Assets.xcassets in Resources */,
 				C57675AB2AA384D1009CC959 /* Assets.xcassets in Resources */,
 				C5B2EE542ADB22F600CA476D /* confetti-animation.json in Resources */,
@@ -605,6 +604,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C531959A2C08AFD50057BFF8 /* GoogleService-Info.plist in Sources */,
 				C57919AB2B4F394B00A73302 /* AppDelegate.swift in Sources */,
 				C5F02AF32B5AF417007482F4 /* ContinueGameViewModel.swift in Sources */,
 				C5DB88912AA39EC800D702E0 /* UnderlinedTextField.swift in Sources */,
