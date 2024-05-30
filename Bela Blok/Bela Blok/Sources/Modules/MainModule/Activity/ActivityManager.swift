@@ -45,13 +45,15 @@ final class ActivityManager: ObservableObject {
               let runningActivity = Activity<BelaBlokWidgetAttributes>.activities.first(where: { $0.id == activityID }) else {
             return
         }
-        
+
         let newContentState = BelaBlokWidgetAttributes.ContentState(
             wePoints: wePoints,
             youPoints: youPoints
         )
-        
-        await runningActivity.update(using: newContentState)
+
+        let activityContent = ActivityContent(state: newContentState, staleDate: Date.distantFuture)
+
+        await runningActivity.update(activityContent)
     }
     
     func endActivity() async {
