@@ -29,6 +29,8 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
     var shouldNavigate = mutableStateOf(true)
     private var _historyButtonState = MutableStateFlow(false)
     val historyButtonState = _historyButtonState.asStateFlow()
+    private val _deleteGamesButtonState = MutableStateFlow(false)
+    val deleteGamesButtonState = _deleteGamesButtonState.asStateFlow()
     private var gameList = listOf<SingleGame>()
     private val currentListSize = mutableStateOf(0)
     private val previousListSize = mutableStateOf(0)
@@ -44,6 +46,7 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
             try {
                 databaseRepository.getAllSingleGames().distinctUntilChanged().collect {
                         _scoreScreenUIState.value = ScoreScreenUIState.Success(it)
+                        _deleteGamesButtonState.value = it.isNotEmpty()
                         gameList = it
                         currentListSize.value = it.size
                         _totalWeScore.value = getTotalScoreWe(it)
@@ -162,6 +165,11 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
     fun deleteAllGames() {
         viewModelScope.launch {
             insertWholeGame(gameList)
+            deleteAllSingleGames()
+        }
+    }
+    fun deleteAllSingleGames(){
+        viewModelScope.launch {
             databaseRepository.deleteAllSingleGames()
         }
     }

@@ -3,6 +3,7 @@ package com.bunoza.belablok.ui.scorescreen
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,6 +17,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SheetState
@@ -44,6 +46,7 @@ import com.bunoza.belablok.ui.UIState
 import com.bunoza.belablok.ui.destinations.HistoryScreenDestination
 import com.bunoza.belablok.ui.destinations.InputScoreScreenDestination
 import com.bunoza.belablok.ui.errorscreen.ErrorScreen
+import com.bunoza.belablok.ui.gamedetailsscreen.DeleteGameAlertDialog
 import com.bunoza.belablok.ui.loadingscreen.LoadingScreen
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
@@ -62,6 +65,10 @@ fun ScoreScreen(navigator: DestinationsNavigator) {
     val totalThemScore = scoreScreenViewModel.totalThemScore.collectAsState()
     val dealer by scoreScreenViewModel.dealer.collectAsState()
     val historyButtonState by scoreScreenViewModel.historyButtonState.collectAsState()
+    val deleteGamesButtonState by scoreScreenViewModel.deleteGamesButtonState.collectAsState()
+    val isDeleteGamesDialogOpened = rememberSaveable {
+        mutableStateOf(false)
+    }
 
 
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
@@ -81,7 +88,7 @@ fun ScoreScreen(navigator: DestinationsNavigator) {
             )
         },
         sheetPeekHeight = 0.dp,
-        scaffoldState = bottomSheetScaffoldState
+        scaffoldState = bottomSheetScaffoldState,
     ) {
         when (scoreScreenUIState) {
             ScoreScreenUIState.Loading -> LoadingScreen()
@@ -130,6 +137,18 @@ fun ScoreScreen(navigator: DestinationsNavigator) {
                     },
                     onDealerChange = {
                         //scoreScreenViewModel.changeDealerAfterNewGame()
+                    },
+                    onDeleteCurrentGamesClick = {
+                        isDeleteGamesDialogOpened.value = true
+                    },
+                    isDeleteGamesButtonEnabled = deleteGamesButtonState,
+                    isDeleteGamesDialogOpened = isDeleteGamesDialogOpened.value,
+                    onDeleteGameDialogConfirm = {
+                        scoreScreenViewModel.deleteAllSingleGames()
+                        isDeleteGamesDialogOpened.value = false
+                    },
+                    onDeleteGameDialogDismiss = {
+                        isDeleteGamesDialogOpened.value = false
                     }
                 )
             }
@@ -159,9 +178,21 @@ fun ScoreScreenContent(
     onSingleGameClick: (SingleGame) -> Unit,
     isHistoryButtonEnabled: Boolean,
     onDismissClick: () -> Unit,
-    onDealerChange: () -> Unit
+    onDealerChange: () -> Unit,
+    onDeleteCurrentGamesClick: () -> Unit,
+    isDeleteGamesButtonEnabled: Boolean,
+    isDeleteGamesDialogOpened: Boolean,
+    onDeleteGameDialogConfirm: () -> Unit,
+    onDeleteGameDialogDismiss: () -> Unit
 ) {
     val lazyListState = rememberLazyListState()
+
+    if (isDeleteGamesDialogOpened) {
+        DeleteGameAlertDialog(
+            onDismissClick = onDeleteGameDialogDismiss,
+            onConfirmClick = onDeleteGameDialogConfirm
+        )
+    }
 
     if (isAlertDialogOpened) {
         NewGameAlertDialog(
@@ -188,46 +219,66 @@ fun ScoreScreenContent(
                             tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
+                    IconButton(
+                        onClick = onDeleteCurrentGamesClick,
+                        enabled = isDeleteGamesButtonEnabled,
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.baseline_delete_sweep_24),
+                            contentDescription = null,
+                            tint =
+                            if(isDeleteGamesButtonEnabled){
+                                MaterialTheme.colorScheme.onPrimary
+                            }else{
+                                MaterialTheme.colorScheme.onSurfaceVariant
+
+                            }
+                        )
+                    }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primary)
             )
         },
         bottomBar = {
-            if(singleGameList.isNotEmpty()){
-                Column(modifier = Modifier.background(MaterialTheme.colorScheme.primary)) {
+            Column(modifier = Modifier.background(MaterialTheme.colorScheme.primary)) {
+                if (singleGameList.isNotEmpty()) {
                     TotalScoreItem(
                         firstPlayerText = totalScoreWe.toString(),
                         secondPlayerText = totalScoreThem.toString()
                     )
-                    Row(
-                        modifier = Modifier.clickable {
-                            onDealerCounterClick.invoke()
-                        },
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = "Dijeli: $dealer",
-                            color = MaterialTheme.colorScheme.onPrimary,
-                            modifier = Modifier
-                                .padding(12.dp)
-                        )
-                        Icon(
-                            painter = painterResource(id = R.drawable.outline_edit_24),
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onPrimary
-                        )
-                    }
+                }
+                Row(
+                    modifier = Modifier.clickable {
+                        onDealerCounterClick.invoke()
+                    },
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Dijeli: $dealer",
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        modifier = Modifier
+                            .padding(12.dp)
+                    )
+                    Icon(
+                        painter = painterResource(id = R.drawable.outline_edit_24),
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onPrimary
+                    )
                 }
             }
 
+
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = {
-                checkNewGame.invoke()
-                if (shouldNavigate.value) {
-                    navigateToInputScoreScreen()
-                }
-            }) {
+            FloatingActionButton(
+                onClick = {
+                    checkNewGame.invoke()
+                    if (shouldNavigate.value) {
+                        navigateToInputScoreScreen()
+                    }
+                },
+                modifier = Modifier.padding(bottom = 24.dp, start = 24.dp)
+            ) {
                 Icon(
                     painter = painterResource(id = R.drawable.baseline_add_24),
                     contentDescription = null
@@ -235,9 +286,9 @@ fun ScoreScreenContent(
             }
         }
     ) {
-        if(singleGameList.isEmpty()){
+        if (singleGameList.isEmpty()) {
             StartSplashScreen()
-        }else{
+        } else {
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
