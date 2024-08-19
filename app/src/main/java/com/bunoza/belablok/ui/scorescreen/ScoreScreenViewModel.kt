@@ -97,7 +97,7 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
 
     private fun getDealer() {
         viewModelScope.launch {
-            preferenceRepository.dealer.collectLatest {
+            preferenceRepository.getDealer().collectLatest {
                 if (it != null) {
                     setCounter(it)
                     dealer.value = dealerPossibilities[counter.value]
@@ -189,6 +189,7 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
             dealerPossibilities[2] -> counter.value = 2
             dealerPossibilities[3] -> counter.value = 3
         }
+        updateDealer()
     }
     private fun updateCounterWeWin() {
         when (counter.value) {

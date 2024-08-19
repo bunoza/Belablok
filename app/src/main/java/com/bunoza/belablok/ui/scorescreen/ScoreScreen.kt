@@ -216,7 +216,12 @@ fun ScoreScreenContent(
                         Icon(
                             painter = painterResource(id = R.drawable.baseline_history_24),
                             contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onPrimary
+                            tint =
+                                if(isHistoryButtonEnabled){
+                                    MaterialTheme.colorScheme.onPrimary
+                                }else{
+                                    MaterialTheme.colorScheme.onSurfaceVariant
+                                }
                         )
                     }
                     IconButton(
@@ -277,7 +282,7 @@ fun ScoreScreenContent(
                         navigateToInputScoreScreen()
                     }
                 },
-                modifier = Modifier.padding(bottom = 24.dp, start = 24.dp)
+                modifier = Modifier.padding(bottom = 32.dp, start = 24.dp)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.baseline_add_24),
