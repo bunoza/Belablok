@@ -24,4 +24,7 @@ class AppState: ObservableObject {
 
     @CustomUserDefaultsObject("ask_for_review_counter", defaultValue: 0)
     var reviewCounter: Int
+    
+    @CustomUserDefaultsObject("odabrana_zvanja", defaultValue: [.dvadeset, .pedeset, .sto, .belot])
+    var selectedCalls: [Calls]
 }

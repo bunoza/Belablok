@@ -6,11 +6,15 @@ struct Game: Codable, Hashable, Identifiable {
     var weCall20: Int = 0
     var weCall50: Int = 0
     var weCall100: Int = 0
+    var weCall150: Int = 0
+    var weCall200: Int = 0
     var weCallBelot: Int = 0
 
     var youCall20: Int = 0
     var youCall50: Int = 0
     var youCall100: Int = 0
+    var youCall150: Int = 0
+    var youCall200: Int = 0
     var youCallBelot: Int = 0
 
     var caller: Caller = .we
@@ -104,11 +108,11 @@ struct Game: Codable, Hashable, Identifiable {
     }
 
     public var weCallsSum: Int {
-        weCall20 * 20 + weCall50 * 50 + weCall100 * 100 + weCallBelot * 1001 + weStiglja * 90
+        weCall20 * 20 + weCall50 * 50 + weCall100 * 100 + weCall150 * 150 + weCall200 * 200 + weCallBelot * 1001 + weStiglja * 90
     }
 
     public var youCallsSum: Int {
-        youCall20 * 20 + youCall50 * 50 + youCall100 * 100 + youCallBelot * 1001 + youStiglja * 90
+        youCall20 * 20 + youCall50 * 50 + youCall100 * 100 + youCall150 * 150 + youCall200 * 200 + youCallBelot * 1001 + youStiglja * 90
     }
 
     public var weTotal: Int {

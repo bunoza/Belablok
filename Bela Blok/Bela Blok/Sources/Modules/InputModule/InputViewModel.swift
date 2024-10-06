@@ -61,6 +61,16 @@ class InputViewModel: ObservableObject {
                 if currentGameEdit.weCall50 < 6 { currentGameEdit.weCall50 += 1 }
             case 100:
                 if currentGameEdit.weCall100 < 5 { currentGameEdit.weCall100 += 1 }
+            case 150:
+                if currentGameEdit.weCall150 < 1 {
+                    currentGameEdit.weCall150 += 1
+                    currentGameEdit.youCall150 = 0
+                }
+            case 200:
+                if currentGameEdit.weCall200 < 1 {
+                    currentGameEdit.weCall200 += 1
+                    currentGameEdit.youCall200 = 0
+                }
             case 1001:
                 if currentGameEdit.weCallBelot == 0 {
                     currentGameEdit.resetWeCalls()
@@ -83,6 +93,16 @@ class InputViewModel: ObservableObject {
                 if currentGameEdit.youCall50 < 6 { currentGameEdit.youCall50 += 1 }
             case 100:
                 if currentGameEdit.youCall100 < 5 { currentGameEdit.youCall100 += 1 }
+            case 150:
+                if currentGameEdit.youCall150 < 1 {
+                    currentGameEdit.youCall150 += 1
+                    currentGameEdit.weCall150 = 0
+                }
+            case 200:
+                if currentGameEdit.youCall200 < 1 {
+                    currentGameEdit.youCall200 += 1
+                    currentGameEdit.weCall200 = 0
+                }
             case 1001:
                 if currentGameEdit.youCallBelot == 0 {
                     currentGameEdit.resetYouCalls()

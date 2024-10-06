@@ -90,29 +90,53 @@ struct InputView: View {
                     .padding()
 
                     Group {
-                        renderCallButtonRow(
-                            weCall: $viewModel.currentGameEdit.weCall20,
-                            youCall: $viewModel.currentGameEdit.youCall20,
-                            amount: 20
-                        )
+                        if appState.selectedCalls.contains(.dvadeset) {
+                            renderCallButtonRow(
+                                weCall: $viewModel.currentGameEdit.weCall20,
+                                youCall: $viewModel.currentGameEdit.youCall20,
+                                amount: 20
+                            )
+                        }
 
-                        renderCallButtonRow(
-                            weCall: $viewModel.currentGameEdit.weCall50,
-                            youCall: $viewModel.currentGameEdit.youCall50,
-                            amount: 50
-                        )
+                        if appState.selectedCalls.contains(.pedeset) {
+                            renderCallButtonRow(
+                                weCall: $viewModel.currentGameEdit.weCall50,
+                                youCall: $viewModel.currentGameEdit.youCall50,
+                                amount: 50
+                            )
+                        }
 
-                        renderCallButtonRow(
-                            weCall: $viewModel.currentGameEdit.weCall100,
-                            youCall: $viewModel.currentGameEdit.youCall100,
-                            amount: 100
-                        )
+                        if appState.selectedCalls.contains(.sto) {
+                            renderCallButtonRow(
+                                weCall: $viewModel.currentGameEdit.weCall100,
+                                youCall: $viewModel.currentGameEdit.youCall100,
+                                amount: 100
+                            )
+                        }
+                        
+                        if appState.selectedCalls.contains(.stopedeset) {
+                            renderCallButtonRow(
+                                weCall: $viewModel.currentGameEdit.weCall150,
+                                youCall: $viewModel.currentGameEdit.youCall150,
+                                amount: 150
+                            )
+                        }
 
-                        renderCallButtonRow(
-                            weCall: $viewModel.currentGameEdit.weCallBelot,
-                            youCall: $viewModel.currentGameEdit.youCallBelot,
-                            amount: 1001
-                        )
+                        if appState.selectedCalls.contains(.dvjesto) {
+                            renderCallButtonRow(
+                                weCall: $viewModel.currentGameEdit.weCall200,
+                                youCall: $viewModel.currentGameEdit.youCall200,
+                                amount: 200
+                            )
+                        }
+
+                        if appState.selectedCalls.contains(.belot) {
+                            renderCallButtonRow(
+                                weCall: $viewModel.currentGameEdit.weCallBelot,
+                                youCall: $viewModel.currentGameEdit.youCallBelot,
+                                amount: 1001
+                            )
+                        }
 
                         renderCallButtonRow(
                             weCall: $viewModel.currentGameEdit.weStiglja,

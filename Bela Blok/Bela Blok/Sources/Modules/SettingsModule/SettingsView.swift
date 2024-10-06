@@ -20,7 +20,7 @@ struct SettingsView: View {
                         Text("Ne gasi zaslon")
                     }
                 } footer: {
-                    Text("Može dovesti do povećanja potrošnje baterije.")
+                    Text("Potrebno je u potpunosti ugasiti i upaliti aplikaciju kako bi se promjena primijenila.")
                 }
 
                 HStack {
@@ -31,6 +31,16 @@ struct SettingsView: View {
                         }
                     }
                     .pickerStyle(.segmented)
+                }
+                
+                Section {
+                    NavigationLink {
+                        CallSelectionView()
+                    } label: {
+                        Text("Odaberi tipke za zvanja")
+                    }
+                } footer: {
+                    Text("Odaberi zvanja koja se pojavljuju na zaslonu za unos.")
                 }
 
                 Section {
