@@ -7,7 +7,6 @@ import com.bunoza.belablok.data.database.model.Game
 import com.bunoza.belablok.data.database.model.SingleGame
 import com.bunoza.belablok.data.repositories.DatabaseRepository
 import com.bunoza.belablok.data.repositories.PreferenceRepository
-import com.bunoza.belablok.ui.UIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -45,13 +44,12 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
         viewModelScope.launch {
             try {
                 databaseRepository.getAllSingleGames().distinctUntilChanged().collect {
-                        _scoreScreenUIState.value = ScoreScreenUIState.Success(it)
-                        _deleteGamesButtonState.value = it.isNotEmpty()
-                        gameList = it
-                        currentListSize.value = it.size
-                        _totalWeScore.value = getTotalScoreWe(it)
-                        _totalThemScore.value = getTotalScoreThem(it)
-
+                    _scoreScreenUIState.value = ScoreScreenUIState.Success(it)
+                    _deleteGamesButtonState.value = it.isNotEmpty()
+                    gameList = it
+                    currentListSize.value = it.size
+                    _totalWeScore.value = getTotalScoreWe(it)
+                    _totalThemScore.value = getTotalScoreThem(it)
                 }
             } catch (e: Exception) {
                 _scoreScreenUIState.value = ScoreScreenUIState.Error
@@ -59,21 +57,21 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
         }
     }
 
-    fun dealerChangeCondition(){
-        if(currentListSize.value>previousListSize.value){
+    fun dealerChangeCondition() {
+        if (currentListSize.value > previousListSize.value) {
             changeDealerAfterNewGame()
-            previousListSize.value=currentListSize.value
+            previousListSize.value = currentListSize.value
         }
     }
 
-    fun resetListSizes(){
-        currentListSize.value=0
-        previousListSize.value=0
+    fun resetListSizes() {
+        currentListSize.value = 0
+        previousListSize.value = 0
     }
 
-    private fun getAllGames(){
+    private fun getAllGames() {
         viewModelScope.launch {
-            databaseRepository.getAllGames().collect{
+            databaseRepository.getAllGames().collect {
                 _historyButtonState.value = it.isNotEmpty()
             }
         }
@@ -124,10 +122,10 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
             if (totalWeScore.value > 1000 && totalThemScore.value > 1000) {
                 if (totalWeScore.value > totalThemScore.value) {
                     whoWon.value = "MI"
-                    //updateCounterWeWin()
+                    // updateCounterWeWin()
                 } else {
                     whoWon.value = "VI"
-                    //updateCounterTheyWin()
+                    // updateCounterTheyWin()
                 }
                 shouldNavigate.value = false
                 isAlertDialogOpened.value = true
@@ -135,25 +133,25 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
                 whoWon.value = "MI"
                 shouldNavigate.value = false
                 isAlertDialogOpened.value = true
-                //updateCounterWeWin()
+                // updateCounterWeWin()
             } else if (totalThemScore.value > 1000) {
                 whoWon.value = "VI"
                 shouldNavigate.value = false
                 isAlertDialogOpened.value = true
-                //updateCounterTheyWin()
+                // updateCounterTheyWin()
             }
         }
     }
 
-    fun startNewGameDealerChange(){
-        if(whoWon.value=="MI"){
+    fun startNewGameDealerChange() {
+        if (whoWon.value == "MI") {
             updateCounterWeWin()
-        }else if(whoWon.value=="VI"){
+        } else if (whoWon.value == "VI") {
             updateCounterTheyWin()
         }
     }
 
-    fun changeDealerAfterNewGame(){
+    fun changeDealerAfterNewGame() {
         if (counter.value == 3) {
             counter.value = 0
         } else {
@@ -168,7 +166,7 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
             deleteAllSingleGames()
         }
     }
-    fun deleteAllSingleGames(){
+    fun deleteAllSingleGames() {
         viewModelScope.launch {
             databaseRepository.deleteAllSingleGames()
         }

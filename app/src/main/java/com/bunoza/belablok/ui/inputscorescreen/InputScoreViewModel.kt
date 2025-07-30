@@ -180,8 +180,8 @@ class InputScoreViewModel(
     }
 
     fun onShtigliaCallUsClick() {
-        if (callShtigliaUsState.value.timesCalled == 0 && callShtigliaThemState.value.timesCalled == 0
-            && callBelotUsState.value.timesCalled == 0 && callBelotThemState.value.timesCalled == 0
+        if (callShtigliaUsState.value.timesCalled == 0 && callShtigliaThemState.value.timesCalled == 0 &&
+            callBelotUsState.value.timesCalled == 0 && callBelotThemState.value.timesCalled == 0
         ) {
             callShtigliaUsState.value = callShtigliaUsState.value.copy(
                 timesCalled = callShtigliaUsState.value.timesCalled + 1,
@@ -198,8 +198,8 @@ class InputScoreViewModel(
     }
 
     fun onShtigliaCallThemClick() {
-        if (callShtigliaUsState.value.timesCalled == 0 && callShtigliaThemState.value.timesCalled == 0
-            && callBelotUsState.value.timesCalled == 0 && callBelotThemState.value.timesCalled == 0
+        if (callShtigliaUsState.value.timesCalled == 0 && callShtigliaThemState.value.timesCalled == 0 &&
+            callBelotUsState.value.timesCalled == 0 && callBelotThemState.value.timesCalled == 0
         ) {
             callShtigliaThemState.value = callShtigliaThemState.value.copy(
                 timesCalled = callShtigliaThemState.value.timesCalled + 1,
@@ -686,32 +686,31 @@ class InputScoreViewModel(
             var secondPlayerTotalPoints =
                 secondPlayerPoints.value.toInt() + callTwentyThemState.value.callValue * callTwentyThemState.value.timesCalled + callFiftyThemState.value.timesCalled * callFiftyThemState.value.callValue + callHundredThemState.value.callValue * callHundredThemState.value.timesCalled + callBelotThemState.value.timesCalled * callBelotThemState.value.callValue + callShtigliaThemState.value.callValue * callShtigliaThemState.value.timesCalled
 
-            if (selectedOption.value == radioOptions[0]) { //MI called
-                if (secondPlayerTotalPoints >= firstPlayerTotalPoints) { //Mi pali
+            if (selectedOption.value == radioOptions[0]) { // MI called
+                if (secondPlayerTotalPoints >= firstPlayerTotalPoints) { // Mi pali
                     firstPlayerTotalPoints = 0
                     secondPlayerTotalPoints =
                         162 + callTwentyUsState.value.callValue * callTwentyUsState.value.timesCalled + callFiftyUsState.value.callValue * callFiftyUsState.value.timesCalled + callHundredUsState.value.callValue * callHundredUsState.value.timesCalled + callBelotUsState.value.callValue * callBelotUsState.value.timesCalled + callTwentyThemState.value.callValue * callTwentyThemState.value.timesCalled + callFiftyThemState.value.timesCalled * callFiftyThemState.value.callValue + callHundredThemState.value.callValue * callHundredThemState.value.timesCalled + callBelotThemState.value.timesCalled * callBelotThemState.value.callValue + callShtigliaUsState.value.callValue * callShtigliaUsState.value.timesCalled + callShtigliaThemState.value.callValue * callShtigliaThemState.value.timesCalled
                     afterBasePointsWe.value = 0
                     afterBasePointsThem.value = 162
                 } else { // MI prošli
-                    if (shtigliaCalledWe.value){
+                    if (shtigliaCalledWe.value) {
                         firstPlayerTotalPoints =
                             162 + callTwentyUsState.value.callValue * callTwentyUsState.value.timesCalled + callFiftyUsState.value.callValue * callFiftyUsState.value.timesCalled + callHundredUsState.value.callValue * callHundredUsState.value.timesCalled + callBelotUsState.value.callValue * callBelotUsState.value.timesCalled + callTwentyThemState.value.callValue * callTwentyThemState.value.timesCalled + callFiftyThemState.value.timesCalled * callFiftyThemState.value.callValue + callHundredThemState.value.callValue * callHundredThemState.value.timesCalled + callBelotThemState.value.timesCalled * callBelotThemState.value.callValue + callShtigliaUsState.value.callValue * callShtigliaUsState.value.timesCalled + callShtigliaThemState.value.callValue * callShtigliaThemState.value.timesCalled
                         secondPlayerTotalPoints = 0
-
                     }
                     afterBasePointsWe.value = firstPlayerPoints.value.toInt()
                     afterBasePointsThem.value = secondPlayerPoints.value.toInt()
                 }
             } else {
-                if (firstPlayerTotalPoints >= secondPlayerTotalPoints) { //VI pali
+                if (firstPlayerTotalPoints >= secondPlayerTotalPoints) { // VI pali
                     secondPlayerTotalPoints = 0
                     firstPlayerTotalPoints =
                         162 + callTwentyThemState.value.callValue * callTwentyThemState.value.timesCalled + callFiftyThemState.value.timesCalled * callFiftyThemState.value.callValue + callHundredThemState.value.callValue * callHundredThemState.value.timesCalled + callBelotThemState.value.timesCalled * callBelotThemState.value.callValue + callTwentyUsState.value.callValue * callTwentyUsState.value.timesCalled + callFiftyUsState.value.callValue * callFiftyUsState.value.timesCalled + callHundredUsState.value.callValue * callHundredUsState.value.timesCalled + callBelotUsState.value.callValue * callBelotUsState.value.timesCalled + callShtigliaUsState.value.callValue * callShtigliaUsState.value.timesCalled + callShtigliaThemState.value.callValue * callShtigliaThemState.value.timesCalled
                     afterBasePointsThem.value = 0
                     afterBasePointsWe.value = 162
                 } else { // VI prošli
-                    if(shtigliaCalledThem.value){
+                    if (shtigliaCalledThem.value) {
                         secondPlayerTotalPoints =
                             162 + callTwentyThemState.value.callValue * callTwentyThemState.value.timesCalled + callFiftyThemState.value.timesCalled * callFiftyThemState.value.callValue + callHundredThemState.value.callValue * callHundredThemState.value.timesCalled + callBelotThemState.value.timesCalled * callBelotThemState.value.callValue + callTwentyUsState.value.callValue * callTwentyUsState.value.timesCalled + callFiftyUsState.value.callValue * callFiftyUsState.value.timesCalled + callHundredUsState.value.callValue * callHundredUsState.value.timesCalled + callBelotUsState.value.callValue * callBelotUsState.value.timesCalled + callShtigliaUsState.value.callValue * callShtigliaUsState.value.timesCalled + callShtigliaThemState.value.callValue * callShtigliaThemState.value.timesCalled
                         firstPlayerTotalPoints = 0
@@ -763,5 +762,4 @@ class InputScoreViewModel(
             0
         }
     }
-
 }

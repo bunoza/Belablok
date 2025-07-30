@@ -9,6 +9,6 @@ val databaseModule = module {
     single { get<AppDatabase>().gameDao() }
     single {
         Room.databaseBuilder(get(), AppDatabase::class.java, "score_database")
-            .fallbackToDestructiveMigration().build()
+            .fallbackToDestructiveMigration(false).build()
     }
 }

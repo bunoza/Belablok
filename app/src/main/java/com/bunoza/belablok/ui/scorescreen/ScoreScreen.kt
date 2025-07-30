@@ -3,7 +3,6 @@ package com.bunoza.belablok.ui.scorescreen
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,7 +16,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SheetState
@@ -38,11 +36,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import com.bunoza.belablok.R
 import com.bunoza.belablok.data.database.model.SingleGame
 import com.bunoza.belablok.ui.StartSplashScreen
-import com.bunoza.belablok.ui.UIState
 import com.bunoza.belablok.ui.destinations.HistoryScreenDestination
 import com.bunoza.belablok.ui.destinations.InputScoreScreenDestination
 import com.bunoza.belablok.ui.errorscreen.ErrorScreen
@@ -70,11 +68,11 @@ fun ScoreScreen(navigator: DestinationsNavigator) {
         mutableStateOf(false)
     }
 
-
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = SheetState(
             initialValue = SheetValue.Hidden,
-            skipPartiallyExpanded = false
+            skipPartiallyExpanded = false,
+            density = Density(1.0F, 1.0F)
         )
     )
     val coroutineScope = rememberCoroutineScope()
@@ -88,7 +86,7 @@ fun ScoreScreen(navigator: DestinationsNavigator) {
             )
         },
         sheetPeekHeight = 0.dp,
-        scaffoldState = bottomSheetScaffoldState,
+        scaffoldState = bottomSheetScaffoldState
     ) {
         when (scoreScreenUIState) {
             ScoreScreenUIState.Loading -> LoadingScreen()
@@ -136,7 +134,7 @@ fun ScoreScreen(navigator: DestinationsNavigator) {
                         scoreScreenViewModel.isAlertDialogOpened.value = false
                     },
                     onDealerChange = {
-                        //scoreScreenViewModel.changeDealerAfterNewGame()
+                        // scoreScreenViewModel.changeDealerAfterNewGame()
                     },
                     onDeleteCurrentGamesClick = {
                         isDeleteGamesDialogOpened.value = true
@@ -153,8 +151,6 @@ fun ScoreScreen(navigator: DestinationsNavigator) {
                 )
             }
         }
-
-
     }
     if (totalScoreWe.value > 1000 || totalThemScore.value > 1000) {
         WinAnimation()
@@ -217,26 +213,25 @@ fun ScoreScreenContent(
                             painter = painterResource(id = R.drawable.baseline_history_24),
                             contentDescription = null,
                             tint =
-                                if(isHistoryButtonEnabled){
-                                    MaterialTheme.colorScheme.onPrimary
-                                }else{
-                                    MaterialTheme.colorScheme.onSurfaceVariant
-                                }
+                            if (isHistoryButtonEnabled) {
+                                MaterialTheme.colorScheme.onPrimary
+                            } else {
+                                MaterialTheme.colorScheme.onSurfaceVariant
+                            }
                         )
                     }
                     IconButton(
                         onClick = onDeleteCurrentGamesClick,
-                        enabled = isDeleteGamesButtonEnabled,
+                        enabled = isDeleteGamesButtonEnabled
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.baseline_delete_sweep_24),
                             contentDescription = null,
                             tint =
-                            if(isDeleteGamesButtonEnabled){
+                            if (isDeleteGamesButtonEnabled) {
                                 MaterialTheme.colorScheme.onPrimary
-                            }else{
+                            } else {
                                 MaterialTheme.colorScheme.onSurfaceVariant
-
                             }
                         )
                     }
@@ -271,8 +266,6 @@ fun ScoreScreenContent(
                     )
                 }
             }
-
-
         },
         floatingActionButton = {
             FloatingActionButton(
@@ -325,9 +318,7 @@ fun ScoreScreenContent(
                 if (singleGameList.isNotEmpty()) {
                     lazyListState.animateScrollToItem(singleGameList.size - 1)
                 }
-
             }
         }
-
     }
 }

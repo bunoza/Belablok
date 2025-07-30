@@ -24,16 +24,16 @@ data class SingleGame(
     val afterBasePointsWe: Int,
     val afterBasePointsThem: Int,
     val dealer: String,
-    val whoCalled:String,
-    val shtigliaCalledWe:Boolean,
-    val shtigliaCalledThem:Boolean,
+    val whoCalled: String,
+    val shtigliaCalledWe: Boolean,
+    val shtigliaCalledThem: Boolean
 ) {
     val accumulatedCallsWe: Int get() {
-        val shtigliaWe = if(shtigliaCalledWe){90}else 0
+        val shtigliaWe = if (shtigliaCalledWe) { 90 } else 0
         return callTwentyWe * 20 + callFiftyWe * 50 + callHundredWe * 100 + callBelotWe * 1001 + shtigliaWe
     }
     val accumulatedCallsThem: Int get() {
-        val shtigliaThem = if(shtigliaCalledThem){90}else 0
+        val shtigliaThem = if (shtigliaCalledThem) { 90 } else 0
         return callTwentyThem * 20 + callFiftyThem * 50 + callHundredThem * 100 + callBelotThem * 1001 + shtigliaThem
     }
 }

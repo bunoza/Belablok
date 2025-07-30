@@ -24,7 +24,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -82,7 +81,7 @@ fun CallComposable(
             ),
             modifier = Modifier.width(80.dp).border(1.dp, color = MaterialTheme.colorScheme.onPrimary, shape = RoundedCornerShape(10.dp)),
             shape = RoundedCornerShape(10.dp),
-            contentPadding = PaddingValues(horizontal = 8.dp,vertical = 8.dp)
+            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp)
         ) {
             Text(text = callValue, fontSize = 16.sp)
         }

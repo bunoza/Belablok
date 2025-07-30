@@ -24,7 +24,7 @@ import com.bunoza.belablok.ui.theme.BelaBlokTheme
 fun InputScoreComposable(
     pointsValue: String,
     onPointsChanged: (String) -> Unit,
-    isEnabled:Boolean
+    isEnabled: Boolean
 ) {
     TextField(
         value = pointsValue,
@@ -52,7 +52,7 @@ fun InputScoreComposable(
             unfocusedPlaceholderColor = MaterialTheme.colorScheme.surface,
             focusedIndicatorColor = MaterialTheme.colorScheme.background,
             unfocusedIndicatorColor = MaterialTheme.colorScheme.background,
-            disabledContainerColor = MaterialTheme.colorScheme.primary,
+            disabledContainerColor = MaterialTheme.colorScheme.primary
         ),
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Number,
@@ -60,7 +60,7 @@ fun InputScoreComposable(
         ),
         textStyle = TextStyle(fontSize = 48.sp, textAlign = TextAlign.Center),
         singleLine = true,
-        enabled = isEnabled,
+        enabled = isEnabled
     )
 }
 

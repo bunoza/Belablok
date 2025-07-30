@@ -12,11 +12,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.bunoza.belablok.data.database.model.Game
-import com.bunoza.belablok.ui.EmptyGameScreen
 import com.bunoza.belablok.ui.UIState
 import com.bunoza.belablok.ui.destinations.GameDetailsScreenDestination
 import com.bunoza.belablok.ui.errorscreen.ErrorScreen

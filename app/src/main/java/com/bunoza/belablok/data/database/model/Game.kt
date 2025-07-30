@@ -52,79 +52,79 @@ data class Game(
     val calledPointsThem: Int
         get() = totalPointsThem - totalBasePointsThem
 
-    val timesWeCalledShtiglia : Int
+    val timesWeCalledShtiglia: Int
         get() {
             var sum = 0
             singleGameList.forEach {
-                if(it.shtigliaCalledWe){
+                if (it.shtigliaCalledWe) {
                     sum++
                 }
             }
             return sum
         }
-    val timesThemCalledShtiglia : Int
+    val timesThemCalledShtiglia: Int
         get() {
             var sum = 0
             singleGameList.forEach {
-                if(it.shtigliaCalledThem){
+                if (it.shtigliaCalledThem) {
                     sum++
                 }
             }
             return sum
         }
-    val timesWeFall : Int
+    val timesWeFall: Int
         get() {
             var counter = 0
             singleGameList.forEach {
-                if(it.whoCalled=="MI"){
-                    if(it.scoreWe<=it.scoreThem){
+                if (it.whoCalled == "MI") {
+                    if (it.scoreWe <= it.scoreThem) {
                         counter++
                     }
                 }
             }
             return counter
         }
-    val timesThemFall : Int
+    val timesThemFall: Int
         get() {
             var counter = 0
             singleGameList.forEach {
-                if(it.whoCalled=="VI"){
-                    if(it.scoreWe>=it.scoreThem){
+                if (it.whoCalled == "VI") {
+                    if (it.scoreWe >= it.scoreThem) {
                         counter++
                     }
                 }
             }
             return counter
         }
-    val shtigliaTakedownCounter:ShtigliaTakedownCounter
+    val shtigliaTakedownCounter: ShtigliaTakedownCounter
         get() {
-            var shtigliaTakedownCounter = ShtigliaTakedownCounter(0,0,0,0)
+            var shtigliaTakedownCounter = ShtigliaTakedownCounter(0, 0, 0, 0)
             singleGameList.forEach {
-                if(it.shtigliaCalledWe){
+                if (it.shtigliaCalledWe) {
                     shtigliaTakedownCounter.timesWeCalledShtiglia++
                 }
-                if(it.shtigliaCalledThem){
+                if (it.shtigliaCalledThem) {
                     shtigliaTakedownCounter.timesTheyCalledShtiglia++
                 }
-                if(it.whoCalled=="MI"){
-                    if(it.scoreWe<=it.scoreThem){
+                if (it.whoCalled == "MI") {
+                    if (it.scoreWe <= it.scoreThem) {
                         shtigliaTakedownCounter.timesWeFall++
                     }
                 }
-                if(it.whoCalled=="VI"){
-                    if(it.scoreWe>=it.scoreThem){
+                if (it.whoCalled == "VI") {
+                    if (it.scoreWe >= it.scoreThem) {
                         shtigliaTakedownCounter.timesTheyFall++
                     }
                 }
             }
-            return  shtigliaTakedownCounter
+            return shtigliaTakedownCounter
         }
 }
 data class ShtigliaTakedownCounter(
-    var timesWeCalledShtiglia:Int,
-    var timesTheyCalledShtiglia:Int,
-    var timesWeFall:Int,
-    var timesTheyFall:Int
+    var timesWeCalledShtiglia: Int,
+    var timesTheyCalledShtiglia: Int,
+    var timesWeFall: Int,
+    var timesTheyFall: Int
 )
 
 fun List<Int>.toPairList(): List<Pair<Number, Number>> {

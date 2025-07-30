@@ -22,7 +22,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -142,7 +141,7 @@ fun InputScoreScreen(navigator: DestinationsNavigator, dealer: String, singleGam
             onFirstIconButtonClick = { inputScoreViewModel.onShtigliaCallUsMinusClick() },
             onSecondIconButtonClick = {inputScoreViewModel.onShtigliaCallThemMinusClick()}
         )
-            
+
 
 
         Text(
@@ -210,14 +209,14 @@ fun InputScoreScreen(navigator: DestinationsNavigator, dealer: String, singleGam
         callStigljaThem = collectedCallShtigliaThemState.value,
         firstPlayerPoints = inputScoreViewModel.firstPlayerPoints.value,
         secondPlayerPoints = inputScoreViewModel.secondPlayerPoints.value,
-        onTwentyUsClick = {inputScoreViewModel.onTwentyCallUsClick()},
+        onTwentyUsClick = { inputScoreViewModel.onTwentyCallUsClick() },
         onTwentyUsMinusClick = { inputScoreViewModel.onTwentyCallMinusUsClick() },
         onTwentyThemClick = { inputScoreViewModel.onTwentyCallThemClick() },
         onTwentyThemMinusClick = { inputScoreViewModel.onTwentyCallMinusThemClick() },
         onFiftyUsClick = { inputScoreViewModel.onFiftyCallUsClick() },
         onFiftyUsMinusClick = { inputScoreViewModel.onFiftyCallMinusUsClick() },
-        onFiftyThemClick = {inputScoreViewModel.onFiftyCallThemClick()},
-        onFiftyThemMinusClick = {inputScoreViewModel.onFiftyCallMinusThemClick() },
+        onFiftyThemClick = { inputScoreViewModel.onFiftyCallThemClick() },
+        onFiftyThemMinusClick = { inputScoreViewModel.onFiftyCallMinusThemClick() },
         onHundredUsClick = { inputScoreViewModel.onHundredCallUsClick() },
         onHundredUsMinusClick = { inputScoreViewModel.onHundredCallMinusUsClick() },
         onHundredThemClick = { inputScoreViewModel.onHundredCallThemClick() },
@@ -232,69 +231,70 @@ fun InputScoreScreen(navigator: DestinationsNavigator, dealer: String, singleGam
         onStigljaThemMinusClick = { inputScoreViewModel.onShtigliaCallThemMinusClick() },
         onDeleteCallsClick = { inputScoreViewModel.onDeleteCallsClick() },
         isFirstScoreEnabled = inputScoreViewModel.isInputFieldEnabled.value,
-        onFirstPointsChanged = {inputScoreViewModel.onFirstInputChange(it)},
-        onSecondPointsChanged = {inputScoreViewModel.onSecondInputChange(it)},
+        onFirstPointsChanged = { inputScoreViewModel.onFirstInputChange(it) },
+        onSecondPointsChanged = { inputScoreViewModel.onSecondInputChange(it) },
         collectedTimesCalledUs = collectedTimesCalledUsState.value,
         collectedTimesCalledThem = collectedTimesCalledThemState.value,
         radioOptions = inputScoreViewModel.radioOptions,
         selectedOption = inputScoreViewModel.selectedOption.value,
-        onMIClick = {inputScoreViewModel.onRadioButtonClick(it)},
-        onVIClick = {inputScoreViewModel.onRadioButtonClick(it)},
+        onMIClick = { inputScoreViewModel.onRadioButtonClick(it) },
+        onVIClick = { inputScoreViewModel.onRadioButtonClick(it) },
         onCancelClick = { navigator.navigateUp() },
         onSaveGameClick = {
             inputScoreViewModel.onSaveGameClick()
-            navigator.navigateUp() },
+            navigator.navigateUp()
+        },
         isSaveButtonEnabled = collectedSaveButton.value
     )
 }
 
 @Composable
 private fun InputScoreScreenContent(
-    callTwentyUs:CallState,
-    callTwentyThem:CallState,
-    callFiftyUs:CallState,
-    callFiftyThem:CallState,
-    callHundredUs:CallState,
-    callHundredThem:CallState,
-    callBelotUs:CallState,
-    callBelotThem:CallState,
-    callStigljaUs:CallState,
-    callStigljaThem:CallState,
-    firstPlayerPoints:String,
-    secondPlayerPoints:String,
-    onTwentyUsClick:()->Unit,
-    onTwentyUsMinusClick:()->Unit,
-    onTwentyThemClick:()->Unit,
-    onTwentyThemMinusClick:()->Unit,
-    onFiftyUsClick:()->Unit,
-    onFiftyUsMinusClick:()->Unit,
-    onFiftyThemClick:()->Unit,
-    onFiftyThemMinusClick:()->Unit,
-    onHundredUsClick:()->Unit,
-    onHundredUsMinusClick:()->Unit,
-    onHundredThemClick:()->Unit,
-    onHundredThemMinusClick:()->Unit,
-    onBelotUsClick:()->Unit,
-    onBelotUsMinusClick:()->Unit,
-    onBelotThemClick:()->Unit,
-    onBelotThemMinusClick:()->Unit,
-    onStigljaUsClick:()->Unit,
-    onStigljaUsMinusClick:()->Unit,
-    onStigljaThemClick:()->Unit,
-    onStigljaThemMinusClick:()->Unit,
-    onDeleteCallsClick:()->Unit,
-    isFirstScoreEnabled:Boolean,
-    onFirstPointsChanged:(String)->Unit,
-    onSecondPointsChanged:(String)->Unit,
-    collectedTimesCalledUs:Int,
-    collectedTimesCalledThem:Int,
-    radioOptions:List<String>,
-    selectedOption:String,
-    onMIClick:(String)->Unit,
-    onVIClick:(String)->Unit,
-    onCancelClick:()->Unit,
-    onSaveGameClick:()->Unit,
-    isSaveButtonEnabled:Boolean
+    callTwentyUs: CallState,
+    callTwentyThem: CallState,
+    callFiftyUs: CallState,
+    callFiftyThem: CallState,
+    callHundredUs: CallState,
+    callHundredThem: CallState,
+    callBelotUs: CallState,
+    callBelotThem: CallState,
+    callStigljaUs: CallState,
+    callStigljaThem: CallState,
+    firstPlayerPoints: String,
+    secondPlayerPoints: String,
+    onTwentyUsClick: () -> Unit,
+    onTwentyUsMinusClick: () -> Unit,
+    onTwentyThemClick: () -> Unit,
+    onTwentyThemMinusClick: () -> Unit,
+    onFiftyUsClick: () -> Unit,
+    onFiftyUsMinusClick: () -> Unit,
+    onFiftyThemClick: () -> Unit,
+    onFiftyThemMinusClick: () -> Unit,
+    onHundredUsClick: () -> Unit,
+    onHundredUsMinusClick: () -> Unit,
+    onHundredThemClick: () -> Unit,
+    onHundredThemMinusClick: () -> Unit,
+    onBelotUsClick: () -> Unit,
+    onBelotUsMinusClick: () -> Unit,
+    onBelotThemClick: () -> Unit,
+    onBelotThemMinusClick: () -> Unit,
+    onStigljaUsClick: () -> Unit,
+    onStigljaUsMinusClick: () -> Unit,
+    onStigljaThemClick: () -> Unit,
+    onStigljaThemMinusClick: () -> Unit,
+    onDeleteCallsClick: () -> Unit,
+    isFirstScoreEnabled: Boolean,
+    onFirstPointsChanged: (String) -> Unit,
+    onSecondPointsChanged: (String) -> Unit,
+    collectedTimesCalledUs: Int,
+    collectedTimesCalledThem: Int,
+    radioOptions: List<String>,
+    selectedOption: String,
+    onMIClick: (String) -> Unit,
+    onVIClick: (String) -> Unit,
+    onCancelClick: () -> Unit,
+    onSaveGameClick: () -> Unit,
+    isSaveButtonEnabled: Boolean
 ) {
     Column(
         modifier = Modifier
@@ -437,7 +437,7 @@ private fun InputScoreScreenContent(
 @Composable
 @PreviewScreenSizes
 private fun PreviewInputScoreScreen() {
-    val testCallState = CallState(20,2,true,true)
+    val testCallState = CallState(20, 2, true, true)
     BelaBlokTheme {
         InputScoreScreenContent(
             callTwentyUs = testCallState,
@@ -477,8 +477,8 @@ private fun PreviewInputScoreScreen() {
             onFirstPointsChanged = {},
             onSecondPointsChanged = {},
             collectedTimesCalledUs = 3,
-            collectedTimesCalledThem =4 ,
-            radioOptions = listOf("MI","VI"),
+            collectedTimesCalledThem = 4,
+            radioOptions = listOf("MI", "VI"),
             selectedOption = "MI",
             onMIClick = {},
             onVIClick = {},
