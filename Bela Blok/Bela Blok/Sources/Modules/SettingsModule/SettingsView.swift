@@ -23,6 +23,19 @@ struct SettingsView: View {
                     Text("Potrebno je u potpunosti ugasiti i upaliti aplikaciju kako bi se promjena primijenila.")
                 }
 
+                Section {
+                    Toggle(isOn: $appState.shouldShowScoreDifferenceOnMain) {
+                        Text("Prikaži razliku na glavnom ekranu")
+                    }
+                    Toggle(isOn: $appState.shouldShowScoreDifferenceOnHistory) {
+                        Text("Prikaži razliku u povijesti")
+                    }
+                } header: {
+                    Text("Prikaži razliku")
+                } footer: {
+                    Text("Ako je ovo uključeno, između zbrojeva bodova pokazat će se razlika.")
+                }
+
                 HStack {
                     Text("Igra se do: ")
                     Picker("", selection: $appState.gameEndScore) {

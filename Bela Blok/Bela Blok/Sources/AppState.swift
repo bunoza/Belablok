@@ -16,6 +16,12 @@ class AppState: ObservableObject {
     @CustomUserDefaultsObject("should_keep_screen_on", defaultValue: UIApplication.shared.isIdleTimerDisabled)
     var isIdleTimerDisabled: Bool
 
+    @CustomUserDefaultsObject("should_show_score_difference_on_main", defaultValue: true)
+    var shouldShowScoreDifferenceOnMain: Bool
+
+    @CustomUserDefaultsObject("should_show_score_difference_on_history", defaultValue: true)
+    var shouldShowScoreDifferenceOnHistory: Bool
+
     @CustomUserDefaultsObject("game_end_score", defaultValue: PossibleGameEndScore.large)
     var gameEndScore: PossibleGameEndScore
 

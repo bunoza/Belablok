@@ -6,28 +6,49 @@ struct StatsView: View {
     @StateObject private var viewModel: StatsViewModel
     @State private var showGraph: Bool = true
 
+    @State private var isExpanded1 = true
+    @State private var isExpanded2 = true
+    @State private var isExpanded3 = true
+
     private func statsRow(label: String, weValue: Int, youValue: Int) -> some View {
         HStack {
             Spacer()
             VStack {
                 Text(label)
+                    .frame(alignment: .center)
+                    .multilineTextAlignment(.center)
                 Text("\(weValue)")
             }
             Spacer()
             VStack {
                 Text(label)
+                    .frame(alignment: .center)
+                    .multilineTextAlignment(.center)
                 Text("\(youValue)")
             }
             Spacer()
         }
     }
 
+    private var title: some View {
+        ResultRow(weLabel: "MI", youLabel: "VI")
+            .bold()
+    }
+
+    @ViewBuilder
+    private var statsWithTitle: some View {
+        title
+        stats
+    }
+
+    @ViewBuilder
+    private var listWithTitle: some View {
+        title
+        list
+    }
+
     private var stats: some View {
         VStack(spacing: 24) {
-            ResultRow(weLabel: "MI", youLabel: "VI")
-                .bold()
-                .padding(.vertical)
-
             statsRow(label: "Ukupno bodova:", weValue: viewModel.weTotal, youValue: viewModel.youTotal).bold()
 
             statsRow(label: "Broj zvanja:", weValue: viewModel.weNumberOfCalls, youValue: viewModel.youNumberOfCalls)
@@ -40,7 +61,6 @@ struct StatsView: View {
 
             statsRow(label: "Bodovi iz igre:", weValue: viewModel.game.weBaseGame, youValue: viewModel.game.youBaseGame)
         }
-        .listRowBackground(Color.clear)
         .listRowInsets(EdgeInsets())
     }
 
@@ -83,22 +103,78 @@ struct StatsView: View {
         .frame(width: 300, height: 250)
         .chartYAxisLabel("Bodovi", position: .leading, alignment: .center, spacing: 5)
         .listRowSeparator(.hidden)
-        .padding()
+    }
+    
+    private var list: some View {
+        VStack(spacing: 10) {
+            ForEach(viewModel.game) { game in
+                ResultRow(
+                    numberOfGame: viewModel.getOrderedNumberOfGame(game),
+                    weScore: game.handleSpecialCases.weTotal,
+                    youScore: game.handleSpecialCases.youTotal,
+                    showFallIcon: game.handleSpecialCases.didFallIndicator,
+                    showStigljaIcon: game.handleSpecialCases.isStigljaActive
+                )
+            }
+
+
+            Rectangle()
+                .frame(height: 2, alignment: .center)
+                .listRowBackground(Color.clear)
+                .listRowSeparator(.hidden)
+                .padding(.vertical, 4)
+            
+            ResultRow(
+                weScore: viewModel.game.forDisplay.weTotalAccumulated,
+                youScore: viewModel.game.forDisplay.youTotalAccumulated,
+                shouldShowDiff: appState.shouldShowScoreDifferenceOnHistory
+            )
+            .padding(.bottom)
+        }
     }
 
+    private func customDisclosureGroup<Content: View>(
+        isExpanded: Binding<Bool>,
+        label: String,
+        @ViewBuilder content: @escaping () -> Content
+    ) -> some View {
+        Section {
+            DisclosureGroup(isExpanded: isExpanded) {
+                content()
+            } label: {
+                Text(label)
+                    .font(.title)
+                    .bold()
+            }
+            .padding(.bottom)
+        }
+    }
+
+    @ViewBuilder
     private var statsContent: some View {
         Group {
-            stats
-            if showGraph {
-                HStack {
-                    Spacer()
-                    graph
-                    Spacer()
+            customDisclosureGroup(isExpanded: $isExpanded1, label: "Detalji") {
+                statsWithTitle
+            }
+
+            customDisclosureGroup(isExpanded: $isExpanded2, label: "Graf") {
+                if showGraph {
+                    HStack {
+                        Spacer()
+                        graph
+                        Spacer()
+                    }
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
                 }
-                .listRowSeparator(.hidden)
-                .listRowBackground(Color.clear)
+            }
+
+            customDisclosureGroup(isExpanded: $isExpanded3, label: "Tijek") {
+                listWithTitle
             }
         }
+        .listRowBackground(Color.clear)
+        .listRowSeparator(.hidden)
     }
 
     init(viewModel: StatsViewModel) {
@@ -114,9 +190,10 @@ struct StatsView: View {
                 statsContent
             }
             .scrollContentBackground(.hidden)
+            .listStyle(.plain)
         }
         .task {
-            await viewModel.onAppear(stats, graph, statsContent)
+            await viewModel.onAppear(statsWithTitle, graph, listWithTitle)
         }
         .navigationTitle("Statistika")
         .navigationBarTitleDisplayMode(.large)
@@ -124,8 +201,8 @@ struct StatsView: View {
             ToolbarItem(placement: .primaryAction) {
                 Menu {
                     if let imageToShare = viewModel.stats {
-                        ShareLink(item: imageToShare, preview: SharePreview("Statistika", image: imageToShare)) {
-                            Label("Podijeli statistiku", systemImage: "doc.plaintext")
+                        ShareLink(item: imageToShare, preview: SharePreview("Detalji", image: imageToShare)) {
+                            Label("Podijeli detalje", systemImage: "doc.plaintext")
                         }
                     } else {
                         HStack {
@@ -144,15 +221,27 @@ struct StatsView: View {
                             Text("Loading")
                         }
                     }
+                    
+                    if let imageToShare = viewModel.list {
+                        ShareLink(item: imageToShare, preview: SharePreview("Tijek", image: imageToShare)) {
+                            Label("Podijeli tijek", systemImage: "text.justify")
+                        }
+                    } else {
+                        HStack {
+                            ProgressView()
+                            Text("Loading")
+                        }
+                    }
 
                     if let sharingStats = viewModel.stats,
-                       let sharingGraph = viewModel.graph
+                       let sharingGraph = viewModel.graph,
+                       let sharingList = viewModel.list
                     {
-                        ShareLink(items: [sharingStats, sharingGraph]) {
-                            SharePreview("Statistika i graf", image: $0)
+                        ShareLink(items: [sharingStats, sharingGraph, sharingList]) {
+                            SharePreview("Detalji, graf, tijek", image: $0)
                         }
                         label: {
-                            Label("Podijeli oboje", systemImage: "doc.richtext")
+                            Label("Podijeli sve", systemImage: "doc.richtext")
                         }
                     } else {
                         HStack {

@@ -22,7 +22,8 @@ struct HistoryView: View {
                             ResultRow(
                                 numberOfGame: viewModel.getOrderedNumberOfGame(games),
                                 weScore: games.weTotalAccumulated,
-                                youScore: games.youTotalAccumulated
+                                youScore: games.youTotalAccumulated,
+                                shouldShowDiff: appState.shouldShowScoreDifferenceOnHistory
                             )
                             .showChevron()
                             .swipeActions(edge: .trailing, allowsFullSwipe: false) {

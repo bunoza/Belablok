@@ -7,7 +7,8 @@ class StatsViewModel: ObservableObject {
     @Published var youGraphData: [GraphData] = [GraphData(amount: 0, orderedNumber: 0)]
     @Published var stats: Image?
     @Published var graph: Image?
-    @Published var both: Image?
+    @Published var list: Image?
+    @Published var all: Image?
 
     var weTotal: Int {
         game.weTotalAccumulated
@@ -36,9 +37,15 @@ class StatsViewModel: ObservableObject {
     }
 
     @MainActor
-    func onAppear(_ stats: some View, _ graph: some View, _: some View) async {
+    func onAppear(_ stats: some View, _ graph: some View, _ list: some View) async {
         self.stats = stats.snapshot()
         self.graph = graph.snapshot()
+        self.list = list.snapshot()
+    }
+    
+    func getOrderedNumberOfGame(_ searchedGame: Game) -> Int? {
+        guard let index = game.firstIndex(of: searchedGame) else { return nil }
+        return index + 1
     }
 }
 

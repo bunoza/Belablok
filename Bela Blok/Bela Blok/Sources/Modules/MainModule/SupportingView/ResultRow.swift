@@ -9,24 +9,52 @@ struct ResultRow: View {
     private let youScore: String
     private var showFallIcon: Bool?
     private var showStigljaIcon: Bool?
+    private var shouldShowDiff: Bool
+    
+    private var weLead: Bool {
+        if let weScoreInt = Int(weScore), let youScoreInt = Int(youScore) {
+            return weScoreInt > youScoreInt
+        }
+        return false
+    }
+    
+    private var youLead: Bool {
+        if let weScoreInt = Int(weScore), let youScoreInt = Int(youScore) {
+            return weScoreInt < youScoreInt
+        }
+        return false
+    }
+    
+    private var diff: String? {
+        if weLead, let weScoreInt = Int(weScore), let youScoreInt = Int(youScore) {
+            return String("+\(weScoreInt - youScoreInt)")
+        } else if youLead, let weScoreInt = Int(weScore), let youScoreInt = Int(youScore) {
+            return String("-\(youScoreInt - weScoreInt)")
+        } else {
+            return "="
+        }
+    }
 
     init(
         numberOfGame: Int? = nil,
         weScore: Int,
         youScore: Int,
         showFallIcon: Bool = false,
-        showStigljaIcon: Bool = false
+        showStigljaIcon: Bool = false,
+        shouldShowDiff: Bool = false
     ) {
         self.numberOfGame = numberOfGame
         self.weScore = String(weScore)
         self.youScore = String(youScore)
         self.showFallIcon = showFallIcon
         self.showStigljaIcon = showStigljaIcon
+        self.shouldShowDiff = shouldShowDiff
     }
 
     init(weLabel: String, youLabel: String) {
         weScore = weLabel
         youScore = youLabel
+        shouldShowDiff = false
     }
 
     var body: some View {
@@ -68,6 +96,14 @@ struct ResultRow: View {
                         .frame(alignment: .center)
                 }
                 .frame(maxWidth: .infinity)
+                
+                if shouldShowDiff, let diff {
+                    VStack(alignment: .center) {
+                        Text(diff)
+                            .font(.caption)
+                            .frame(alignment: .center)
+                    }
+                }
 
                 VStack(alignment: .center) {
                     Text(youScore)
@@ -103,6 +139,7 @@ struct ResultRow_Previews: PreviewProvider {
             ResultRow(weScore: 36, youScore: 126)
             ResultRow(weScore: 36, youScore: 126)
                 .showChevron()
+            ResultRow(weScore: 36, youScore: 126, shouldShowDiff: true)
         }
     }
 }
