@@ -79,8 +79,10 @@ struct MainView: View {
                             }
                             .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                                 Button(role: .destructive) {
+                                    if !viewModel.shouldStartNewGame {
+                                        viewModel.dealerStepBack()
+                                    }
                                     viewModel.delete(game)
-                                    viewModel.dealerStepBack()
                                 } label: {
                                     Image(systemName: "trash")
                                         .resizable()
@@ -98,7 +100,8 @@ struct MainView: View {
 
                     ResultRow(
                         weScore: viewModel.currentSession.forDisplay.weTotalAccumulated,
-                        youScore: viewModel.currentSession.forDisplay.youTotalAccumulated
+                        youScore: viewModel.currentSession.forDisplay.youTotalAccumulated,
+                        shouldShowDiff: appState.shouldShowScoreDifferenceOnMain
                     )
                     .animation(.easeInOut, value: viewModel.currentSession)
                     .padding(.bottom)
