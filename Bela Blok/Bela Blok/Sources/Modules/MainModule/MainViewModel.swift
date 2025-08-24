@@ -16,7 +16,11 @@ class MainViewModel: ObservableObject {
     }
 
     var shouldStartNewGame: Bool {
-        currentSession.forDisplay.weTotalAccumulated >= appState.gameEndScore.amount
+        guard currentSession.forDisplay.weTotalAccumulated != currentSession.forDisplay.youTotalAccumulated else {
+            return false
+        }
+
+        return currentSession.forDisplay.weTotalAccumulated >= appState.gameEndScore.amount
             || currentSession.forDisplay.youTotalAccumulated >= appState.gameEndScore.amount
     }
 
