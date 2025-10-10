@@ -97,6 +97,7 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
         viewModelScope.launch {
             preferenceRepository.getDealer().collectLatest {
                 if (it != null) {
+                    println("Collect block triggered")
                     setCounter(it)
                     dealer.value = dealerPossibilities[counter.value]
                 }
@@ -104,9 +105,9 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
         }
     }
 
-    private fun updateDealer() {
+    private fun updateDealer(selectedOption: String) {
         viewModelScope.launch {
-            preferenceRepository.updateDealer(dealerPossibilities[counter.value])
+            preferenceRepository.updateDealer(selectedOption)
         }
     }
 
@@ -157,7 +158,7 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
         } else {
             counter.value++
         }
-        updateDealer()
+        updateDealer(dealerPossibilities[counter.value])
     }
 
     fun deleteAllGames() {
@@ -187,7 +188,7 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
             dealerPossibilities[2] -> counter.value = 2
             dealerPossibilities[3] -> counter.value = 3
         }
-        updateDealer()
+        updateDealer(selectedOption)
     }
     private fun updateCounterWeWin() {
         when (counter.value) {
@@ -196,7 +197,7 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
             2 -> counter.value = 2
             3 -> counter.value = 0
         }
-        updateDealer()
+        updateDealer(dealerPossibilities[counter.value])
     }
     private fun updateCounterTheyWin() {
         when (counter.value) {
@@ -205,6 +206,6 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
             2 -> counter.value = 3
             3 -> counter.value = 3
         }
-        updateDealer()
+        updateDealer(dealerPossibilities[counter.value])
     }
 }

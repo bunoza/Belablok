@@ -21,6 +21,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -40,6 +42,9 @@ fun CallComposable(
     onButtonClick: () -> Unit,
     onIconButtonClick: () -> Unit
 ) {
+    val textSize = remember {
+        mutableStateOf(16.sp)
+    }
     val alphaIconVisibility: Float by animateFloatAsState(
         targetValue = if (iconButtonVisibility) 1f else 0f,
         animationSpec = tween(
@@ -79,11 +84,21 @@ fun CallComposable(
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary
             ),
-            modifier = Modifier.width(80.dp).border(1.dp, color = MaterialTheme.colorScheme.onPrimary, shape = RoundedCornerShape(10.dp)),
+            modifier = Modifier
+                .width(80.dp)
+                .border(
+                    1.dp,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    shape = RoundedCornerShape(10.dp)
+                ),
             shape = RoundedCornerShape(10.dp),
             contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp)
         ) {
-            Text(text = callValue, fontSize = 16.sp)
+            Text(text = callValue, fontSize = textSize.value, softWrap = false, onTextLayout = {
+                if(it.didOverflowWidth){
+                    textSize.value = textSize.value * 0.9
+                }
+            })
         }
 
         Text(

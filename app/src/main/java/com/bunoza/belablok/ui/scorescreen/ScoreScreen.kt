@@ -4,10 +4,14 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -79,11 +83,14 @@ fun ScoreScreen(navigator: DestinationsNavigator) {
 
     BottomSheetScaffold(
         sheetContent = {
-            TableComposable(
-                tableOptions = scoreScreenViewModel.dealerPossibilities,
-                selectedOption = dealer,
-                onOptionSelected = { scoreScreenViewModel.onDealerCounterClick(it) }
-            )
+            Column(modifier =Modifier.windowInsetsPadding(WindowInsets.navigationBars)){
+                TableComposable(
+                    tableOptions = scoreScreenViewModel.dealerPossibilities,
+                    selectedOption = dealer,
+                    onOptionSelected = { scoreScreenViewModel.onDealerCounterClick(it) }
+                )
+            }
+
         },
         sheetPeekHeight = 0.dp,
         scaffoldState = bottomSheetScaffoldState
@@ -240,7 +247,8 @@ fun ScoreScreenContent(
             )
         },
         bottomBar = {
-            Column(modifier = Modifier.background(MaterialTheme.colorScheme.primary)) {
+            Column(modifier = Modifier.background(MaterialTheme.colorScheme.primary).windowInsetsPadding(
+                WindowInsets.navigationBars)) {
                 if (singleGameList.isNotEmpty()) {
                     TotalScoreItem(
                         firstPlayerText = totalScoreWe.toString(),
