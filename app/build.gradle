@@ -16,8 +16,8 @@ android {
         applicationId "com.bunoza.belablok"
         minSdk 26
         targetSdk 36
-        versionCode 9
-        versionName "2.1"
+        versionCode 11
+        versionName "2.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

@@ -150,6 +150,7 @@ fun ScoreScreen(navigator: DestinationsNavigator) {
                     isDeleteGamesDialogOpened = isDeleteGamesDialogOpened.value,
                     onDeleteGameDialogConfirm = {
                         scoreScreenViewModel.deleteAllSingleGames()
+                        scoreScreenViewModel.resetListSizes()
                         isDeleteGamesDialogOpened.value = false
                     },
                     onDeleteGameDialogDismiss = {
