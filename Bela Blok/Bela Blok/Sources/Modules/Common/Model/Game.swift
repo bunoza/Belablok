@@ -17,7 +17,7 @@ struct Game: Codable, Hashable, Identifiable {
     var youCall200: Int = 0
     var youCallBelot: Int = 0
 
-    var caller: Caller = .we
+    var caller: Caller = AppState.shared.defaultCallerSelection
     var dealer: Dealer?
 
     var weBaseScore: Int = -1
@@ -69,6 +69,8 @@ struct Game: Codable, Hashable, Identifiable {
             youCallBelot += weCallBelot
 
             resetWeCalls()
+        case .none:
+            return
         }
     }
 
@@ -103,6 +105,8 @@ struct Game: Codable, Hashable, Identifiable {
                 gameForDisplay.transferCalls(to: .we)
                 gameForDisplay.didFallIndicator = true
             }
+        case .none:
+            break
         }
         return gameForDisplay
     }

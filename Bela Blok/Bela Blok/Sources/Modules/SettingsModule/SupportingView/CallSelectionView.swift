@@ -25,11 +25,9 @@ struct CallSelectionView: View {
         .navigationTitle("Upravljaj zvanjima")
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
-                Button {
+                Button(role: .confirm) {
                     AppState.shared.selectedCalls = currentSelection
                     dismiss()
-                } label: {
-                    Text("Spremi")
                 }
                 .disabled(Set(AppState.shared.selectedCalls) == Set(currentSelection))
             }

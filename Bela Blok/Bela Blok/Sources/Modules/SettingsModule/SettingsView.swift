@@ -13,7 +13,7 @@ struct SettingsView: View {
     @State private var showDestructiveCheckmark: Bool = false
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 Section {
                     Toggle(isOn: $appState.isIdleTimerDisabled) {
@@ -57,6 +57,16 @@ struct SettingsView: View {
                 }
 
                 Section {
+                    NavigationLink {
+                        DefaultCallerSelectionView()
+                    } label: {
+                        Text("Odaberi zadanog pozivatelja aduta")
+                    }
+                } footer: {
+                    Text("Odaberi tko će biti označen kao pozivatelj aduta prilikom novog upisa.")
+                }
+
+                Section {
                     Button {
                         showContinueOnNewDevice = true
                     } label: {
@@ -93,7 +103,7 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("Postavke")
-            .navigationBarBackButtonHidden()
+            .navigationBarTitleDisplayMode(.inline)
             .sheet(isPresented: $showContinueOnNewDevice) {
                 ContinueGameView()
                     .environment(\.presentations, presentations + [$showContinueOnNewDevice])
@@ -128,11 +138,9 @@ struct SettingsView: View {
                 Text("Ova radnja se ne može poništiti.")
             })
             .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(role: .cancel) {
                         dismiss()
-                    } label: {
-                        Text("Gotovo")
                     }
                 }
             }

@@ -54,6 +54,7 @@
 		C587667E2B73ED2100DD8E32 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C587667D2B73ED2100DD8E32 /* Assets.xcassets */; };
 		C58766822B73ED2100DD8E32 /* BelaBlokWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C58766712B73ED1F00DD8E32 /* BelaBlokWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C58B41FF2B4AF2D900561FB3 /* cards-animation.json in Resources */ = {isa = PBXBuildFile; fileRef = C58B41FE2B4AF2D900561FB3 /* cards-animation.json */; };
+		C58BE6802F0AF42700F71B20 /* DefaultCallerSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58BE67F2F0AF42700F71B20 /* DefaultCallerSelectionView.swift */; };
 		C58C149D2B52F7A200A9496A /* StigljaValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58C149C2B52F7A200A9496A /* StigljaValue.swift */; };
 		C599C4F42AB762590011CA2B /* DealerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C599C4F32AB762590011CA2B /* DealerView.swift */; };
 		C599C4F72AB77FE70011CA2B /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C599C4F62AB77FE70011CA2B /* HistoryView.swift */; };
@@ -131,6 +132,7 @@
 		C587667D2B73ED2100DD8E32 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C587667F2B73ED2100DD8E32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C58B41FE2B4AF2D900561FB3 /* cards-animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cards-animation.json"; sourceTree = "<group>"; };
+		C58BE67F2F0AF42700F71B20 /* DefaultCallerSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCallerSelectionView.swift; sourceTree = "<group>"; };
 		C58C149C2B52F7A200A9496A /* StigljaValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StigljaValue.swift; sourceTree = "<group>"; };
 		C599C4F32AB762590011CA2B /* DealerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealerView.swift; sourceTree = "<group>"; };
 		C599C4F62AB77FE70011CA2B /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 		C55B05522CB2F6AF00CFC1DF /* SupportingView */ = {
 			isa = PBXGroup;
 			children = (
+				C58BE67F2F0AF42700F71B20 /* DefaultCallerSelectionView.swift */,
 				C55B05532CB2F6BE00CFC1DF /* CallSelectionView.swift */,
 			);
 			path = SupportingView;
@@ -621,6 +624,7 @@
 				C531959A2C08AFD50057BFF8 /* GoogleService-Info.plist in Sources */,
 				C57919AB2B4F394B00A73302 /* AppDelegate.swift in Sources */,
 				C5F02AF32B5AF417007482F4 /* ContinueGameViewModel.swift in Sources */,
+				C58BE6802F0AF42700F71B20 /* DefaultCallerSelectionView.swift in Sources */,
 				C5DB88912AA39EC800D702E0 /* UnderlinedTextField.swift in Sources */,
 				C57675A92AA384CE009CC959 /* MainView.swift in Sources */,
 				C5DB88962AA3A74800D702E0 /* RoundedAccentButton.swift in Sources */,
@@ -824,12 +828,12 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait,UIInterfaceOrientationPortraitUpsideDown,UIInterfaceOrientationLandscapeLeft,UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait,UIInterfaceOrientationPortraitUpsideDown,UIInterfaceOrientationLandscapeLeft,UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.7;
+				MARKETING_VERSION = 2.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "bunoza.Bela-Blok";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -865,12 +869,12 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait,UIInterfaceOrientationPortraitUpsideDown,UIInterfaceOrientationLandscapeLeft,UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait,UIInterfaceOrientationPortraitUpsideDown,UIInterfaceOrientationLandscapeLeft,UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.7;
+				MARKETING_VERSION = 2.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "bunoza.Bela-Blok";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -900,7 +904,7 @@
 				INFOPLIST_FILE = BelaBlokWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = BelaBlokWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -936,7 +940,7 @@
 				INFOPLIST_FILE = BelaBlokWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = BelaBlokWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

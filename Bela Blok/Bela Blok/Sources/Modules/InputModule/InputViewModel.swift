@@ -37,6 +37,8 @@ class InputViewModel: ObservableObject {
                 currentGameEdit.youStiglja = 0
             }
             currentGameEdit.youBaseScore = 162
+        case .none:
+            return
         }
     }
 

@@ -13,7 +13,7 @@ struct InputView: View {
     }
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 Color(.defaultBackground)
                     .ignoresSafeArea()
@@ -22,7 +22,7 @@ struct InputView: View {
                     HStack {
                         Spacer()
                         UnderlinedTextField(score: $viewModel.currentGameEdit.weBaseScore)
-                            .onChange(of: viewModel.currentGameEdit.weBaseScore) { _ in
+                            .onChange(of: viewModel.currentGameEdit.weBaseScore) {
                                 if !ignoreFlag {
                                     ignoreFlag = true
                                     viewModel.onChangeOfWeScore()
@@ -31,7 +31,7 @@ struct InputView: View {
                             }
                         Spacer()
                         UnderlinedTextField(score: $viewModel.currentGameEdit.youBaseScore)
-                            .onChange(of: viewModel.currentGameEdit.youBaseScore) { _ in
+                            .onChange(of: viewModel.currentGameEdit.youBaseScore) {
                                 if !ignoreFlag {
                                     ignoreFlag = true
                                     viewModel.onChangeOfYouScore()
@@ -80,7 +80,7 @@ struct InputView: View {
                     .padding()
 
                     Picker("", selection: $viewModel.currentGameEdit.caller) {
-                        ForEach(Caller.allCases, id: \.self) { caller in
+                        ForEach(Caller.allCases.filter { $0 != .none }, id: \.self) { caller in
                             Text(caller.description)
                         }
                     }
@@ -148,26 +148,26 @@ struct InputView: View {
                     .listRowBackground(Color.clear)
                     .listRowSeparator(.hidden)
                 }
-                .scrollDismissesKeyboard(.immediately)
+                .scrollDismissesKeyboard(.immediately) 
                 .scrollContentBackground(.hidden)
+                .background(Color.clear)
             }
             .navigationTitle("Unos")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button {
+                    Button(role: .confirm) {
                         viewModel.saveCurrentGame()
                         dismiss()
-                    } label: {
-                        Text("Spremi")
                     }
-                    .disabled(viewModel.currentGameEdit.weBaseScore + viewModel.currentGameEdit.youBaseScore != 162)
+                    .disabled(
+                        (viewModel.currentGameEdit.weBaseScore + viewModel.currentGameEdit.youBaseScore != 162)
+                        || viewModel.currentGameEdit.caller == .none
+                    )
                 }
                 ToolbarItem(placement: .cancellationAction) {
-                    Button {
+                    Button(role: .cancel) {
                         dismiss()
-                    } label: {
-                        Text("Odustani")
                     }
                 }
             }

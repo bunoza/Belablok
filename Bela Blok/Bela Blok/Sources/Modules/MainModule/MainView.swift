@@ -18,6 +18,8 @@ struct MainView: View {
     @Environment(\.presentations) private var presentations
     @Environment(\.requestReview) private var requestReview
 
+    @Namespace private var namespace
+
     @StateObject private var appState: AppState = .shared
     @StateObject private var viewModel: MainViewModel
     @StateObject private var activityManager: ActivityManager = .shared
@@ -156,7 +158,7 @@ struct MainView: View {
         }
         .task { await updateActivity() }
         .animation(.easeInOut, value: viewModel.currentSession)
-        .onChange(of: viewModel.currentSession.count) { [oldValue = viewModel.currentSession.count] newValue in
+        .onChange(of: viewModel.currentSession.count) { oldValue, newValue in
             if newValue > oldValue {
                 if !viewModel.shouldStartNewGame { viewModel.updateDealer() }
             }
@@ -179,8 +181,11 @@ struct MainView: View {
                 }
             },
             content: {
-                SettingsView()
-                    .environment(\.presentations, presentations + [$showSettingsSheet])
+                GlassEffectContainer {
+                    SettingsView()
+                        .environment(\.presentations, presentations + [$showSettingsSheet])
+                }
+                .navigationTransition(.zoom(sourceID: "topBarLeading", in: namespace))
             }
         )
         .sheet(
@@ -192,8 +197,11 @@ struct MainView: View {
                 }
             },
             content: {
-                DealerView(dealer: $viewModel.dealer)
-                    .presentationDetents([.medium])
+                GlassEffectContainer {
+                    DealerView(dealer: $viewModel.dealer)
+                }
+                .presentationDetents([.medium])
+                .navigationTransition(.zoom(sourceID: "bottomBar", in: namespace))
             }
         )
         .sheet(
@@ -209,15 +217,19 @@ struct MainView: View {
                 }
             },
             content: {
-                if viewModel.editingGame != nil {
-                    InputView(viewModel: InputViewModel(
-                        editGame: $viewModel.editingGame,
-                        isEditing: true
-                    ))
-                    .interactiveDismissDisabled(true)
-                } else {
-                    InputView(viewModel: InputViewModel())
+                GlassEffectContainer {
+                    if viewModel.editingGame != nil {
+                        InputView(viewModel: InputViewModel(
+                            editGame: $viewModel.editingGame,
+                            isEditing: true
+                        ))
                         .interactiveDismissDisabled(true)
+                        .navigationTransition(.zoom(sourceID: "none", in: namespace))
+                    } else {
+                        InputView(viewModel: InputViewModel())
+                            .interactiveDismissDisabled(true)
+                            .navigationTransition(.zoom(sourceID: "bottomBar", in: namespace))
+                    }
                 }
             }
         )
@@ -231,6 +243,7 @@ struct MainView: View {
                         .animation(.easeInOut, value: showSettingsSheet)
                 }
             }
+            .matchedTransitionSource(id: "topBarLeading", in: namespace)
 
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink {
@@ -244,27 +257,36 @@ struct MainView: View {
             ToolbarItem(placement: .bottomBar) {
                 if showBottomBar {
                     HStack {
-                        Button {
-                            showDealerSheet = true
-                        } label: {
-                            Text("Dijeli: \(viewModel.dealer.description)")
-                                .animation(.easeInOut, value: viewModel.dealer)
-                                .font(.body)
-                        }
-                        Spacer()
-                        Button {
-                            if viewModel.shouldStartNewGame {
-                                showGameFinishedAlert = true
-                            } else {
-                                showInputSheet = true
+                        GlassEffectContainer {
+                            Button {
+                                showDealerSheet = true
+                            } label: {
+                                Text("Dijeli: \(viewModel.dealer.description)")
+                                    .animation(.easeInOut, value: viewModel.dealer)
+                                    .font(.body)
                             }
-                        } label: {
-                            Image(systemName: "square.and.pencil")
-                                .imageScale(.large)
+                            .buttonStyle(.glass)
+                        }
+
+                        Spacer()
+
+                        GlassEffectContainer {
+                            Button {
+                                if viewModel.shouldStartNewGame {
+                                    showGameFinishedAlert = true
+                                } else {
+                                    showInputSheet = true
+                                }
+                            } label: {
+                                Image(systemName: "square.and.pencil")
+                                    .imageScale(.large)
+                            }
+                            .buttonStyle(.glass)
                         }
                     }
                 }
             }
+            .matchedTransitionSource(id: "bottomBar", in: namespace)
         }
         .alert("Nova igra?", isPresented: $showGameFinishedAlert) {
             Button(role: .cancel) {
