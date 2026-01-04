@@ -7,7 +7,7 @@ enum Calls: Int, CaseIterable, Codable {
     case stopedeset = 150
     case dvjesto = 200
     case belot = 1001
-    
+
     var description: String {
         switch self {
         case .dvadeset:

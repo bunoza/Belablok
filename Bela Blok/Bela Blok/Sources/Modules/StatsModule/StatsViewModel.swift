@@ -42,7 +42,7 @@ class StatsViewModel: ObservableObject {
         self.graph = graph.snapshot()
         self.list = list.snapshot()
     }
-    
+
     func getOrderedNumberOfGame(_ searchedGame: Game) -> Int? {
         guard let index = game.firstIndex(of: searchedGame) else { return nil }
         return index + 1

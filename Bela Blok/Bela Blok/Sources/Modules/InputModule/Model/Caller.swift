@@ -15,7 +15,7 @@ enum Caller: CaseIterable, Codable {
             return ""
         }
     }
-    
+
     var name: String {
         switch self {
         case .we:

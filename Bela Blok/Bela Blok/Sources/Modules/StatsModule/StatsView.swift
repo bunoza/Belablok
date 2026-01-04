@@ -104,7 +104,7 @@ struct StatsView: View {
         .chartYAxisLabel("Bodovi", position: .leading, alignment: .center, spacing: 5)
         .listRowSeparator(.hidden)
     }
-    
+
     private var list: some View {
         VStack(spacing: 10) {
             ForEach(viewModel.game) { game in
@@ -117,13 +117,12 @@ struct StatsView: View {
                 )
             }
 
-
             Rectangle()
                 .frame(height: 2, alignment: .center)
                 .listRowBackground(Color.clear)
                 .listRowSeparator(.hidden)
                 .padding(.vertical, 4)
-            
+
             ResultRow(
                 weScore: viewModel.game.forDisplay.weTotalAccumulated,
                 youScore: viewModel.game.forDisplay.youTotalAccumulated,
@@ -221,7 +220,7 @@ struct StatsView: View {
                             Text("Loading")
                         }
                     }
-                    
+
                     if let imageToShare = viewModel.list {
                         ShareLink(item: imageToShare, preview: SharePreview("Tijek", image: imageToShare)) {
                             Label("Podijeli tijek", systemImage: "text.justify")

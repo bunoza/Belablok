@@ -3,18 +3,18 @@ import SwiftUI
 struct DealerView: View {
     @StateObject private var appState = AppState.shared
     @Binding private var dealer: Dealer
-    
+
     init(dealer: Binding<Dealer>) {
         _dealer = dealer
     }
-    
+
     var body: some View {
         GeometryReader { geo in
             VStack {
                 Text("Dijeli: \(dealer.description)")
                     .font(.system(size: geo.size.height / 17))
                     .padding(.horizontal)
-                
+
                 Group {
                     HStack {
                         Button {
@@ -27,7 +27,7 @@ struct DealerView: View {
                                 .padding()
                         }
                     }
-                    
+
                     HStack {
                         Button {
                             dealer = .leftOpponent
@@ -38,12 +38,12 @@ struct DealerView: View {
                                 .frame(width: geo.size.width / 7)
                                 .padding()
                         }
-                        
+
                         RoundedRectangle(cornerSize: CGSize(width: 8, height: 8))
                             .frame(width: geo.size.width / 4, height: geo.size.width / 4, alignment: .center)
                             .foregroundStyle(Color.accentColor.opacity(0.8))
                             .padding(4)
-                        
+
                         Button {
                             dealer = .rightOpponent
                         } label: {
@@ -54,7 +54,7 @@ struct DealerView: View {
                                 .padding()
                         }
                     }
-                    
+
                     HStack {
                         Button {
                             dealer = .me

@@ -10,21 +10,21 @@ struct ResultRow: View {
     private var showFallIcon: Bool?
     private var showStigljaIcon: Bool?
     private var shouldShowDiff: Bool
-    
+
     private var weLead: Bool {
         if let weScoreInt = Int(weScore), let youScoreInt = Int(youScore) {
             return weScoreInt > youScoreInt
         }
         return false
     }
-    
+
     private var youLead: Bool {
         if let weScoreInt = Int(weScore), let youScoreInt = Int(youScore) {
             return weScoreInt < youScoreInt
         }
         return false
     }
-    
+
     private var diff: String? {
         if weLead, let weScoreInt = Int(weScore), let youScoreInt = Int(youScore) {
             return String("+\(weScoreInt - youScoreInt)")
@@ -96,7 +96,7 @@ struct ResultRow: View {
                         .frame(alignment: .center)
                 }
                 .frame(maxWidth: .infinity)
-                
+
                 if shouldShowDiff, let diff {
                     VStack(alignment: .center) {
                         Text(diff)

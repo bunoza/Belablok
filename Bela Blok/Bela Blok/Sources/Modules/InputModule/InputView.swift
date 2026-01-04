@@ -113,7 +113,7 @@ struct InputView: View {
                                 amount: 100
                             )
                         }
-                        
+
                         if appState.selectedCalls.contains(.stopedeset) {
                             renderCallButtonRow(
                                 weCall: $viewModel.currentGameEdit.weCall150,
@@ -148,7 +148,7 @@ struct InputView: View {
                     .listRowBackground(Color.clear)
                     .listRowSeparator(.hidden)
                 }
-                .scrollDismissesKeyboard(.immediately) 
+                .scrollDismissesKeyboard(.immediately)
                 .scrollContentBackground(.hidden)
                 .background(Color.clear)
             }
@@ -162,7 +162,7 @@ struct InputView: View {
                     }
                     .disabled(
                         (viewModel.currentGameEdit.weBaseScore + viewModel.currentGameEdit.youBaseScore != 162)
-                        || viewModel.currentGameEdit.caller == .none
+                            || viewModel.currentGameEdit.caller == .none
                     )
                 }
                 ToolbarItem(placement: .cancellationAction) {

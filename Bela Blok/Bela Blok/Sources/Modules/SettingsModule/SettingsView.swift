@@ -45,7 +45,7 @@ struct SettingsView: View {
                     }
                     .pickerStyle(.segmented)
                 }
-                
+
                 Section {
                     NavigationLink {
                         CallSelectionView()
