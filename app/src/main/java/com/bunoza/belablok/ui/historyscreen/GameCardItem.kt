@@ -3,6 +3,7 @@ package com.bunoza.belablok.ui.historyscreen
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -12,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -22,7 +24,13 @@ import com.bunoza.belablok.ui.theme.BelaBlokTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GameItem(firstPlayerText: String, secondPlayerText: String, onCardClick: () -> Unit) {
+fun GameItem(
+    firstPlayerText: String,
+    secondPlayerText: String,
+    onCardClick: () -> Unit,
+    scoreDiff: String,
+    isScoreDiffEnabled: Boolean
+) {
     OutlinedCard(
         modifier = Modifier.fillMaxWidth(),
         onClick = onCardClick,
@@ -33,7 +41,8 @@ fun GameItem(firstPlayerText: String, secondPlayerText: String, onCardClick: () 
                 .fillMaxWidth()
                 .background(MaterialTheme.colorScheme.primary)
                 .padding(vertical = 16.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = firstPlayerText,
@@ -43,14 +52,26 @@ fun GameItem(firstPlayerText: String, secondPlayerText: String, onCardClick: () 
                 modifier = Modifier.width(100.dp),
                 textAlign = TextAlign.Center
             )
-            Text(
-                text = "-",
-                color = MaterialTheme.colorScheme.onPrimary,
-                fontWeight = FontWeight.Bold,
-                fontSize = 32.sp,
-                modifier = Modifier.width(100.dp),
-                textAlign = TextAlign.Center
-            )
+            Column(verticalArrangement = Arrangement.Top, horizontalAlignment = Alignment.CenterHorizontally) {
+                if (isScoreDiffEnabled) {
+                    Text(
+                        text = scoreDiff,
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 16.sp,
+                        textAlign = TextAlign.Center
+                    )
+                }
+                Text(
+                    text = "-",
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 32.sp,
+                    modifier = Modifier.width(100.dp),
+                    textAlign = TextAlign.Center
+                )
+            }
+
             Text(
                 text = secondPlayerText,
                 color = MaterialTheme.colorScheme.onPrimary,
@@ -67,6 +88,6 @@ fun GameItem(firstPlayerText: String, secondPlayerText: String, onCardClick: () 
 @Composable
 fun PreviewGameItem() {
     BelaBlokTheme {
-        GameItem("100", "62", {})
+        GameItem("100", "62", scoreDiff = "50", isScoreDiffEnabled = true, onCardClick = {})
     }
 }

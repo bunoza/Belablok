@@ -10,6 +10,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -20,6 +21,8 @@ import androidx.compose.ui.unit.sp
 fun TotalScoreItem(
     firstPlayerText: String,
     secondPlayerText: String,
+    scoreDiff: String,
+    isGameDiffEnabled: Boolean,
     modifier: Modifier = Modifier
 ) {
     Column {
@@ -33,7 +36,8 @@ fun TotalScoreItem(
                 .fillMaxWidth()
                 .padding(vertical = 8.dp)
                 .then(modifier),
-            horizontalArrangement = Arrangement.SpaceEvenly
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = firstPlayerText,
@@ -43,13 +47,27 @@ fun TotalScoreItem(
                 modifier = Modifier.width(100.dp),
                 textAlign = TextAlign.Center
             )
-            Text(
-                text = "-",
-                color = MaterialTheme.colorScheme.onPrimary,
-                fontWeight = FontWeight.Bold,
-                fontSize = 32.sp,
-                textAlign = TextAlign.Center
-            )
+            Column(
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                if (isGameDiffEnabled) {
+                    Text(
+                        text = scoreDiff,
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 16.sp,
+                        textAlign = TextAlign.Center
+                    )
+                }
+                Text(
+                    text = "-",
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 32.sp,
+                    textAlign = TextAlign.Center
+                )
+            }
 
             Text(
                 text = secondPlayerText,
@@ -60,5 +78,16 @@ fun TotalScoreItem(
                 textAlign = TextAlign.Center
             )
         }
+    }
+}
+
+fun calculateScoreDiff(
+    firstPlayerScore: Int,
+    secondPlayerScore: Int
+): String {
+    return if (firstPlayerScore > secondPlayerScore) {
+        "+${(firstPlayerScore - secondPlayerScore)}"
+    } else {
+        (firstPlayerScore - secondPlayerScore).toString()
     }
 }

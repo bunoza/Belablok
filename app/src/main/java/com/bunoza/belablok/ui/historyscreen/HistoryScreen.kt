@@ -14,11 +14,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bunoza.belablok.data.database.model.Game
 import com.bunoza.belablok.ui.UIState
 import com.bunoza.belablok.ui.destinations.GameDetailsScreenDestination
 import com.bunoza.belablok.ui.errorscreen.ErrorScreen
 import com.bunoza.belablok.ui.loadingscreen.LoadingScreen
+import com.bunoza.belablok.ui.scorescreen.calculateScoreDiff
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import org.koin.androidx.compose.koinViewModel
@@ -28,6 +30,7 @@ import org.koin.androidx.compose.koinViewModel
 fun HistoryScreen(navigator: DestinationsNavigator) {
     val historyViewModel = koinViewModel<HistoryViewModel>()
     val uiState by historyViewModel.uiState.collectAsState()
+    val isHistoryDiffEnabled by historyViewModel.isHistoryDiffEnabled.collectAsStateWithLifecycle()
     Scaffold(topBar = {
         HistoryTopBar {
             navigator.navigateUp()
@@ -43,13 +46,23 @@ fun HistoryScreen(navigator: DestinationsNavigator) {
                 navigator.navigateUp()
             }
 
-            is UIState.Success<*> -> HistoryScreenContent(gameList = (uiState as UIState.Success<*>).data as List<Game>, onCardClick = { navigator.navigate(GameDetailsScreenDestination(it.id)) }, paddingValues)
+            is UIState.Success<*> -> HistoryScreenContent(
+                gameList = (uiState as UIState.Success<*>).data as List<Game>,
+                onCardClick = { navigator.navigate(GameDetailsScreenDestination(it.id)) },
+                paddingValues = paddingValues,
+                isHistoryDiffEnabled = isHistoryDiffEnabled
+            )
         }
     }
 }
 
 @Composable
-private fun HistoryScreenContent(gameList: List<Game>, onCardClick: (Game) -> Unit, paddingValues: PaddingValues) {
+private fun HistoryScreenContent(
+    gameList: List<Game>,
+    onCardClick: (Game) -> Unit,
+    paddingValues: PaddingValues,
+    isHistoryDiffEnabled: Boolean
+) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -66,7 +79,9 @@ private fun HistoryScreenContent(gameList: List<Game>, onCardClick: (Game) -> Un
             GameItem(
                 firstPlayerText = game.totalPointsWe.toString(),
                 secondPlayerText = game.totalPointsThem.toString(),
-                onCardClick = { onCardClick.invoke(game) }
+                onCardClick = { onCardClick.invoke(game) },
+                isScoreDiffEnabled = isHistoryDiffEnabled,
+                scoreDiff = calculateScoreDiff(game.totalPointsWe, game.totalPointsThem)
             )
         }
     }

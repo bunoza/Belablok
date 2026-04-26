@@ -51,4 +51,10 @@ class DatabaseRepository(private val scoreDao: ScoreDao, private val gameDao: Ga
             gameDao.deleteGame(game)
         }
     }
+
+    suspend fun deleteAllGames() {
+        withContext(Dispatchers.IO) {
+            gameDao.deleteAllGames()
+        }
+    }
 }

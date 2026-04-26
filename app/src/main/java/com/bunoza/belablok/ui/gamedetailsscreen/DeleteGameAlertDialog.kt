@@ -31,3 +31,27 @@ fun DeleteGameAlertDialog(onDismissClick: () -> Unit, onConfirmClick: () -> Unit
         containerColor = MaterialTheme.colorScheme.background
     )
 }
+
+@Composable
+fun DeleteHistoryAlertDialog(onDismissClick: () -> Unit, onConfirmClick: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = onDismissClick,
+        confirmButton = {
+            Button(onClick = onConfirmClick, colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error, contentColor = MaterialTheme.colorScheme.onError)) {
+                Text(text = "Obriši")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismissClick) {
+                Text(text = "Odustani")
+            }
+        },
+        title = {
+            Text(text = "Obrisati povijest igara?")
+        },
+        text = {
+            Text(text = "Jeste li sigurni da želite obrisati povijest svojih igara?")
+        },
+        containerColor = MaterialTheme.colorScheme.background
+    )
+}

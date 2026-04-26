@@ -4,7 +4,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
@@ -15,6 +14,8 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -42,11 +43,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bunoza.belablok.R
 import com.bunoza.belablok.data.database.model.SingleGame
 import com.bunoza.belablok.ui.StartSplashScreen
 import com.bunoza.belablok.ui.destinations.HistoryScreenDestination
 import com.bunoza.belablok.ui.destinations.InputScoreScreenDestination
+import com.bunoza.belablok.ui.destinations.SettingsScreenDestination
 import com.bunoza.belablok.ui.errorscreen.ErrorScreen
 import com.bunoza.belablok.ui.gamedetailsscreen.DeleteGameAlertDialog
 import com.bunoza.belablok.ui.loadingscreen.LoadingScreen
@@ -68,9 +71,11 @@ fun ScoreScreen(navigator: DestinationsNavigator) {
     val dealer by scoreScreenViewModel.dealer.collectAsState()
     val historyButtonState by scoreScreenViewModel.historyButtonState.collectAsState()
     val deleteGamesButtonState by scoreScreenViewModel.deleteGamesButtonState.collectAsState()
+    val targetScore by scoreScreenViewModel.targetScore.collectAsState()
     val isDeleteGamesDialogOpened = rememberSaveable {
         mutableStateOf(false)
     }
+    val isGameDiffEnabled by scoreScreenViewModel.isGameDiffEnabled.collectAsStateWithLifecycle()
 
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = SheetState(
@@ -83,14 +88,13 @@ fun ScoreScreen(navigator: DestinationsNavigator) {
 
     BottomSheetScaffold(
         sheetContent = {
-            Column(modifier =Modifier.windowInsetsPadding(WindowInsets.navigationBars)){
+            Column(modifier = Modifier.windowInsetsPadding(WindowInsets.navigationBars)) {
                 TableComposable(
                     tableOptions = scoreScreenViewModel.dealerPossibilities,
                     selectedOption = dealer,
                     onOptionSelected = { scoreScreenViewModel.onDealerCounterClick(it) }
                 )
             }
-
         },
         sheetPeekHeight = 0.dp,
         scaffoldState = bottomSheetScaffoldState
@@ -155,12 +159,16 @@ fun ScoreScreen(navigator: DestinationsNavigator) {
                     },
                     onDeleteGameDialogDismiss = {
                         isDeleteGamesDialogOpened.value = false
+                    },
+                    isGameDiffEnabled = isGameDiffEnabled,
+                    onNavigateToSettings = {
+                        navigator.navigate(SettingsScreenDestination())
                     }
                 )
             }
         }
     }
-    if (totalScoreWe.value > 1000 || totalThemScore.value > 1000) {
+    if (totalScoreWe.value > targetScore || totalThemScore.value > targetScore) {
         WinAnimation()
     }
 }
@@ -187,7 +195,9 @@ fun ScoreScreenContent(
     isDeleteGamesButtonEnabled: Boolean,
     isDeleteGamesDialogOpened: Boolean,
     onDeleteGameDialogConfirm: () -> Unit,
-    onDeleteGameDialogDismiss: () -> Unit
+    onDeleteGameDialogDismiss: () -> Unit,
+    isGameDiffEnabled: Boolean,
+    onNavigateToSettings: () -> Unit
 ) {
     val lazyListState = rememberLazyListState()
 
@@ -243,17 +253,31 @@ fun ScoreScreenContent(
                             }
                         )
                     }
+                    IconButton(
+                        onClick = onNavigateToSettings
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Settings,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onPrimary
+                        )
+                    }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primary)
             )
         },
         bottomBar = {
-            Column(modifier = Modifier.background(MaterialTheme.colorScheme.primary).windowInsetsPadding(
-                WindowInsets.navigationBars)) {
+            Column(
+                modifier = Modifier.background(MaterialTheme.colorScheme.primary).windowInsetsPadding(
+                    WindowInsets.navigationBars
+                )
+            ) {
                 if (singleGameList.isNotEmpty()) {
                     TotalScoreItem(
                         firstPlayerText = totalScoreWe.toString(),
-                        secondPlayerText = totalScoreThem.toString()
+                        secondPlayerText = totalScoreThem.toString(),
+                        scoreDiff = calculateScoreDiff(totalScoreWe, totalScoreThem),
+                        isGameDiffEnabled = isGameDiffEnabled
                     )
                 }
                 Row(

@@ -8,9 +8,12 @@ import com.bunoza.belablok.data.database.model.SingleGame
 import com.bunoza.belablok.data.repositories.DatabaseRepository
 import com.bunoza.belablok.data.repositories.PreferenceRepository
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, private val preferenceRepository: PreferenceRepository) : ViewModel() {
@@ -33,6 +36,17 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
     private var gameList = listOf<SingleGame>()
     private val currentListSize = mutableStateOf(0)
     private val previousListSize = mutableStateOf(0)
+    val targetScore = preferenceRepository.targetScore.filterNotNull().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = 1000
+    )
+
+    val isGameDiffEnabled = preferenceRepository.isGameDiffEnabled.filterNotNull().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = false
+    )
 
     init {
         getAllSingleGames()
@@ -50,6 +64,9 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
                     currentListSize.value = it.size
                     _totalWeScore.value = getTotalScoreWe(it)
                     _totalThemScore.value = getTotalScoreThem(it)
+                    if (it.isEmpty()) {
+                        previousListSize.value = 0
+                    }
                 }
             } catch (e: Exception) {
                 _scoreScreenUIState.value = ScoreScreenUIState.Error
@@ -121,7 +138,7 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
 
     fun checkNewGame() {
         viewModelScope.launch {
-            if (totalWeScore.value > 1000 && totalThemScore.value > 1000) {
+            if (totalWeScore.value > targetScore.value && totalThemScore.value > targetScore.value) {
                 if (totalWeScore.value > totalThemScore.value) {
                     whoWon.value = "MI"
                     // updateCounterWeWin()
@@ -131,12 +148,12 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
                 }
                 shouldNavigate.value = false
                 isAlertDialogOpened.value = true
-            } else if (totalWeScore.value > 1000) {
+            } else if (totalWeScore.value > targetScore.value) {
                 whoWon.value = "MI"
                 shouldNavigate.value = false
                 isAlertDialogOpened.value = true
                 // updateCounterWeWin()
-            } else if (totalThemScore.value > 1000) {
+            } else if (totalThemScore.value > targetScore.value) {
                 whoWon.value = "VI"
                 shouldNavigate.value = false
                 isAlertDialogOpened.value = true
@@ -189,7 +206,7 @@ class ScoreScreenViewModel(private val databaseRepository: DatabaseRepository, p
             dealerPossibilities[2] -> counter.value = 2
             dealerPossibilities[3] -> counter.value = 3
         }
-        //updateDealer(selectedOption)
+        // updateDealer(selectedOption)
     }
     private fun updateCounterWeWin() {
         when (counter.value) {
