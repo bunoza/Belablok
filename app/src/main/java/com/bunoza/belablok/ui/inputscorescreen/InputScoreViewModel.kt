@@ -180,8 +180,8 @@ class InputScoreViewModel(
     }
 
     fun onShtigliaCallUsClick() {
-        if (callShtigliaUsState.value.timesCalled == 0 && callShtigliaThemState.value.timesCalled == 0
-            && callBelotUsState.value.timesCalled == 0 && callBelotThemState.value.timesCalled == 0
+        if (callShtigliaUsState.value.timesCalled == 0 && callShtigliaThemState.value.timesCalled == 0 &&
+            callBelotUsState.value.timesCalled == 0 && callBelotThemState.value.timesCalled == 0
         ) {
             callShtigliaUsState.value = callShtigliaUsState.value.copy(
                 timesCalled = callShtigliaUsState.value.timesCalled + 1,
@@ -198,8 +198,8 @@ class InputScoreViewModel(
     }
 
     fun onShtigliaCallThemClick() {
-        if (callShtigliaUsState.value.timesCalled == 0 && callShtigliaThemState.value.timesCalled == 0
-            && callBelotUsState.value.timesCalled == 0 && callBelotThemState.value.timesCalled == 0
+        if (callShtigliaUsState.value.timesCalled == 0 && callShtigliaThemState.value.timesCalled == 0 &&
+            callBelotUsState.value.timesCalled == 0 && callBelotThemState.value.timesCalled == 0
         ) {
             callShtigliaThemState.value = callShtigliaThemState.value.copy(
                 timesCalled = callShtigliaThemState.value.timesCalled + 1,
@@ -250,8 +250,8 @@ class InputScoreViewModel(
                     timesCalledVisibility = true
                 )
                 timesCalledUs.value = timesCalledUs.value + 20
-                //onShtigliaCallUsMinusClick()
-                //onShtigliaCallThemMinusClick()
+                // onShtigliaCallUsMinusClick()
+                // onShtigliaCallThemMinusClick()
             }
         }
     }
@@ -283,8 +283,8 @@ class InputScoreViewModel(
                     timesCalledVisibility = true
                 )
                 timesCalledThem.value = timesCalledThem.value + 20
-                //onShtigliaCallUsMinusClick()
-                //onShtigliaCallThemMinusClick()
+                // onShtigliaCallUsMinusClick()
+                // onShtigliaCallThemMinusClick()
             }
         }
     }
@@ -316,8 +316,8 @@ class InputScoreViewModel(
                     timesCalledVisibility = true
                 )
                 timesCalledUs.value = timesCalledUs.value + 50
-                //onShtigliaCallUsMinusClick()
-                //onShtigliaCallThemMinusClick()
+                // onShtigliaCallUsMinusClick()
+                // onShtigliaCallThemMinusClick()
             }
         }
     }
@@ -349,8 +349,8 @@ class InputScoreViewModel(
                     timesCalledVisibility = true
                 )
                 timesCalledThem.value = timesCalledThem.value + 50
-                //onShtigliaCallUsMinusClick()
-                //onShtigliaCallThemMinusClick()
+                // onShtigliaCallUsMinusClick()
+                // onShtigliaCallThemMinusClick()
             }
         }
     }
@@ -382,8 +382,8 @@ class InputScoreViewModel(
                     timesCalledVisibility = true
                 )
                 timesCalledUs.value = timesCalledUs.value + 100
-                //onShtigliaCallUsMinusClick()
-                //onShtigliaCallThemMinusClick()
+                // onShtigliaCallUsMinusClick()
+                // onShtigliaCallThemMinusClick()
             }
         }
     }
@@ -415,8 +415,8 @@ class InputScoreViewModel(
                     timesCalledVisibility = true
                 )
                 timesCalledThem.value = timesCalledThem.value + 100
-                //onShtigliaCallUsMinusClick()
-                //onShtigliaCallThemMinusClick()
+                // onShtigliaCallUsMinusClick()
+                // onShtigliaCallThemMinusClick()
             }
         }
     }
@@ -484,8 +484,8 @@ class InputScoreViewModel(
                     timesCalledVisibility = true
                 )
                 timesCalledUs.value = timesCalledUs.value + 1001
-                //onShtigliaCallUsMinusClick()
-                //onShtigliaCallThemMinusClick()
+                // onShtigliaCallUsMinusClick()
+                // onShtigliaCallThemMinusClick()
             }
         }
     }
@@ -499,8 +499,8 @@ class InputScoreViewModel(
                     timesCalledVisibility = true
                 )
                 timesCalledThem.value = timesCalledThem.value + 1001
-                //onShtigliaCallUsMinusClick()
-                //onShtigliaCallThemMinusClick()
+                // onShtigliaCallUsMinusClick()
+                // onShtigliaCallThemMinusClick()
             }
         }
     }
@@ -687,15 +687,14 @@ class InputScoreViewModel(
             var secondPlayerTotalPoints =
                 secondPlayerPoints.value.toInt() + callTwentyThemState.value.callValue * callTwentyThemState.value.timesCalled + callFiftyThemState.value.timesCalled * callFiftyThemState.value.callValue + callHundredThemState.value.callValue * callHundredThemState.value.timesCalled + callBelotThemState.value.timesCalled * callBelotThemState.value.callValue + callShtigliaThemState.value.callValue * callShtigliaThemState.value.timesCalled
 
-            if (selectedOption.value == radioOptions[0]) { //MI called
-                if(shtigliaCalledWe.value){
+            if (selectedOption.value == radioOptions[0]) { // MI called
+                if (shtigliaCalledWe.value) {
                     firstPlayerTotalPoints =
                         162 + callTwentyUsState.value.callValue * callTwentyUsState.value.timesCalled + callFiftyUsState.value.callValue * callFiftyUsState.value.timesCalled + callHundredUsState.value.callValue * callHundredUsState.value.timesCalled + callBelotUsState.value.callValue * callBelotUsState.value.timesCalled + callTwentyThemState.value.callValue * callTwentyThemState.value.timesCalled + callFiftyThemState.value.timesCalled * callFiftyThemState.value.callValue + callHundredThemState.value.callValue * callHundredThemState.value.timesCalled + callBelotThemState.value.timesCalled * callBelotThemState.value.callValue + callShtigliaUsState.value.callValue * callShtigliaUsState.value.timesCalled + callShtigliaThemState.value.callValue * callShtigliaThemState.value.timesCalled
                     secondPlayerTotalPoints = 0
                     afterBasePointsWe.value = 162
                     afterBasePointsThem.value = 0
-                }
-                else if (secondPlayerTotalPoints >= firstPlayerTotalPoints || shtigliaCalledThem.value) { //Mi pali ili Vi štigljili
+                } else if (secondPlayerTotalPoints >= firstPlayerTotalPoints || shtigliaCalledThem.value) { // Mi pali ili Vi štigljili
                     firstPlayerTotalPoints = 0
                     secondPlayerTotalPoints =
                         162 + callTwentyUsState.value.callValue * callTwentyUsState.value.timesCalled + callFiftyUsState.value.callValue * callFiftyUsState.value.timesCalled + callHundredUsState.value.callValue * callHundredUsState.value.timesCalled + callBelotUsState.value.callValue * callBelotUsState.value.timesCalled + callTwentyThemState.value.callValue * callTwentyThemState.value.timesCalled + callFiftyThemState.value.timesCalled * callFiftyThemState.value.callValue + callHundredThemState.value.callValue * callHundredThemState.value.timesCalled + callBelotThemState.value.timesCalled * callBelotThemState.value.callValue + callShtigliaUsState.value.callValue * callShtigliaUsState.value.timesCalled + callShtigliaThemState.value.callValue * callShtigliaThemState.value.timesCalled
@@ -706,14 +705,13 @@ class InputScoreViewModel(
                     afterBasePointsThem.value = secondPlayerPoints.value.toInt()
                 }
             } else {
-                if(shtigliaCalledThem.value){
+                if (shtigliaCalledThem.value) {
                     secondPlayerTotalPoints =
                         162 + callTwentyThemState.value.callValue * callTwentyThemState.value.timesCalled + callFiftyThemState.value.timesCalled * callFiftyThemState.value.callValue + callHundredThemState.value.callValue * callHundredThemState.value.timesCalled + callBelotThemState.value.timesCalled * callBelotThemState.value.callValue + callTwentyUsState.value.callValue * callTwentyUsState.value.timesCalled + callFiftyUsState.value.callValue * callFiftyUsState.value.timesCalled + callHundredUsState.value.callValue * callHundredUsState.value.timesCalled + callBelotUsState.value.callValue * callBelotUsState.value.timesCalled + callShtigliaUsState.value.callValue * callShtigliaUsState.value.timesCalled + callShtigliaThemState.value.callValue * callShtigliaThemState.value.timesCalled
                     firstPlayerTotalPoints = 0
                     afterBasePointsWe.value = 162
                     afterBasePointsThem.value = 0
-                }
-                else if (firstPlayerTotalPoints >= secondPlayerTotalPoints || shtigliaCalledWe.value) { //VI pali ili MI štigljili
+                } else if (firstPlayerTotalPoints >= secondPlayerTotalPoints || shtigliaCalledWe.value) { // VI pali ili MI štigljili
                     secondPlayerTotalPoints = 0
                     firstPlayerTotalPoints =
                         162 + callTwentyThemState.value.callValue * callTwentyThemState.value.timesCalled + callFiftyThemState.value.timesCalled * callFiftyThemState.value.callValue + callHundredThemState.value.callValue * callHundredThemState.value.timesCalled + callBelotThemState.value.timesCalled * callBelotThemState.value.callValue + callTwentyUsState.value.callValue * callTwentyUsState.value.timesCalled + callFiftyUsState.value.callValue * callFiftyUsState.value.timesCalled + callHundredUsState.value.callValue * callHundredUsState.value.timesCalled + callBelotUsState.value.callValue * callBelotUsState.value.timesCalled + callShtigliaUsState.value.callValue * callShtigliaUsState.value.timesCalled + callShtigliaThemState.value.callValue * callShtigliaThemState.value.timesCalled

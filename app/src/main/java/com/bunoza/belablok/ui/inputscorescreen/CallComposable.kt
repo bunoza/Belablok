@@ -95,7 +95,7 @@ fun CallComposable(
             contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp)
         ) {
             Text(text = callValue, fontSize = textSize.value, softWrap = false, onTextLayout = {
-                if(it.didOverflowWidth){
+                if (it.didOverflowWidth) {
                     textSize.value = textSize.value * 0.9
                 }
             })
