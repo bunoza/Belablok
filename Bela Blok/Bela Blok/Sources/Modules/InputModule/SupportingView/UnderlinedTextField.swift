@@ -41,13 +41,14 @@ struct UnderlinedTextField: View {
             .font(.largeTitle)
             .multilineTextAlignment(.center)
             .labelsHidden()
-            .background {
-                VStack {
-                    Spacer()
-                    Rectangle()
-                        .frame(height: 2.0, alignment: .bottom)
-                }
-                .padding(.horizontal)
+            .foregroundStyle(.clear)
+            .overlay {
+                Text(text.isEmpty ? "0" : text)
+                    .font(.largeTitle)
+                    .foregroundStyle(text.isEmpty ? HierarchicalShapeStyle.tertiary : .primary)
+                    .contentTransition(.numericText(value: Double(text) ?? 0))
+                    .animation(.snappy, value: text)
+                    .allowsHitTesting(false)
             }
     }
 }

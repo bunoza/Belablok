@@ -182,4 +182,11 @@ extension [Game] {
     var forDisplay: [Game] {
         self.map(\.handleSpecialCases)
     }
+
+    func isFinished(endScore: Int) -> Bool {
+        let weTotal = forDisplay.weTotalAccumulated
+        let youTotal = forDisplay.youTotalAccumulated
+        guard weTotal != youTotal else { return false }
+        return weTotal >= endScore || youTotal >= endScore
+    }
 }

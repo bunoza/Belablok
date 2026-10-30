@@ -158,10 +158,7 @@ struct MainView: View {
         }
         .task { await updateActivity() }
         .animation(.easeInOut, value: viewModel.currentSession)
-        .onChange(of: viewModel.currentSession.count) { oldValue, newValue in
-            if newValue > oldValue {
-                if !viewModel.shouldStartNewGame { viewModel.updateDealer() }
-            }
+        .onChange(of: viewModel.currentSession.count) {
             Task {
                 await updateActivity()
             }
@@ -201,7 +198,7 @@ struct MainView: View {
                     DealerView(dealer: $viewModel.dealer)
                 }
                 .presentationDetents([.medium])
-                .navigationTransition(.zoom(sourceID: "bottomBar", in: namespace))
+                .navigationTransition(.zoom(sourceID: "dealer", in: namespace))
             }
         )
         .sheet(
@@ -209,8 +206,10 @@ struct MainView: View {
             onDismiss: {
                 if let editingGame = viewModel.editingGame {
                     viewModel.change(editingGame)
+                    viewModel.updateState()
+                } else {
+                    viewModel.handleInputDismissed()
                 }
-                viewModel.updateState()
                 viewModel.editingGame = nil
                 Task {
                     await updateActivity()
@@ -228,7 +227,7 @@ struct MainView: View {
                     } else {
                         InputView(viewModel: InputViewModel())
                             .interactiveDismissDisabled(true)
-                            .navigationTransition(.zoom(sourceID: "bottomBar", in: namespace))
+                            .navigationTransition(.zoom(sourceID: "input", in: namespace))
                     }
                 }
             }
@@ -254,39 +253,37 @@ struct MainView: View {
                 .disabled(AppState.shared.finishedGames.isEmpty)
             }
 
-            ToolbarItem(placement: .bottomBar) {
-                if showBottomBar {
-                    HStack {
-                        GlassEffectContainer {
-                            Button {
-                                showDealerSheet = true
-                            } label: {
-                                Text("Dijeli: \(viewModel.dealer.description)")
-                                    .animation(.easeInOut, value: viewModel.dealer)
-                                    .font(.body)
-                            }
-                            .buttonStyle(.glass)
-                        }
-
-                        Spacer()
-
-                        GlassEffectContainer {
-                            Button {
-                                if viewModel.shouldStartNewGame {
-                                    showGameFinishedAlert = true
-                                } else {
-                                    showInputSheet = true
-                                }
-                            } label: {
-                                Image(systemName: "square.and.pencil")
-                                    .imageScale(.large)
-                            }
-                            .buttonStyle(.glass)
+            if showBottomBar {
+                ToolbarItem(placement: .bottomBar) {
+                    Button {
+                        showDealerSheet = true
+                    } label: {
+                        HStack(spacing: 4) {
+                            Text("Dijeli:")
+                            Text(viewModel.dealer.description)
+                                .contentTransition(.numericText())
                         }
                     }
+                    .animation(.snappy, value: viewModel.dealer)
                 }
+                .matchedTransitionSource(id: "dealer", in: namespace)
+
+                ToolbarSpacer(.flexible, placement: .bottomBar)
+
+                ToolbarItem(placement: .bottomBar) {
+                    Button {
+                        if viewModel.shouldStartNewGame {
+                            showGameFinishedAlert = true
+                        } else {
+                            showInputSheet = true
+                        }
+                    } label: {
+                        Image(systemName: "square.and.pencil")
+                    }
+                    .buttonStyle(.glassProminent)
+                }
+                .matchedTransitionSource(id: "input", in: namespace)
             }
-            .matchedTransitionSource(id: "bottomBar", in: namespace)
         }
         .alert("Nova igra?", isPresented: $showGameFinishedAlert) {
             Button(role: .cancel) {

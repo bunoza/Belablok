@@ -16,12 +16,7 @@ class MainViewModel: ObservableObject {
     }
 
     var shouldStartNewGame: Bool {
-        guard currentSession.forDisplay.weTotalAccumulated != currentSession.forDisplay.youTotalAccumulated else {
-            return false
-        }
-
-        return currentSession.forDisplay.weTotalAccumulated >= appState.gameEndScore.amount
-            || currentSession.forDisplay.youTotalAccumulated >= appState.gameEndScore.amount
+        currentSession.isFinished(endScore: appState.gameEndScore.amount)
     }
 
     private func updateDealerOnGameFinished() {
@@ -32,16 +27,14 @@ class MainViewModel: ObservableObject {
             if currentSession.forDisplay.weTotalAccumulated > currentSession.forDisplay.youTotalAccumulated {
                 if ![.me, .partner].contains(dealer) {
                     dealer = dealer.nextDealer
-                    setDealer()
-                    return
                 }
             } else {
                 if ![.leftOpponent, .rightOpponent].contains(dealer) {
                     dealer = dealer.nextDealer
-                    setDealer()
-                    return
                 }
             }
+            setDealer()
+            return
         }
         if currentSession.forDisplay.weTotalAccumulated >= appState.gameEndScore.amount {
             if [.leftOpponent, .rightOpponent].contains(dealer) {
@@ -89,6 +82,8 @@ class MainViewModel: ObservableObject {
 
         if updateFlag, !shouldStartNewGame {
             updateDealer()
+        } else if !updateFlag, shouldStartNewGame {
+            dealerStepBack()
         }
     }
 
@@ -103,6 +98,14 @@ class MainViewModel: ObservableObject {
         appState.currentGame = []
         updateDealerOnGameFinished()
         currentSession = []
+    }
+
+    func handleInputDismissed() {
+        let previousCount = currentSession.count
+        updateState()
+        if currentSession.count > previousCount, !shouldStartNewGame {
+            updateDealer()
+        }
     }
 
     func updateState() {

@@ -19,65 +19,26 @@ struct InputView: View {
                     .ignoresSafeArea()
 
                 List {
-                    HStack {
-                        Spacer()
-                        UnderlinedTextField(score: $viewModel.currentGameEdit.weBaseScore)
-                            .onChange(of: viewModel.currentGameEdit.weBaseScore) {
-                                if !ignoreFlag {
-                                    ignoreFlag = true
-                                    viewModel.onChangeOfWeScore()
-                                    ignoreFlag = false
-                                }
-                            }
-                        Spacer()
-                        UnderlinedTextField(score: $viewModel.currentGameEdit.youBaseScore)
-                            .onChange(of: viewModel.currentGameEdit.youBaseScore) {
-                                if !ignoreFlag {
-                                    ignoreFlag = true
-                                    viewModel.onChangeOfYouScore()
-                                    ignoreFlag = false
-                                }
-                            }
-                        Spacer()
+                    GlassEffectContainer(spacing: 16) {
+                        HStack(spacing: 16) {
+                            scoreField(
+                                caller: .we,
+                                score: $viewModel.currentGameEdit.weBaseScore,
+                                callsSum: viewModel.currentGameEdit.weCallsSum,
+                                onChange: viewModel.onChangeOfWeScore
+                            )
+                            scoreField(
+                                caller: .you,
+                                score: $viewModel.currentGameEdit.youBaseScore,
+                                callsSum: viewModel.currentGameEdit.youCallsSum,
+                                onChange: viewModel.onChangeOfYouScore
+                            )
+                        }
                     }
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
-                    .foregroundStyle(viewModel.currentGameEdit.isStigljaActive ? Color.gray : Color.primary)
+                    .foregroundStyle(viewModel.currentGameEdit.isStigljaActive ? Color.secondary : Color.primary)
                     .disabled(viewModel.currentGameEdit.isStigljaActive)
-                    .padding()
-
-                    HStack {
-                        Spacer()
-                        VStack {
-                            Text("Zvanje")
-                                .font(.subheadline)
-                            Text("\(viewModel.currentGameEdit.weCallsSum)")
-                                .font(.subheadline)
-                        }
-                        Spacer()
-
-                        Button {
-                            viewModel.resetCalls()
-                        } label: {
-                            Text("Obriši zvanja")
-                                .font(.subheadline)
-                        }
-                        .roundedAccentButton(width: 110, height: 35)
-                        .buttonStyle(.plain)
-                        .padding(.horizontal)
-                        Spacer()
-
-                        VStack {
-                            Text("Zvanje")
-                                .font(.subheadline)
-                            Text("\(viewModel.currentGameEdit.youCallsSum)")
-                                .font(.subheadline)
-                        }
-                        Spacer()
-                    }
-                    .listRowBackground(Color.clear)
-                    .listRowSeparator(.hidden)
-                    .padding()
 
                     Picker("", selection: $viewModel.currentGameEdit.caller) {
                         ForEach(Caller.allCases.filter { $0 != .none }, id: \.self) { caller in
@@ -155,6 +116,19 @@ struct InputView: View {
             .navigationTitle("Unos")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                ToolbarItem(placement: .principal) {
+                    VStack(spacing: 0) {
+                        Text("Mi \(currentSession.weTotalAccumulated) : \(currentSession.youTotalAccumulated) Vi")
+                            .font(.headline)
+                            .monospacedDigit()
+                        if let dealer {
+                            Text("Dijeli: \(dealer.description)")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    .accessibilityElement(children: .combine)
+                }
                 ToolbarItem(placement: .confirmationAction) {
                     Button(role: .confirm) {
                         viewModel.saveCurrentGame()
@@ -174,51 +148,109 @@ struct InputView: View {
         }
     }
 
-    private func renderCallButtonRow(weCall: Binding<Int>, youCall: Binding<Int>, amount: Int) -> some View {
-        HStack {
-            VStack {
-                HStack {
-                    minusButton(bindedInt: weCall)
-                    counter(bindedInt: weCall)
-                    Spacer()
-                    renderCallButton(caller: .we, amount: amount)
-                    Spacer()
-                }
-            }
+    private var currentSession: [Game] {
+        appState.currentGame.forDisplay
+    }
 
-            VStack {
-                HStack {
-                    Spacer()
-                    renderCallButton(caller: .you, amount: amount)
-                    Spacer()
-                    counter(bindedInt: youCall)
-                    minusButton(bindedInt: youCall)
+    private var dealer: Dealer? {
+        viewModel.isEditing ? viewModel.currentGameEdit.dealer : appState.currentDealer
+    }
+
+    private func scoreField(caller: Caller, score: Binding<Int>, callsSum: Int, onChange: @escaping () -> Void) -> some View {
+        VStack(spacing: 6) {
+            Text(caller.name)
+                .font(.subheadline.weight(.semibold))
+                .foregroundStyle(.secondary)
+
+            UnderlinedTextField(score: score)
+                .onChange(of: score.wrappedValue) {
+                    if !ignoreFlag {
+                        ignoreFlag = true
+                        onChange()
+                        ignoreFlag = false
+                    }
                 }
+
+            HStack {
+                Text("Zvanje:")
+                    .font(.subheadline)
+                Text("\(callsSum)")
+                    .font(.subheadline)
+                    .contentTransition(.numericText(value: Double(callsSum)))
+                    .animation(.snappy, value: callsSum)
             }
         }
+        .padding(.vertical, 16)
         .frame(maxWidth: .infinity)
-        .padding(.vertical)
+        .glassEffect(.regular, in: .rect(cornerRadius: 28))
+    }
+
+    private func renderCallButtonRow(weCall: Binding<Int>, youCall: Binding<Int>, amount: Int) -> some View {
+        GlassEffectContainer(spacing: 12) {
+            HStack(spacing: 12) {
+                HStack(spacing: 8) {
+                    callAdjuster(bindedInt: weCall, minusLeading: true)
+                    Spacer(minLength: 0)
+                    renderCallButton(caller: .we, amount: amount)
+                }
+                .frame(maxWidth: .infinity)
+
+                HStack(spacing: 8) {
+                    renderCallButton(caller: .you, amount: amount)
+                    Spacer(minLength: 0)
+                    callAdjuster(bindedInt: youCall, minusLeading: false)
+                }
+                .frame(maxWidth: .infinity)
+            }
+        }
+        .padding(.horizontal)
+        .padding(.vertical, 8)
+        .animation(.bouncy, value: weCall.wrappedValue > 0)
+        .animation(.bouncy, value: youCall.wrappedValue > 0)
+    }
+
+    /// Minus button and counter, shown only once the call is pressed.
+    /// A hidden copy keeps their space reserved so the row never shifts.
+    private func callAdjuster(bindedInt: Binding<Int>, minusLeading: Bool) -> some View {
+        adjusterContent(minus: minusButton(bindedInt: .constant(1)), counter: Text("x0").monospaced().fixedSize(), minusLeading: minusLeading)
+            .hidden()
+            .overlay(alignment: minusLeading ? .leading : .trailing) {
+                if bindedInt.wrappedValue > 0 {
+                    adjusterContent(minus: minusButton(bindedInt: bindedInt), counter: counter(bindedInt: bindedInt), minusLeading: minusLeading)
+                        .transition(.scale.combined(with: .opacity))
+                }
+            }
+    }
+
+    private func adjusterContent(minus: some View, counter: some View, minusLeading: Bool) -> some View {
+        HStack(spacing: 4) {
+            if minusLeading {
+                minus
+                counter
+            } else {
+                counter
+                minus
+            }
+        }
     }
 
     private func minusButton(bindedInt: Binding<Int>) -> some View {
         Button {
-            bindedInt.wrappedValue -= 1
+            bindedInt.wrappedValue = max(0, bindedInt.wrappedValue - 1)
         } label: {
-            Image(systemName: "minus.circle")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 28, height: 28)
+            Image(systemName: "minus")
+                .frame(width: 16, height: 16)
         }
-        .buttonStyle(.plain)
-        .disabled(bindedInt.wrappedValue <= 0)
-        .opacity(bindedInt.wrappedValue > 0 ? 1 : 0)
-        .animation(.bouncy, value: bindedInt.wrappedValue)
+        .buttonStyle(.glass)
+        .buttonBorderShape(.circle)
     }
 
     private func counter(bindedInt: Binding<Int>) -> some View {
         Text("x\(bindedInt.wrappedValue)")
             .monospaced()
-            .opacity(bindedInt.wrappedValue == 0 ? 0 : 1)
+            .fixedSize()
+            .contentTransition(.numericText(value: Double(bindedInt.wrappedValue)))
+            .animation(.snappy, value: bindedInt.wrappedValue)
     }
 
     private func renderCallButton(caller: Caller, amount: Int) -> some View {
@@ -231,9 +263,12 @@ struct InputView: View {
         } label: {
             Text(handleButtonLabel(amount: amount))
                 .font(.system(size: 24))
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+                .frame(minWidth: 64)
         }
-        .roundedAccentButton(width: 80, height: 44)
-        .buttonStyle(.plain)
+        .buttonStyle(.glass)
+        .controlSize(.large)
     }
 
     private func handleButtonLabel(amount: Int) -> String {

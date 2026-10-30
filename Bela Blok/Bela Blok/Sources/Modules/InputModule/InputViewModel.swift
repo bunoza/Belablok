@@ -3,7 +3,7 @@ import Foundation
 import SwiftUI
 
 class InputViewModel: ObservableObject {
-    @State private var appState = AppState.shared
+    private let appState = AppState.shared
     @Binding var currentGame: Game?
     @Published var currentGameEdit: Game = .init()
     var isEditing: Bool

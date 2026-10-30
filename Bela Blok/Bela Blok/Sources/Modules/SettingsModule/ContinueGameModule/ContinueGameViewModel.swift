@@ -49,7 +49,8 @@ class ContinueGameViewModel: ObservableObject {
 
             AppState.shared.currentGame = game
             if let lastDealer = game.last?.dealer {
-                AppState.shared.currentDealer = lastDealer
+                let isFinished = game.isFinished(endScore: AppState.shared.gameEndScore.amount)
+                AppState.shared.currentDealer = isFinished ? lastDealer : lastDealer.nextDealer
             }
 
             completion()
