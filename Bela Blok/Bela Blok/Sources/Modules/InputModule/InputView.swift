@@ -7,6 +7,9 @@ struct InputView: View {
     @StateObject private var appState: AppState = .shared
     @StateObject private var viewModel: InputViewModel
     @State private var ignoreFlag: Bool = false
+    @State private var weTotal: Int = 0
+    @State private var youTotal: Int = 0
+    @State private var dealer: Dealer?
 
     init(viewModel: InputViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
@@ -115,10 +118,16 @@ struct InputView: View {
             }
             .navigationTitle("Unos")
             .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                let currentSession = appState.currentGame.forDisplay
+                weTotal = currentSession.weTotalAccumulated
+                youTotal = currentSession.youTotalAccumulated
+                dealer = viewModel.isEditing ? viewModel.currentGameEdit.dealer : appState.currentDealer
+            }
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     VStack(spacing: 0) {
-                        Text("Mi \(currentSession.weTotalAccumulated) : \(currentSession.youTotalAccumulated) Vi")
+                        Text("Mi \(weTotal) : \(youTotal) Vi")
                             .font(.headline)
                             .monospacedDigit()
                         if let dealer {
@@ -146,14 +155,6 @@ struct InputView: View {
                 }
             }
         }
-    }
-
-    private var currentSession: [Game] {
-        appState.currentGame.forDisplay
-    }
-
-    private var dealer: Dealer? {
-        viewModel.isEditing ? viewModel.currentGameEdit.dealer : appState.currentDealer
     }
 
     private func scoreField(caller: Caller, score: Binding<Int>, callsSum: Int, onChange: @escaping () -> Void) -> some View {
